@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostHog — Step-by-Step Guide</title>
+  <meta name="description" content="PostHog bundles analytics, session replay, feature flags, experiments, and error tracking in one open-source platform. Here's how to get started."/>
+  <meta name="post-tags" content="posthog,analytics,feature-flags,session-replay,ab-testing,experiments,ai-analytics"/>
+  <meta name="post-category" content="Dev Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Dev Tools</span>
+        <h1>PostHog: the product-analytics Swiss Army knife developers actually like</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>PostHog is the open-source platform that crams product analytics, session replay, feature flags, A/B testing, surveys, error tracking, logs, and a data warehouse into one tool. Their current framing is "building self-driving products": capture enough context that agents (or humans) can diagnose problems and ship fixes proactively. The repo is at ~39k stars and was pushed literally today — commits from August 24–25, 2026 include a new llms.txt fetch endpoint for agent analytics, which tells you where they're heading.</p>
+
+      <p>If you've ever glued together Mixpanel + LaunchDarkly + FullStory + Sentry, PostHog's pitch is simple: stop paying four vendors and wiring four SDKs.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ol>
+        <li><strong>You want to know why users churn, not just that they do.</strong> Session replay ties every recording to the same event stream as your funnels. See a funnel drop at checkout, click through to an actual session of someone rage-clicking a broken button.</li>
+        <li><strong>You ship features behind flags already.</strong> PostHog flags support percentage rollouts, cohort targeting, and multivariate variants — and because flags live next to analytics, you can measure a flag's impact without exporting anything.</li>
+        <li><strong>A/B testing without a stats degree.</strong> Experiments run on top of flags with automatic significance calculation. Ship variant B to 50% of users, watch the dashboard tell you whether conversion actually moved.</li>
+        <li><strong>Detecting what AI features are doing in production.</strong> With their AI observability push, teams instrumenting LLM calls get token/cost/quality signals in the same place as normal events. The new <code>llms.txt</code> endpoint added this week extends that to tracking AI-agent traffic hitting your site.</li>
+        <li><strong>Compliance-conscious teams.</strong> Self-hosting (Docker/Helm) or EU/US cloud hosting means you can keep replay data inside your own perimeter — something most SaaS-only competitors won't offer.</li>
+      </ol>
+
+      <figure>
+        <img src="../images/2026-08-24-posthog/demo-thumb.jpg" alt="PostHog product demonstration screenshot">
+        <figcaption>PostHog's own demo walkthrough — dashboards, replays, and flags in one UI.</figcaption>
+      </figure>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>The zero-infra path: create a project at <a href="https://posthog.com">posthog.com</a> (generous free tier — 1M events/month per their pricing docs) and grab your project API key from Settings.</li>
+        <li>Add the JS snippet to your site:
+          <pre><code>&lt;script src="https://us-assets.i.posthog.com/static/array.js"&gt;&lt;/script&gt; // or eu-assets
+&lt;script&gt;
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){/* ... */},e.init("phc_YOUR_PROJECT_KEY",{api_host:"https://us.i.posthog.com"}))
+&lt;/script&gt;</code></pre>
+          In practice you'll use their official wizard or framework package instead of hand-pasting.
+        </li>
+        <li>For React apps:
+          <pre><code>npm install posthog-js
+
+// provider.tsx
+import posthog from 'posthog-js'
+import { PostHogProvider } from 'posthog-js/react'
+
+posthog.init('phc_YOUR_KEY', {
+  api_host: 'https://us.i.posthog.com',
+  person_profiles: 'identified_only', // don't profile anonymous visitors
+})
+
+export function PHProvider({ children }) {
+  return &lt;PostHogProvider client={posthog}&gt;{children}&lt;/PostHogProvider&gt;
+}</code></pre>
+        </li>
+        <li>Capture events and use flags anywhere in the app:
+          <pre><code>import { useFeatureFlagEnabled, usePostHog } from 'posthog-js/react'
+
+function Checkout() {
+  const posthog = usePostHog()
+  const newFlow = useFeatureFlagEnabled('checkout-v2')
+
+  useEffect(() =&gt; {
+    posthog.capture('checkout_started', { cart_value: 79.99 })
+  }, [])
+
+  return newFlow ? &lt;NewCheckout /&gt; : &lt;OldCheckout /&gt;
+}</code></pre>
+        </li>
+        <li>Prefer self-hosting? The supported route is Docker Compose for evaluation or Kubernetes/Helm for production (per official docs):
+          <pre><code># quick eval stack
+git clone https://github.com/PostHog/posthog.git
+cd posthog
+docker compose -f docker-compose.dev.yml up -d</code></pre>
+          For real workloads, their docs steer self-hosters toward Helm on Kubernetes — the monolith is heavy (ClickHouse, Kafka, Postgres, Redis).
+        </li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Server-side flag checks in Python (posthog-node has the equivalent):</p>
+      <pre><code>import posthog
+
+posthog.api_key = 'phc_YOUR_KEY'
+posthog.host = 'https://us.i.posthog.com'
+
+enabled = posthog.feature_enabled(
+    'pricing-page-experiment',
+    distinct_id='user_1234',
+)
+
+if enabled:
+    price = 12
+else:
+    price = 9</code></pre>
+      <p>Identifying users so replays and cohorts join up across web + server:</p>
+      <pre><code>// after login
+posthog.identify(user.id, { email: user.email, plan: user.plan })
+
+# server-side, for backend-only actions
+posthog.capture('user_1234', 'subscription_upgraded', {'plan': 'pro'})</code></pre>
+      <p>A reverse-proxy setup keeps everything first-party (no third-party cookies, better ad-blocker survival) — proxy <code>/ingest</code> on your domain to <code>us.i.posthog.com</code> and set that as <code>api_host</code>.</p>
+
+      <h2>What's new</h2>
+      <ul>
+        <li><strong>Latest release:</strong> desktop-v0.61.11 (August 25, 2026), mostly dependency bumps — posthog-js 1.418.16, posthog-node 5.51.1, React Native plugin 2.5.0.</li>
+        <li><strong>New this week:</strong> a web-analytics llms.txt fetch endpoint for tracking AI-agent traffic (#88039) — if crawlers/agents hit your docs, you can now see them in analytics.</li>
+        <li><strong>Bugfixes worth noting:</strong> error tracking no longer loses your selection when linking an existing issue (#88130); a fixed deferred audit write stops saved requests failing (#88121); sparkline bar tooltips now cover the whole band (#88001).</li>
+        <li>SDK releases are automated via an updater bot, so client libraries stay fresh weekly — pin versions deliberately.</li>
+      </ul>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Flags always return false in production.</strong> Cause: the flag targets anonymous users but you never call <code>identify</code>, or <code>distinct_id</code> differs between web and server SDKs. Fix: call identify immediately after login and pass the same ID to server-side evaluations; check the flag's release conditions in the dashboard.</li>
+        <li><strong>No events showing up.</strong> Cause: ad blockers/tracking protection eating the ingest requests. Fix: reverse-proxy the ingestion path through your own domain, and verify with the "recent events" debug view in settings while devtools shows network calls succeeding.</li>
+        <li><strong>Session recordings are blank or missing clicks.</strong> Cause: shadow DOM/iframes and canvas-heavy apps aren't fully captured by default. Fix: enable the relevant recording config options for canvas capture, and test on pages without strict CSP; also confirm your CSP allows the PostHog asset domains.</li>
+        <li><strong>Autocapture noise drowning real signals.</strong> Cause: autocapture records every click by design. Fix: keep autocapture for breadth but define named actions/events for what you actually chart, and set <code>person_profiles: 'identified_only'</code> to avoid inflating person counts.</li>
+        <li><strong>Self-hosted instance falls over under load.</strong> Cause: ClickHouse/Kafka resource starvation — the eval compose file is not a production topology. Fix: move to the Helm deployment with dedicated nodes for ClickHouse, and follow their capacity guidance before enabling replay at scale.</li>
+      </ul>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

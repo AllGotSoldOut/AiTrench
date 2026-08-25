@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apache Maka — A Local-First Agent Workspace That Keeps the Receipts</title>
+  <meta name="description" content="Apache Maka (Incubating) is a local-first AI agent runtime and desktop workspace that records every model message and tool call as a recoverable execution log."/>
+  <meta name="post-tags" content="maka,apache,agent-runtime,ai-agent,llm,event-sourcing,local-first"/>
+  <meta name="post-category" content="Agents"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Agents</span>
+        <h1>Apache Maka: A Local-First Agent Workspace That Keeps the Receipts</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>Most agent tools treat your conversation with the model as disposable state in a UI. <a href="https://github.com/apache/maka">Apache Maka</a> (Incubating) flips that: it's a local-first agent workspace where every model message, tool call, tool result, permission decision, and termination event is written to an append-only log on your machine. The ~3,000 stars it picked up since May say a lot of people want exactly that.</p>
+
+      <p>The pitch in one line: your machine, your data, and a durable record of what the agent actually did. You bring the model — cloud API, local model, or gateway — and Maka runs tools under a sandbox boundary through one Runtime Host shared by the desktop app, the terminal CLI, and the eval harness.</p>
+
+      <h2>Why you'd actually use it</h2>
+
+      <ul>
+        <li><strong>You don't trust an agent near your codebase without an audit trail.</strong> Every tool call and its result is saved as execution fact. If a run goes sideways, you can read exactly what happened instead of guessing from the chat transcript.</li>
+        <li><strong>Context trimming shouldn't mean losing evidence.</strong> Maka can omit old tool output from the next prompt to keep context short — without deleting the saved record. Long-running refactors stay coherent without amnesia about what was already tried.</li>
+        <li><strong>Crash recovery matters.</strong> Runs are resumable after interruption. If your laptop dies mid-turn, you resume instead of restarting from scratch.</li>
+        <li><strong>Permission boundaries by default.</strong> Tools that leave the sandbox require approval, runs can be aborted mid-flight, and failures are classified rather than silently swallowed.</li>
+        <li><strong>Reproducible evals.</strong> <code>maka eval run &lt;spec&gt;</code> expands declarative multi-arm experiments into task × repetition × subject cells with per-cell scores, usage, cost, and failure reasons — handy if you're comparing models or prompts on real tasks.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+
+      <p>Honest caveat up front: Maka has no Apache release yet, so the README recommends building from source rather than trusting prebuilt downloads. Desktop currently targets Apple Silicon Macs; Windows is an unsigned preview and Linux isn't supported yet.</p>
+
+      <h3>1. Install the requirements</h3>
+
+      <ol>
+        <li>Node.js 22.19+ (CI uses Node.js 24)</li>
+        <li>npm (npm 11 is the current packageManager)</li>
+        <li>Git</li>
+        <li><code>ripgrep</code>, used by Runtime's Grep tool</li>
+      </ol>
+
+      <pre><code># macOS (Homebrew)
+brew install node git ripgrep</code></pre>
+
+      <h3>2. Clone and run Desktop</h3>
+
+      <pre><code>git clone https://github.com/apache/maka.git
+cd maka
+npm ci
+npm run dev</code></pre>
+
+      <p><code>npm run dev</code> starts the desktop environment with HMR. To build every workspace before launching Electron:</p>
+
+      <pre><code>npm run dev:full</code></pre>
+
+      <p>If Electron's binary was skipped during install (<code>ELECTRON_SKIP_BINARY_DOWNLOAD=1</code>), grab it first:</p>
+
+      <pre><code>node node_modules/electron/install.js</code></pre>
+
+      <h3>3. Connect a model</h3>
+
+      <p>Maka ships with no bundled model account. On first launch: open Settings → Models, add an API/local/gateway connection, test it, and set a default. Only connections actually wired into Runtime show up as usable models.</p>
+
+      <h3>4. Use the CLI</h3>
+
+      <pre><code>npm run build
+npm run cli:dev
+# one non-interactive turn
+npm run cli:dev -- run "Summarize this repository and identify its most important risk"
+# durable graph mode
+npm run cli:dev -- run --graph "Implement two independent slices, integrate them, then review the result"</code></pre>
+
+      <p>Note: graph operators use isolated Git worktrees, so your project needs to be a clean Git worktree first.</p>
+
+      <h2>Code &amp; config samples</h2>
+
+      <p>The TUI accepts slash commands to toggle graph mode interactively:</p>
+
+      <pre><code>/graph on
+/graph off
+/graph Refactor the auth module and add tests for the new flow</code></pre>
+
+      <p>Built-in tools available to the agent are the usual file-and-shell set — <code>Read</code>, <code>Write</code>, <code>Edit</code>, <code>Bash</code>, <code>Glob</code>, <code>Grep</code>. Computer Use and catalog skills exist but are opt-in and off by default, which is the right default for anything running against your real projects.</p>
+
+      <p>Eval specs are declarative files expanded into experiment cells:</p>
+
+      <pre><code>maka eval run my-spec.yaml --out ./results/</code></pre>
+
+      <p>Each cell gets immutable attempts and a result kernel covering score, normalized usage, attributable cost, duration, status, failure reason, and artifacts.</p>
+
+      <h2>What's new</h2>
+
+      <p>There's no tagged release yet — the repo is explicit that nothing published so far is an Apache Software Foundation release, and once source releases exist they'll be signed and approved through the Incubator PMC. Development is active (last push within a day of this writing), with recent work centered on streaming model output, clearer provider errors, crash recovery, and the Graph execution mode. Expect data formats and CLI commands to change while it incubates — pin your checkout if that bothers you.</p>
+
+      <h2>Troubleshooting</h2>
+
+      <ul>
+        <li><strong><code>npm run dev</code> fails to launch Electron.</strong> If dependencies were installed with <code>ELECTRON_SKIP_BINARY_DOWNLOAD=1</code> (common on CI or flaky networks), the Electron binary is missing. Run <code>node node_modules/electron/install.js</code>, then retry.</li>
+        <li><strong>Grep tool errors at runtime.</strong> Runtime shells out to ripgrep. If <code>rg</code> isn't on your PATH, install it (<code>brew install ripgrep</code>) before starting a session.</li>
+        <li><strong>--graph run refuses to start.</strong> Graph implementation operators use isolated Git worktrees, which requires a clean working tree. Commit or stash your changes first.</li>
+        <li><strong>Your model connection shows but can't be selected.</strong> Maka distinguishes configured, send-ready, and experimental states — a connection not wired into Runtime won't be presented as usable. Re-test it in Settings → Models and check the connection type matches your provider.</li>
+        <li><strong>Windows build triggers SmartScreen warnings.</strong> Windows is an unsigned preview tier, not a supported release. That warning is expected; prefer macOS arm64 if you want the supported path.</li>
+      </ul>
+
+      <p>Maka is early — incubation means formats move — but the core idea, an append-only execution log as the source of truth for agent runs, is the right one. Worth watching, especially if you run agents against production codebases.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

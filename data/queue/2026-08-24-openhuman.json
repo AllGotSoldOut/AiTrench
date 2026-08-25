@@ -1,0 +1,75 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-openhuman",
+  "topic": {
+    "name": "tinyhumansai/openhuman",
+    "source": "github_trending",
+    "url": "https://github.com/tinyhumansai/openhuman",
+    "stars": 37345,
+    "description": "Your Personal AI super intelligence. A brain that builds a local-first memory of your life, a fantastic orchestrator of agent fleets and workflows, and a deep researcher.",
+    "language": "Rust",
+    "topics": [],
+    "homepage": "https://tinyhumans.ai/openhuman",
+    "pushed_at": "2026-08-24",
+    "created_at": "2026-02-18",
+    "default_branch": "main",
+    "_score": 1946.9
+  },
+  "mode": "docs",
+  "readme_excerpt": "<h1 align=\"center\">OpenHuman</h1>\n\n<p align=\"center\">\n <img src=\"./gitbooks/.gitbook/assets/demo.png\" alt=\"The Tet\" />\n</p>\n\n<p align=\"center\" style=\"display: inline-block\">\n\t<a href=\"https://trendshift.io/repositories/23680\" target=\"_blank\" style=\"display: inline-block\">\n\t\t<img src=\"https://trendshift.io/api/badge/repositories/23680\" alt=\"tinyhumansai%2Fopenhuman | Trendshift\" style=\"width: 250px; height: 55px;\" width=\"250\" height=\"55\"/>\n\t</a>\n\t<a href=\"https://www.producthunt.com/products/openhuman?embed=true&amp;utm_source=badge-top-post-badge&amp;utm_medium=badge&amp;utm_campaign=badge-openhuman\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t<img alt=\"OpenHuman - An open source AI harness built with the human in mind | Product Hunt\" width=\"250\" height=\"54\" src=\"https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1136902&amp;theme=light&amp;period=daily&amp;t=1778916022823\">\n\t\t</a>\n\t\t<a href=\"https://www.producthunt.com/products/openhuman?embed=true&amp;utm_source=badge-top-post-badge&amp;utm_medium=badge&amp;utm_campaign=badge-openhuman\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t\t<img alt=\"OpenHuman - An open source AI harness built with the human in mind | Product Hunt\" width=\"250\" height=\"54\" src=\"https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1136902&amp;theme=light&amp;period=weekly&amp;t=1779351403565\">\n\t\t</a>\n</p>\n<p align=\"center\" style=\"display: inline-block\">\n <a href=\"https://www.producthunt.com/products/openhuman?embed=true&amp;utm_source=badge-top-post-topic-badge&amp;utm_medium=badge&amp;utm_campaign=badge-openhuman\" target=\"_blank\" rel=\"noopener noreferrer\">\n  <img alt=\"OpenHuman - An open source AI harness built with the human in mind | Product Hunt\" width=\"250\" height=\"54\" src=\"https://api.producthunt.com/widgets/embed-image/v1/top-post-topic-badge.svg?post_id=1136902&amp;theme=light&amp;period=weekly&amp;topic_id=268&amp;t=1779351808756\">\n  </a>\n  <a href=\"https://www.producthunt.com/products/openhuman?embed=true&amp;utm_source=badge-top-post-topic-badge&amp;utm_medium=badge&amp;utm_campaign=badge-openhuman\" target=\"_blank\" rel=\"noopener noreferrer\">\n   <img alt=\"OpenHuman - An open source AI harness built with the human in mind | Product Hunt\" width=\"250\" height=\"54\" src=\"https://api.producthunt.com/widgets/embed-image/v1/top-post-topic-badge.svg?post_id=1136902&amp;theme=light&amp;period=weekly&amp;topic_id=46&amp;t=1779351808756\">\n   </a>\n </p>\n\n<p align=\"center\">\n <strong>OpenHuman is your personal AI super intelligence: a brain that remembers everything, a fantastic orchestrator, a deep researcher. Local-first, simple, powerful.</strong>\n</p>\n\n<p align=\"center\">\n <a href=\"https://github.com/tinyhumansai/openhuman/discussions\">Discussions</a> \u2022\n <a href=\"https://discord.tinyhumans.ai/\">Discord</a> \u2022\n <a href=\"https://www.reddit.com/r/tinyhumansai/\">Reddit</a> \u2022\n <a href=\"https://x.com/intent/follow?screen_name=tinyhumansai\">X/Twitter</a> \u2022\n <a href=\"https://tinyhumans.gitbook.io/openhuman/\">Docs</a> \u2022\n <a href=\"https://x.com/intent/follow?screen_name=senamakel\">Follow @senamakel (Creator)</a>\n</p>\n\n<p align=\"center\">\n  \ud83c\uddfa\ud83c\uddf8 <a href=\"./README.md\">English</a> | \ud83c\udde8\ud83c\uddf3 <a href=\"./docs/README.zh-CN.md\">\u7b80\u4f53\u4e2d\u6587</a> | \ud83c\uddef\ud83c\uddf5 <a href=\"./docs/README.ja-JP.md\">\u65e5\u672c\u8a9e</a> | \ud83c\uddf0\ud83c\uddf7 <a href=\"./docs/README.ko.md\">\ud55c\uad6d\uc5b4</a> | \ud83c\udde9\ud83c\uddea <a href=\"./docs/README.de.md\">Deutsch</a> | \ud83c\uddf5\ud83c\uddf0 <a href=\"./docs/README.ur-pk.md\">\u0627\u0631\u062f\u0648</a>\n</p>\n\n<p align=\"center\">\n <img src=\"https://img.shields.io/badge/status-early%20beta-orange\" alt=\"Early Beta\" />\n <a href=\"https://github.com/tinyhumansai/openhuman/releases/latest\"><img src=\"https://img.shields.io/github/v/release/tinyhumansai/openhuman?label=latest\" alt=\"Latest Release\" /></a>\n <a href=\"https://github.com/tinyhumansai/openhuman/stargazers\"><img src=\"https://img.shields.io/github/stars/tinyhumansai/openhuman?style=flat\" alt=\"GitHub Stars\" /></a>\n <a href=\"./LICENSE\"><img src=\"https://img.shields.io/github/license/tinyhumansai/openhuman\" alt=\"License\" /></a>\n</p>\n\n> **Early Beta**: Under active development. Expect rough edges.\n\n> OpenHuman is not AGI. But it is a meaningful architectural step closer, with better memory, better orchestration, and better tooling.\n\n> \ud83c\udf89 Within one week of launch, OpenHuman became the number one trending repository on GitHub for nine days in a row.\n\n# Install\n\nDownload installers from [tinyhumans.ai/openhuman](https://tinyhumans.ai/openhuman?utm_source=github&utm_medium=readme) or from the [GitHub Releases](https://github.com/tinyhumansai/openhuman/releases/latest) page.\n\nFor terminal installs (Homebrew, Debian/Ubuntu `.deb`, AUR, install scripts, and platform notes), see **[INSTALL.md](./INSTALL.md)**.\n\n# What is OpenHuman?\n\nOpenHuman is three things most assistants aren't: **a brain** that builds a persistent, local memory of your world; **a fantastic orchestrator** that runs fleets of agents on durable graphs; and **a deep researcher** that sweeps your data and the web before you finish asking. Every bullet links to the deeper writeup in the [docs](https://tinyhumans.gitbook.io/openhuman/).\n\n### \ud83e\udde0 The brain\n\n- **[Memory Tree](https://tinyhumans.gitbook.io/openhuman/features/memory-tree) + [Obsidian Wiki](https://tinyhumans.gitbook.io/openhuman/features/obsidian-wiki)**: your data compressed into scored Markdown trees in SQLite on your machine, mirrored as an [Obsidian vault](https://x.com/karpathy/status/2039805659525644595) you can open and edit. No vector-soup black box.\n- **[100+ OAuth integrations, 5,000+ MCP servers, 90,000+ Skills](https://tinyhumans.gitbook.io/openhuman/features/integrations)**: one click into Gmail, Notion, GitHub, Slack and the rest of your stack. [Auto-fetch](https://tinyhumans.gitbook.io/openhuman/features/obsidian-wiki/auto-fetch) feeds the brain every 20 minutes, so it has tomorrow's context this morning.\n- **[Goals & Todos](https://tinyhumans.gitbook.io/openhuman/features/goals-and-todos)**: long-term goals, durable per-thread goals, and a shared kan",
+  "readme_images": [
+    "https://trendshift.io/api/badge/repositories/23680",
+    "https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1136902&amp;theme=light&amp;period=daily&amp;t=1778916022823",
+    "https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1136902&amp;theme=light&amp;period=weekly&amp;t=1779351403565",
+    "https://api.producthunt.com/widgets/embed-image/v1/top-post-topic-badge.svg?post_id=1136902&amp;theme=light&amp;period=weekly&amp;topic_id=268&amp;t=1779351808756",
+    "https://api.producthunt.com/widgets/embed-image/v1/top-post-topic-badge.svg?post_id=1136902&amp;theme=light&amp;period=weekly&amp;topic_id=46&amp;t=1779351808756",
+    "https://img.shields.io/badge/status-early%20beta-orange"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": {
+      "tag": "v0.63.12",
+      "date": "2026-08-07",
+      "notes": "# The Smooth Release Bump Upgrade\n\nv0.63.12 is here\u2014a clean, streamlined release update to keep everything moving forward. \ud83c\udf89\n\n## Highlights\n\n### Release automation & housekeeping \u2699\ufe0f\nThis update is focused on release hygiene: bumping the version to v0.63.12 via the automated release workflow, with no feature or bugfix PRs included in this range. \u2014 Thank you @github-actions[bot]!\n\n## Contributor Credits\nThanks to **@github-actions[bot]** for shipping this release update.\n\n## Full Compare\nhttps://github.com/tinyhumansai/openhuman/compare/v0.63.11...v0.63.12\n"
+    },
+    "recent_commits": [
+      {
+        "message": "Merge pull request #5753 from M3gA-Mind/fix/5634-triage-origin-labels",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge pull request #5748 from M3gA-Mind/fix/turn-origin-spawn-helper",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge pull request #5745 from M3gA-Mind/fix/5602-no-langfuse-in-production",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge pull request #5742 from M3gA-Mind/fix/5624-current-user-fetch-backoff",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge pull request #5735 from M3gA-Mind/fix/5722-summarizer-failure-visible",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge pull request #5734 from M3gA-Mind/fix/socket-orphaned-emit-after-reconnect",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge pull request #5720 from M3gA-Mind/fix/5637-thread-title-model-hint",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge pull request #5702 from senamakel/green-ci-20260823",
+        "date": "2026-08-24"
+      }
+    ],
+    "hot_issues": []
+  },
+  "tags": [
+    "openhuman",
+    "tinyhumansai"
+  ]
+}

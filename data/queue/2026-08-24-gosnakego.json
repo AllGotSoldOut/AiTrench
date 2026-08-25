@@ -1,0 +1,40 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-gosnakego",
+  "topic": {
+    "name": "liweiyi88/gosnakego",
+    "source": "trendshift",
+    "url": "https://github.com/liweiyi88/gosnakego",
+    "stars": 32,
+    "description": "A snake game written in Go",
+    "language": "Go",
+    "topics": [
+      "go",
+      "golang",
+      "snake-game"
+    ],
+    "homepage": "",
+    "pushed_at": "2023-11-06",
+    "created_at": "2022-01-10",
+    "default_branch": "main",
+    "_score": 150.64
+  },
+  "mode": "docs",
+  "readme_excerpt": "<p align=\"center\">\n<img src=\"assets/logo_snake.png\" alt=\"gosnakego\" title=\"gosnakego\" />\n</p>\nA snake game written in Go\n\n![snake](https://github.com/liweiyi88/gosnakego/blob/main/assets/gosnakego.gif)\n\n## Installation\n### Get the binary\nYou can obtain the binary executable for your operating system from the [releases page](https://github.com/liweiyi88/gosnakego/releases)\n\n## How to play\nMake sure you download the binary and move it to an \"executable path\" (e.g. `/usr/local/bin/gosnakego`), then start the game with the command\n```\n$ gosnakego\n```\nand use arrow keys to control the direction.\n",
+  "readme_images": [
+    "https://github.com/liweiyi88/gosnakego/blob/main/assets/gosnakego.gif"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [],
+    "hot_issues": []
+  },
+  "tags": [
+    "go",
+    "golang",
+    "gosnakego",
+    "liweiyi88",
+    "snake-game"
+  ]
+}

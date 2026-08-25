@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awesome Agent Skills — Step-by-Step Guide</title>
+  <meta name="description" content="How to use VoltAgent/awesome-agent-skills, a curated list of 1000+ agent skills from official dev teams that work with Claude Code, Codex, Gemini CLI, and Cursor."/>
+  <meta name="post-tags" content="awesome-agent-skills,voltagent,agent-skills,claude-code,codex,gemini-cli,cursor"/>
+  <meta name="post-category" content="Agents"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Agents</span>
+        <h1>Awesome Agent Skills: 1,000+ Curated Skills for Claude Code, Codex &amp; Cursor</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/VoltAgent/awesome-agent-skills">VoltAgent/awesome-agent-skills</a> is a curated directory of agent skills — those SKILL.md-style instruction packages that teach coding agents how to do a specific job. It's sitting at roughly 32,000 stars and climbing, and it's currently one of the fastest-moving repos on GitHub Trending. What separates it from the pile of auto-generated "awesome" lists is stated right in the README: hand-picked skills from real engineering teams — Anthropic, Google Labs, Vercel, Stripe, Cloudflare, Netlify, Trail of Bits, Sentry, Expo, Hugging Face, Figma — plus vetted community contributions. The badge count is at 1,497+ skills and it's still growing daily.</p>
+
+      <p>Why does this matter right now? Because agent skills have quietly become the standard way to extend coding agents. Claude Code, Codex, Gemini CLI, Cursor, GitHub Copilot, OpenCode, Windsurf, and Antigravity all read the same basic format now. That means one well-written skill file works across your whole toolchain — and this repo is effectively the package index for them.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>Stop re-explaining your stack to your agent.</strong> Instead of pasting "we use Stripe Checkout with webhook signature verification" into every session, install a Stripe skill once and every agent that reads it gets the current best-practice flow.</li>
+        <li><strong>Security review you didn't write.</strong> Trail of Bits publishes skills here. If you're shipping code without a security pass, pointing your agent at their skill is a cheap upgrade.</li>
+        <li><strong>Framework drift protection.</strong> Vercel, Cloudflare, Netlify, and Expo move fast; model training data doesn't. Official-team skills encode the current API surface so your agent stops hallucinating deprecated flags.</li>
+        <li><strong>Cross-tool consistency.</strong> Same skill works in Claude Code on your laptop and Codex in CI. One source of truth for "how we do things."</li>
+        <li><strong>Finding what exists.</strong> Honestly, half the value is discovery — browsing the categories tells you what agents can now do that you didn't know about last week.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <p>There's no installer — skills are just files in a known location. The README has a compatibility table mapping each host tool to its skills path. The general flow:</p>
+      <ol>
+        <li>Browse the list (or the companion site) and pick a skill.
+          <pre><code>https://github.com/VoltAgent/awesome-agent-skills
+# browsable site: https://officialskills.sh/</code></pre></li>
+        <li>Clone the repo or grab the skill folder you want:
+          <pre><code>git clone https://github.com/VoltAgent/awesome-agent-skills.git
+cp -r awesome-agent-skills/skills/&lt;skill-name&gt; .claude/skills/</code></pre></li>
+        <li>For Claude Code specifically, drop it under your project's <code>.claude/skills/</code> directory (or <code>~/.claude/skills/</code> for global availability).</li>
+        <li>For other tools, follow the README's per-tool table — Codex, Cursor, Gemini CLI, and friends each have their own skills directory convention documented there.</li>
+        <li>Restart your agent session and confirm the skill is picked up (in Claude Code, ask it which skills are loaded).</li>
+      </ol>
+
+      <h2>Skill anatomy</h2>
+      <p>A skill is a folder with a markdown instruction file plus optional scripts and references. A minimal one looks like this:</p>
+      <pre><code>.claude/skills/stripe-webhooks/
+├── SKILL.md          # instructions the agent loads
+├── scripts/
+│   └── verify_sig.sh # helper the agent may run
+└── references/
+    └── events.md     # event catalog</code></pre>
+
+      <p>The <code>SKILL.md</code> frontmatter declares when the skill should activate:</p>
+      <pre><code>---
+name: stripe-webhooks
+description: Verify Stripe webhook signatures and handle
+  checkout.session.completed events safely. Use when wiring
+  up or debugging Stripe webhooks.
+---
+
+1. Never trust the raw body — always verify the signature header first.
+2. Use the endpoint secret from `stripe listen` in local dev.
+...</code></pre>
+
+      <p>The <code>description</code> field is the trigger — write it like a routing rule, not marketing copy.</p>
+
+      <h2>What's new</h2>
+      <p>No formal releases — it's a living list. Commits land daily: as of August 23–24 the maintainers merged PRs adding a vibe-coding prompt template (#938), an APITube news API skill (#940), and updates from contributors lindblomstefan and hedralab. The skills counter badge keeps ticking upward alongside. If you fork or vendor skills from here, pull regularly — the official-team entries get revised as those teams ship.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Skill isn't being picked up.</strong> Cause: wrong directory for your host tool (each agent uses its own path). Fix: check the compatibility table in the README rather than guessing; global vs. project-level paths differ.</li>
+        <li><strong>Agent ignores the skill mid-session.</strong> Cause: skills are typically indexed at session start. Fix: restart the session after installing, and make sure the frontmatter <code>description</code> actually matches what you're asking for.</li>
+        <li><strong>Name collisions.</strong> Two installed skills with similar names/descriptions confuse routing. Fix: remove duplicates, keep only one skill per concern.</li>
+        <li><strong>Stale vendored copies.</strong> If you copied skills months ago, they've likely been updated upstream. Fix: re-sync from the repo instead of editing your local copy in place.</li>
+        <li><strong>Quality variance in community entries.</strong> The list is curated but not uniform. Fix: prefer official-team skills where they exist, and read the SKILL.md before letting an agent act on it.</li>
+      </ul>
+
+      <p>If you use coding agents at all, bookmark it. It's the closest thing this ecosystem has to npm.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

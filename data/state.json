@@ -1,6 +1,8 @@
 {
-  "blogged_topics": [
+  "last_run": "2026-08-20T19:39:14.608532",
+  "done": [
+    "dify",
+    "open-webui",
     "openclaw/openclaw"
-  ],
-  "last_run": "2026-08-20T19:39:14.608532"
+  ]
 }

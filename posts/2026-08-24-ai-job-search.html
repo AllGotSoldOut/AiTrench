@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Job Search — Step-by-Step Guide</title>
+  <meta name="description" content="An open-source job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, and prep interviews — on your own machine."/>
+  <meta name="post-tags" content="ai-job-search,madslorentzen,claude-code,career,cv,cover-letter,agents"/>
+  <meta name="post-category" content="Productivity"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Productivity</span>
+        <h1>AI Job Search: Run Your Entire Job Hunt Locally with Claude Code</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/MadsLorentzen/ai-job-search">ai-job-search</a> by Mads Lorentzen is an AI-powered job application framework built on Claude Code — and it's sitting at ~34,000 GitHub stars. You fork it, fill in your profile, and let Claude evaluate job postings, tailor your CV, write cover letters, and run interview prep. Everything runs on your machine; the repo's whole thesis is "the job search that runs on your machine. Fork it and own it."</p>
+
+      <p>The credibility part is what makes this trend: the author is a geophysicist whose position was cut in late 2025. He built this framework to run his own search — 69 tailored applications, twenty first interviews, one signed contract later he started as an AI engineer. He was upfront with every employer about using it, and it usually sparked a genuine technical conversation instead of counting against him.</p>
+
+      <p>One important note from the README itself: this is an independent project, not affiliated with Anthropic, and it has no cryptocurrency, token, or paid sponsorship program — anything claiming otherwise is a scam.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ol>
+        <li><strong>You're sending out dozens of applications and every CV is generic.</strong> The framework's core loop evaluates each posting against your profile, then produces a tailored CV per role instead of one resume sprayed everywhere.</li>
+        <li><strong>Cover letters are your least favorite writing task.</strong> The same pipeline drafts them from the posting plus your actual experience, so they reference real requirements rather than boilerplate praise.</li>
+        <li><strong>You got the interview and now you're panicking.</strong> The <code>/interview</code> workflow preps you on the specific company and role — it researches the employer and drills likely questions.</li>
+        <li><strong>You don't want your career data in yet another SaaS.</strong> Everything is local files in your fork. Your profile, your documents, your machine. That also means full control over LaTeX output if you care about typography.</li>
+        <li><strong>You want to customize how applications work.</strong> Because it's a fork-and-own repo, you can change the evaluation prompts, add portals, or enforce your own formatting rules without waiting for a vendor.</li>
+      </ol>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Fork and clone the repo (forking matters here — you'll be committing your personal profile):
+          <pre><code>git clone https://github.com/&lt;you&gt;/ai-job-search.git
+cd ai-job-search</code></pre>
+        </li>
+        <li>You need Python and a Claude Code subscription/API access. Install dependencies:
+          <pre><code>pip install -r requirements.txt</code></pre>
+        </li>
+        <li>Fill in your profile — your background, skills, and base CV live as editable files in the repo (per official docs). This is the input everything else tailors from.
+          <pre><code>$EDITOR profile/</code></pre>
+        </li>
+        <li>Evaluate a posting before you waste time applying:
+          <pre><code>/scrape &lt;job-posting-url&gt;</code></pre>
+        </li>
+        <li>Generate tailored documents for a posting you like:
+          <pre><code>/apply &lt;job-id&gt;</code></pre>
+        </li>
+        <li>When the callback comes, prep:
+          <pre><code>/interview &lt;company&gt;</code></pre>
+        </li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Output documents compile through LaTeX, which is why the CI includes a LaTeX smoke test. If you want Debian-packaged TeX Live locally (the exact combo their new CI leg tests), that's:</p>
+      <pre><code>sudo apt install texlive texlive-latex-extra
+latexmk -pdf output/cv.tex</code></pre>
+      <p>Portal integrations ship as small CLIs with strict contracts — since v1.6.0 every portal CLI rejects unknown flags outright, exiting 1 with a structured error instead of silently returning junk. If you script around them, check the exit code, not just stdout:</p>
+      <pre><code>portal-cli search --query "ml engineer" || echo "bad flags or failed scrape"</code></pre>
+
+      <h2>What's new</h2>
+      <p><strong>v1.6.0</strong> (August 19, 2026) had two themes: things that used to fail silently now fail loudly, and your edited text now survives into the documents you send. It came out of a deep empirical template review (PR #347 — 25 fixes, each carrying its own test). The breaking change: all six portal CLIs reject unknown flags after one portal returned the entire 13,862-posting database for a typo'd flag with exit 0. Since then, commits added company-research caching for repeat <code>/apply</code> and <code>/interview</code> lookups (#349), an onboarding warning about public forks at the point of decision (#345/#348), a fix for dotted suffixes like "A.M.B.A." being dropped in company-name salary matching (#356), and a Debian bookworm TeX Live CI leg (#346). Last push: August 23.</p>
+
+      <h2>Troubleshooting</h2>
+      <ol>
+        <li><strong>Your scraped results include jobs you never searched for.</strong> A known issue (#331): the scraper occasionally generates "ghost" LinkedIn postings. Fix: sanity-check posting URLs before running /apply, pull latest main for scraper fixes, and treat implausible matches as noise.</li>
+        <li><strong>Your edits to a cover letter vanish in the final PDF.</strong> This was v1.6.0's headline fix area — text not surviving into sent documents. Fix: upgrade past v1.6.0 and re-run; the release specifically made user-written text survive templating.</li>
+        <li><strong>A portal CLI returns a suspiciously huge result set.</strong> Pre-v1.6.0, wrong flag names could return entire databases with exit 0. Fix: upgrade to ≥1.6.0 where unknown flags exit 1 with a JSON error, and always check exit codes in any scripts you build on top.</li>
+        <li><strong>LaTeX compilation fails on Linux.</strong> Missing packages, usually. Install the extras (<code>texlive-latex-extra</code>) or mirror the CI's debian:bookworm leg, which compiles against apt-packaged TeX Live.</li>
+        <li><strong>You pushed your fork public with personal data in it.</strong> Real risk — v1.6.0 added a warning about public forks at the point of decision. Fix: keep profile details in a private fork or untracked local files, and scrub history before making anything public.</li>
+      </ol>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

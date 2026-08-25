@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vaultwarden — Step-by-Step Guide</title>
+  <meta name="description" content="Vaultwarden is a lightweight Rust server that's fully compatible with official Bitwarden clients — the easiest way to self-host your password vault."/>
+  <meta name="post-tags" content="vaultwarden,bitwarden,rust,docker,password-manager,security,self-hosted"/>
+  <meta name="post-category" content="Security"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Security</span>
+        <h1>Vaultwarden: self-host your passwords without running Bitwarden's monster stack</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>Vaultwarden is an alternative server implementation of the Bitwarden Client API, written in Rust — and it works with the official Bitwarden apps and browser extensions you already use. The point isn't a different client; it's a server you can actually run at home. The official Bitwarden self-hosted image wants multiple gigabytes of RAM; Vaultwarden runs comfortably in tens of megabytes on a Raspberry Pi or the cheapest VPS you can rent.</p>
+
+      <p>At ~66k stars it's one of the most-starred self-hosted projects on GitHub, pushed as recently as today (August 24, 2026), with continuous development since early 2018. Formerly known as bitwarden_rs, if that name rings a bell.</p>
+
+      <p>One honest note from their own README: it's unofficial. The maintainers are clear it's not formally affiliated with Bitwarden Inc. — you're trusting the community build, which has an excellent track record, but know what you're signing up for.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ol>
+        <li><strong>You want Bitwarden's polish without the subscription or the resource bill.</strong> Official clients sync to your server for free, including premium-ish features Vaultwarden enables (TOTP codes, file attachments, organizations) since it doesn't enforce Bitwarden's paid tiers.</li>
+        <li><strong>Family password sharing.</strong> Spin up an organization on your instance, share the streaming-passwords collection with family members using free Bitwarden accounts pointed at your server.</li>
+        <li><strong>Homelab single sign-on of life stuff.</strong> If you already run Traefik/nginx-proxy-manager and Authelia/Authentik, Vaultwarden slots into the standard "one more container behind SSO" pattern in minutes.</li>
+        <li><strong>Air-gapped / offline-first teams.</strong> Small teams that can't send secrets to any third-party cloud get full API compatibility on an internal network.</li>
+        <li><strong>Raspberry Pi / NAS duty.</strong> It's the canonical "runs great on ARM" workload — Synology and Unraid users have been deploying it via community containers for years.</li>
+      </ol>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Run the container (Docker method from the official wiki):
+          <pre><code>docker run -d --name vaultwarden \
+  -v /vw-data/:/data/ \
+  -p 80:80 \
+  --restart unless-stopped \
+  ghcr.io/dani-garcia/vaultwarden:latest</code></pre>
+          Your encrypted vault database lives entirely in <code>/vw-data/</code> — back that directory up and you've backed up everything.
+        </li>
+        <li>Or use Docker Compose:
+          <pre><code># docker-compose.yml
+services:
+  vaultwarden:
+    image: ghcr.io/dani-garcia/vaultwarden:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vault.example.com"
+      SIGNUPS_ALLOWED: "false"
+    volumes:
+      - ./vw-data:/data
+
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy-data:/data</code></pre>
+        </li>
+        <li>Put TLS in front of it. This matters more than usual: the official Bitwarden clients require HTTPS (except plain HTTP on localhost). A minimal Caddyfile:
+          <pre><code>vault.example.com {
+    reverse_proxy vaultwarden:80
+}</code></pre>
+        </li>
+        <li>Open <code>https://vault.example.com</code>, create your account, then immediately flip <code>SIGNUPS_ALLOWED=false</code> (as above) so strangers can't register on your instance. Re-enable it temporarily whenever someone new needs an account.</li>
+        <li>Point your devices at it: in every official Bitwarden app/extension, go to Settings → Server URL and enter your domain. Log in once; sync happens automatically after that.</li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Most real configuration lives in environment variables or a <code>config.json</code> in the data dir. A hardened setup:</p>
+      <pre><code>DATABASE_URL=/data/db.sqlite3        # or postgres://user:pass@host/vw for Postgres
+DOMAIN=https://vault.example.com     # must match exactly, or CSRF checks fail
+SIGNUPS_ALLOWED=false
+INVITATIONS_ALLOWED=true             # invite family via email org invites
+WEBSOCKET_ENABLED=true               # live sync across clients
+ADMIN_TOKEN=$argon2id$...            # hash of your admin-panel password
+EOF                                  # see wiki for generating the argon2 hash</code></pre>
+      <p>Generate the admin token properly instead of pasting plaintext:</p>
+      <pre><code>docker run --rm -it ghcr.io/dani-garcia/vaultwarden /vaultwarden hash</code></pre>
+      <p>Nightly encrypted backup one-liner (SQLite path):</p>
+      <pre><code>sqlite3 /vw-data/db.sqlite3 ".backup '/backups/db-$(date +%F).sqlite3'" \
+  && gpg -c /backups/db-$(date +%F).sqlite3</code></pre>
+      <p>Use the SQLite backup command rather than copying the file while it's being written, or you'll snapshot a corrupt mid-transaction state.</p>
+
+      <h2>What's new</h2>
+      <p>No tagged release fell inside this article's intel window and no recent-commit list was captured, but the repo shows pushes on August 24, 2026 — dani-garcia's project releases continuously, and the maintainer publishes detailed release notes with each tag on GitHub. Before upgrading, always check the release notes for required <code>config.json</code>/env migrations (they do happen), pull the new image, and recreate the container — your data volume carries over untouched.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Clients can't log in over plain HTTP.</strong> Cause: official Bitwarden apps refuse non-TLS origins except localhost. Fix: terminate TLS with Caddy/nginx/Let's Encrypt in front of the container, and set <code>DOMAIN</code> to the exact public URL.</li>
+        <li><strong>New logins return "Registration not allowed" or CORS errors.</strong> Cause: <code>SIGNUPS_ALLOWED=false</code> doing its job, or a <code>DOMAIN</code> mismatch between browser origin and configured value. Fix: match <code>DOMAIN</code> exactly (scheme included); temporarily enable signups when creating accounts.</li>
+        <li><strong>Password reset emails never arrive.</strong> Cause: no SMTP configured, so the server can't send mail. Fix: set <code>SMTP_HOST</code>, <code>SMTP_FROM</code>, <code>SMTP_USERNAME</code>/<code>SMTP_PASSWORD</code> (and <code>SMTP_PORT=587</code> with STARTTLS for most providers) before you need account recovery — this is the #1 regret among self-hosters who lock themselves out.</li>
+        <li><strong>Mobile app doesn't live-sync changes.</strong> Cause: websocket support disabled or stripped by the reverse proxy. Fix: set <code>WEBSOCKET_ENABLED=true</code> and make sure your proxy forwards Upgrade headers; recent versions fold websockets into the main port, so also just update the image if you're on an old tag.</li>
+        <li><strong>Admin panel won't accept your password.</strong> Cause: <code>ADMIN_TOKEN</code> was set as plaintext or the argon2 hash got mangled by shell escaping ($ characters). Fix: regenerate with the <code>hash</code> command shown above, and quote the value in compose files or use <code>$${...}</code> escaping.</li>
+      </ul>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

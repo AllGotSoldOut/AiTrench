@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onedump — One YAML File, One Command, Every Database Backup</title>
+  <meta name="description" content="Onedump is a Go-based database admin tool that backs up MySQL and PostgreSQL to local disk, S3, Google Drive, Dropbox, and SFTP from a single config file."/>
+  <meta name="post-tags" content="onedump,liweiyi88,database-backup,dba,backup,mysql,postgresql,golang,s3"/>
+  <meta name="post-category" content="Infrastructure"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Infrastructure</span>
+        <h1>Onedump: One YAML File, One Command, Every Database Backup</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/liweiyi88/onedump">Onedump</a> does one thing well: it takes database backups from MySQL or PostgreSQL and drops them wherever you actually keep backups — local disk, S3, Google Drive, Dropbox, SFTP — driven by a single YAML file. It's a Go binary with no runtime dependencies for basic MySQL dumps (it ships its own native dumper), it's in Awesome Go, and it just crossed ~990 stars after trending recently.</p>
+
+      <p>If your current backup story is "a cron job running mysqldump piped through gzip to a directory nobody checks," onedump is the upgrade path.</p>
+
+      <h2>Why you'd actually use it</h2>
+
+      <ul>
+        <li><strong>Small servers without mysqldump installed.</strong> The built-in native MySQL dumper means the single onedump binary can dump MySQL with zero external dependencies — great for containers and minimal VPS images.</li>
+        <li><strong>Backing up databases behind SSH only.</strong> If your production DB isn't reachable except via a bastion, onedump tunnels the dump over SSH (<code>sshhost</code>, <code>sshuser</code>, <code>sshkey</code>) without you writing any tunnel plumbing.</li>
+        <li><strong>Point-in-time recovery setups.</strong> <code>binlog sync-s3</code> streams MySQL binlogs to S3 continuously, and <code>binlog restore</code> replays them to a target timestamp — the two halves of PITR without hand-rolled scripts.</li>
+        <li><strong>Chasing slow queries.</strong> The built-in slow log parser turns MySQL slow logs into structured JSON, so you can pipe them into anything instead of eyeballing raw log text.</li>
+        <li><strong>Cron-friendly scheduled dumps.</strong> Pass a cron expression and onedump handles scheduling itself: <code>onedump -f config.yaml -c 21h</code>.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+
+      <ol>
+        <li><strong>Install the binary.</strong> Grab the latest release for your OS from the <a href="https://github.com/liweiyi88/onedump/releases">releases page</a>, move it into your PATH, and make it executable:
+          <pre><code>sudo mv onedump /usr/local/bin/onedump
+sudo chmod +x /usr/local/bin/onedump
+onedump</code></pre></li>
+        <li><strong>Or use Docker</strong> (recommended if you need PostgreSQL support):
+          <pre><code>docker run julianli/onedump:v1.5.0-amd64 -f config.yaml</code></pre>
+          The image includes <code>mysql</code> client, <code>pg_dump</code> (both postgresql-client 15 and 16), so nothing else to install. Switch client versions with <code>-e PG_VERSION=15</code>. Use the amd64 tag on typical production Linux boxes.</li>
+        <li><strong>If not using Docker,</strong> install clients for the dependency-based dumpers:
+          <pre><code># MySQL advanced features
+apt install mysql-client
+# PostgreSQL
+apt install postgresql-client</code></pre></li>
+        <li><strong>Write a config file</strong> with at least one backup job (see below).</li>
+        <li><strong>Run it:</strong>
+          <pre><code>onedump -f /path/to/config.yaml</code></pre></li>
+        <li><strong>Optional: load config from S3</strong> instead of local disk — useful for ephemeral containers:
+          <pre><code>onedump -f backup-config/config.yaml --s3-bucket mybucket</code></pre>
+          It reads AWS env vars first, then the default profile in <code>~/.aws/credentials</code>; override with <code>--aws-key</code>, <code>--aws-region</code>, <code>--aws-secret</code>.</li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+
+      <p>A minimal job dumping a local MySQL database, gzipped, to two destinations:</p>
+
+      <pre><code>jobs:
+- name: local-dump
+  dbdriver: mysql
+  dbdsn: root@tcp(127.0.0.1)/test_local
+  gzip: true
+  storage:
+    local:
+      - path: /backups/mydb.sql
+      - path: /mnt/nas/mydb.sql</code></pre>
+
+      <p>A remote database reached via SSH, saved locally and to S3:</p>
+
+      <pre><code>jobs:
+- name: ssh-dump
+  dbdriver: mysql
+  dbdsn: user:password@tcp(127.0.0.1:3306)/mydb
+  sshhost: mywebsite.com
+  sshuser: root
+  sshkey: |-
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    ...
+    -----END OPENSSH PRIVATE KEY-----
+  storage:
+    s3:
+      - bucket: mybackupbucket
+        key: backup/mydb.sql
+        region: ap-southeast-2
+        access-key-id: YOURKEY
+        secret-access-key: YOURSECRET</code></pre>
+
+      <p>Tune concurrency and add Slack notifications:</p>
+
+      <pre><code>maxjobs: 20
+
+notifier:
+  slack:
+    - incomingwebhook: https://hooks.slack.com/services/XXX/YYY/ZZZ
+
+jobs:
+- name: local-dump
+  dbdriver: mysql
+  dbdsn: root@tcp(127.0.0.1)/app
+  storage:
+    local:
+      - path: /backups/app.sql</code></pre>
+
+      <p>The slow log parser outputs JSON you can feed straight into jq:</p>
+
+      <pre><code>onedump slow -f /var/log/mysql/slow.log | jq '.results[].query_time'</code></pre>
+
+      <h2>What's new</h2>
+
+      <p>No release metadata was available in our intel snapshot at writing time; check the <a href="https://github.com/liweiyi88/onedump/releases">releases page</a> for the current version (the README's Docker examples reference v1.5.0). The project has been maintained steadily since 2022, with recent pushes as of July 2026 and ongoing work across the binlog backup/restore and SFTP sync commands.</p>
+
+      <h2>Troubleshooting</h2>
+
+      <ul>
+        <li><strong>Dump fails with spatial columns.</strong> The native MySQL dumper doesn't support spatial data types like <code>GEOMETRY</code>, <code>POINT</code>, or <code>POLYGON</code>. Switch that job to <code>dbdriver: mysqldump</code> (requires mysql-client installed).</li>
+        <li><strong>PostgreSQL jobs fail on a bare binary install.</strong> Onedump has no native Postgres dumper — it shells out to <code>pg_dump</code>. Either install <code>postgresql-client</code> locally or run the maintained Docker image which bundles pg_dump 15 and 16.</li>
+        <li><strong>Server rejects the connection.</strong> DSN format matters: Go-style <code>user:password@tcp(host:3306)/dbname</code>. A missing port defaults differently than you might expect — be explicit with <code>:3306</code> for remote hosts.</li>
+        <li><strong>S3 upload fails with auth errors.</strong> When credentials aren't passed inline, onedump falls back to AWS env vars then <code>~/.aws/credentials</code>' default profile. In containers there is usually neither — pass <code>access-key-id</code>/<code>secret-access-key</code> in the storage block or mount valid env vars.</li>
+        <li><strong>Config with secrets sitting in plaintext.</strong> Local config files contain DB passwords and SSH keys in cleartext. For anything sensitive, prefer loading the config from an S3 bucket with encryption, versioning, and IAM policies — onedump reads it straight into memory.</li>
+      </ul>
+
+      <p>Onedump won't replace enterprise backup platforms, but for a solo dev or small team it covers the whole loop — dump, ship, notify, restore — with one binary and one YAML file. That's most of what people actually need.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

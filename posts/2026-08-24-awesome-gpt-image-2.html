@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>awesome-gpt-image-2 — Step-by-Step Guide</title>
+  <meta name="description" content="awesome-gpt-image-2 is a prompt-as-code engine and template library for GPT Image 2, with 530+ reverse-engineered cases and 20+ industrial templates."/>
+  <meta name="post-tags" content="awesome-gpt-image-2,freestylefly,gpt-image-2,image-prompts,prompt-engineering,chatgpt,ai-image-generation"/>
+  <meta name="post-category" content="LLM Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">LLM Tools</span>
+        <h1>awesome-gpt-image-2: 530+ Reverse-Engineered Prompts for GPT Image 2</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/freestylefly/awesome-gpt-image-2">freestylefly/awesome-gpt-image-2</a> is a prompt library and template system for GPT Image 2 built around one idea: <strong>prompt as code</strong>. Instead of vibes-based prompting, every image recipe is structured like a program — explicit inputs, layout rules, style constraints, output spec. The repo has passed 15,800 stars on GitHub Trending and packs 530+ reverse-engineered cases plus 20+ "industrial-grade" templates distilled into reusable Skills. It's updated almost daily; cases 527–532 landed just yesterday.</p>
+
+      <p>The catch with most prompt collections is they're screenshots of cool results with no reproducible prompt. This one does the opposite: it takes real outputs, works backward to the exact structured prompt that produces them, and normalizes everything into a consistent format you can copy, tweak, and chain.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>You need brand-consistent marketing visuals.</strong> The industrial templates cover poster/ad/product-shot patterns where you swap in your product copy and colors but keep composition locked.</li>
+        <li><strong>You're building an app on top of GPT Image 2.</strong> The structured case format doubles as a prompt schema — easy to turn into a config-driven generator instead of hardcoding prose prompts.</li>
+        <li><strong>You want to learn why images work, not just copy them.</strong> Reverse-engineered cases show the mapping between prompt structure and output features, which transfers to your own prompts faster than trial and error.</li>
+        <li><strong>Agent workflows.</strong> The extracted Skills slot into agent pipelines — e.g., a Claude or ChatGPT agent that drafts social visuals from a brief using these templates as its playbook.</li>
+        <li><strong>Browsing before building.</strong> There's a live gallery site at gpt-image2.canghe.ai where you can filter by style/scenario, open large previews, and copy full prompts directly.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Browse without installing anything — use the web gallery:
+          <pre><code>https://gpt-image2.canghe.ai/</code></pre></li>
+        <li>Or clone the repo for the full prompt source:
+          <pre><code>git clone https://github.com/freestylefly/awesome-gpt-image-2.git
+cd awesome-gpt-image-2</code></pre></li>
+        <li>Pick a case from the README index (each entry links to the structured prompt and reference output).</li>
+        <li>Copy the prompt block into GPT Image 2 via ChatGPT or the API:
+          <pre><code>curl https://api.openai.com/v1/images/generations \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-image-2",
+    "prompt": "&lt;paste the structured case prompt here&gt;",
+    "size": "1024x1024"
+  }'</code></pre></li>
+        <li>To use the templates as agent Skills, follow the Skills section of the README — each skill file can be dropped into an Agent-Skills-compatible host like Claude Code.</li>
+      </ol>
+
+      <h2>Prompt structure example</h2>
+      <p>Cases follow a layered structure roughly like this (simplified from the repo's format):</p>
+      <pre><code>[ROLE] Senior art director for a premium coffee brand.
+[LAYOUT] Vertical poster, 3:4. Product centered at lower third,
+         headline top-left, generous negative space.
+[STYLE] Warm editorial photography, soft window light,
+        shallow depth of field, muted earth tones.
+[TEXT] Headline: "Slow mornings" — serif, off-white.
+       No other text anywhere in the frame.
+[CONSTRAINTS] Do not alter product label geometry.
+              Keep logo legible at 400px width.</code></pre>
+
+      <p>The point of "prompt as code": each layer is independently editable. Change [STYLE], keep everything else. That's what makes 530 cases composable instead of just a lookbook.</p>
+
+      <h2>What's new</h2>
+      <p>No tagged releases — it ships continuously. Recent activity: prompt cases 527–532 added August 23, 521–526 added August 20, and same-day fixes to the web gallery including restoring dialog scroll position instantly (August 24). Sponsor housekeeping also landed this week. Translation: if you cloned it even two weeks ago, refresh — dozens of new cases have arrived since.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Output doesn't match the case's reference image.</strong> Known issue — issue #3 documents case 326 producing results inconsistent with its stated red/blue high-saturation style. Fix: treat reference outputs as direction, not guarantees; iterate on the [STYLE] and [CONSTRAINTS] layers.</li>
+        <li><strong>Text in generated images comes out garbled.</strong> Common GPT Image failure mode with long headline strings. Fix: shorten text, specify font character explicitly, and keep text instructions in their own layer as the templates do.</li>
+        <li><strong>Product/logo drifts across generations.</strong> Image models don't hold geometry across runs. Fix: use the image-edit variant with your product photo as input rather than pure text-to-image, per the repo's edit-mode cases.</li>
+        <li><strong>Gallery site slow or elements misbehaving.</strong> It's actively developed — scroll bugs were being patched the day this was written. Fix: hard-refresh, or fall back to browsing prompts straight from the repo markdown.</li>
+        <li><strong>Community skepticism about case provenance.</strong> Issue #13 ("one person's fabrication, the whole community pays") raises concerns about some entries' claimed outputs. Fix: sanity-check any case you build production work on by running it yourself first.</li>
+      </ul>
+
+      <p>If you do serious work with GPT Image 2, this is currently the densest structured prompt resource available — and it's growing by half a dozen cases a week.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

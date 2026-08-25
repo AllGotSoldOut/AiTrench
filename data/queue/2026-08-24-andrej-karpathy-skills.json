@@ -1,0 +1,64 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-andrej-karpathy-skills",
+  "topic": {
+    "name": "multica-ai/andrej-karpathy-skills",
+    "source": "github_trending",
+    "url": "https://github.com/multica-ai/andrej-karpathy-skills",
+    "stars": 206654,
+    "description": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
+    "language": "",
+    "topics": [],
+    "homepage": "",
+    "pushed_at": "2026-04-20",
+    "created_at": "2026-01-27",
+    "default_branch": "main",
+    "_score": 2200.0
+  },
+  "mode": "docs",
+  "readme_excerpt": "# Karpathy-Inspired Claude Code Guidelines\n\n> Check out my new project [Multica](https://github.com/multica-ai/multica) \u2014 an open-source platform for running and managing coding agents with reusable skills.\n>\n> Follow me on X: [https://x.com/jiayuan_jy](https://x.com/jiayuan_jy)\n\nA single `CLAUDE.md` file to improve Claude Code behavior, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.\n\nEnglish | [\u7b80\u4f53\u4e2d\u6587](./README.zh.md)\n\n## The Problems\n\nFrom Andrej's post:\n\n> \"The models make wrong assumptions on your behalf and just run along with them without checking. They don't manage their confusion, don't seek clarifications, don't surface inconsistencies, don't present tradeoffs, don't push back when they should.\"\n\n> \"They really like to overcomplicate code and APIs, bloat abstractions, don't clean up dead code... implement a bloated construction over 1000 lines when 100 would do.\"\n\n> \"They still sometimes change/remove comments and code they don't sufficiently understand as side effects, even if orthogonal to the task.\"\n\n## The Solution\n\nFour principles in one file that directly address these issues:\n\n| Principle | Addresses |\n|-----------|-----------|\n| **Think Before Coding** | Wrong assumptions, hidden confusion, missing tradeoffs |\n| **Simplicity First** | Overcomplication, bloated abstractions |\n| **Surgical Changes** | Orthogonal edits, touching code you shouldn't |\n| **Goal-Driven Execution** | Leverage through tests-first, verifiable success criteria |\n\n## The Four Principles in Detail\n\n### 1. Think Before Coding\n\n**Don't assume. Don't hide confusion. Surface tradeoffs.**\n\nLLMs often pick an interpretation silently and run with it. This principle forces explicit reasoning:\n\n- **State assumptions explicitly** \u2014 If uncertain, ask rather than guess\n- **Present multiple interpretations** \u2014 Don't pick silently when ambiguity exists\n- **Push back when warranted** \u2014 If a simpler approach exists, say so\n- **Stop when confused** \u2014 Name what's unclear and ask for clarification\n\n### 2. Simplicity First\n\n**Minimum code that solves the problem. Nothing speculative.**\n\nCombat the tendency toward overengineering:\n\n- No features beyond what was asked\n- No abstractions for single-use code\n- No \"flexibility\" or \"configurability\" that wasn't requested\n- No error handling for impossible scenarios\n- If 200 lines could be 50, rewrite it\n\n**The test:** Would a senior engineer say this is overcomplicated? If yes, simplify.\n\n### 3. Surgical Changes\n\n**Touch only what you must. Clean up only your own mess.**\n\nWhen editing existing code:\n\n- Don't \"improve\" adjacent code, comments, or formatting\n- Don't refactor things that aren't broken\n- Match existing style, even if you'd do it differently\n- If you notice unrelated dead code, mention it \u2014 don't delete it\n\nWhen your changes create orphans:\n\n- Remove imports/variables/functions that YOUR changes made unused\n- Don't remove pre-existing dead code unless asked\n\n**The test:** Every changed line should trace directly to the user's request.\n\n### 4. Goal-Driven Execution\n\n**Define success criteria. Loop until verified.**\n\nTransform imperative tasks into verifiable goals:\n\n| Instead of... | Transform to... |\n|--------------|-----------------|\n| \"Add validation\" | \"Write tests for invalid inputs, then make them pass\" |\n| \"Fix the bug\" | \"Write a test that reproduces it, then make it pass\" |\n| \"Refactor X\" | \"Ensure tests pass before and after\" |\n\nFor multi-step tasks, state a brief plan:\n\n```\n1. [Step] \u2192 verify: [check]\n2. [Step] \u2192 verify: [check]\n3. [Step] \u2192 verify: [check]\n```\n\nStrong success criteria let the LLM loop independently. Weak criteria (\"make it work\") require constant clarification.\n\n## Install\n\n**Option A: Claude Code Plugin (recommended)**\n\nFrom within Claude Code, first add the marketplace:\n```\n/plugin marketplace add forrestchang/andrej-karpathy-skills\n```\n\nThen install the plugin:\n```\n/plugin install andrej-karpathy-skills@karpathy-skills\n```\n\nThis installs the guidelines as a Claude Code plugin, making the skill available across all your projects.\n\n**Option B: CLAUDE.md (per-project)**\n\nNew project:\n```bash\ncurl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md\n```\n\nExisting project (append):\n```bash\necho \"\" >> CLAUDE.md\ncurl https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md >> CLAUDE.md\n```\n\n## Using with Cursor\n\nThis repository includes a committed Cursor project rule ([`.cursor/rules/karpathy-guidelines.mdc`](.cursor/rules/karpathy-guidelines.mdc)) so the same guidelines apply when you open the project in Cursor. See **[CURSOR.md](CURSOR.md)** for setup, using the rule in other projects, and how this relates to Claude Code.\n\n## Key Insight\n\nFrom Andrej:\n\n> \"LLMs are exceptionally good at looping until they meet specific goals... Don't tell it what to do, give it success criteria and watch it go.\"\n\nThe \"Goal-Driven Execution\" principle captures this: transform imperative instructions into declarative goals with verification loops.\n\n## How to Know It's Working\n\nThese guidelines are working if you see:\n\n- **Fewer unnecessary changes in diffs** \u2014 Only requested changes appear\n- **Fewer rewrites due to overcomplication** \u2014 Code is simple the first time\n- **Clarifying questions come before implementation** \u2014 Not after mistakes\n- **Clean, minimal PRs** \u2014 No drive-by refactoring or \"improvements\"\n\n## Customization\n\nThese guidelines are designed to be merged with project-specific instructions. Add them to your existing `CLAUDE.md` or create a new one.\n\nFor project-specific rules, add sections like:\n\n```markdown\n## Project-Specific Guidelines\n\n- Use TypeScript strict mode\n- All API endpoints must have tests\n- Follow the existing error handling patterns in `src/utils/errors.ts`\n```\n\n## Tradeoff Note\n\nThese guidelines bias toward **caution over speed**. For trivial tasks (simple typo fixes, obvious one-liners),",
+  "readme_images": [],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [
+      {
+        "message": "Sync Chinese README with English version (add Cursor section) (#95)",
+        "date": "2026-04-20"
+      },
+      {
+        "message": "add cursor support (#92)",
+        "date": "2026-04-18"
+      },
+      {
+        "message": "Add Chinese translation for README (#93)",
+        "date": "2026-04-18"
+      },
+      {
+        "message": "Update README with project and social media links",
+        "date": "2026-04-15"
+      },
+      {
+        "message": "Update README with project and social media links",
+        "date": "2026-04-15"
+      },
+      {
+        "message": "Fix readme",
+        "date": "2026-04-15"
+      },
+      {
+        "message": "Add Multica project link at the top of README (#51)",
+        "date": "2026-04-13"
+      },
+      {
+        "message": "Merge pull request #18 from back1ply/fix/plugin-skill-path",
+        "date": "2026-02-16"
+      }
+    ],
+    "hot_issues": []
+  },
+  "tags": [
+    "andrej-karpathy-skills",
+    "multica-ai"
+  ]
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrej Karpathy Skills — Step-by-Step Guide</title>
+  <meta name="description" content="A single CLAUDE.md file that fixes Claude Code's worst coding habits, derived from Andrej Karpathy's observations on LLM coding pitfalls."/>
+  <meta name="post-tags" content="andrej-karpathy-skills,multica-ai,claude-code,llm,coding-agents"/>
+  <meta name="post-category" content="LLM Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">LLM Tools</span>
+        <h1>One CLAUDE.md File, 200k Stars: Karpathy's Coding Pitfalls as Agent Rules</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/multica-ai/andrej-karpathy-skills">andrej-karpathy-skills</a> from Multica AI is about the simplest repo concept possible: one <code>CLAUDE.md</code> file that improves Claude Code's behavior. It has over 200,000 GitHub stars anyway — which tells you how badly developers wanted this.</p>
+
+      <p>The content comes straight from <a href="https://x.com/karpathy/status/2015883857489522876">Andrej Karpathy's observations</a> on LLM coding pitfalls: models make wrong assumptions and run with them without checking; they overcomplicate code ("a bloated construction over 1000 lines when 100 would do"); they change or remove comments and code they don't understand, even when it's orthogonal to the task. The repo turns those complaints into four enforceable principles your agent reads before every session.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ol>
+        <li><strong>Your agent guesses instead of asking.</strong> The "Think Before Coding" principle forces explicit assumptions: state them, ask rather than guess when uncertain, present multiple interpretations of an ambiguous request instead of silently picking one. If you've ever reviewed a PR and thought "why did it assume that?", this is the fix.</li>
+        <li><strong>Small features come back as frameworks.</strong> "Simplicity First" directly targets abstraction bloat and dead code — the agent is instructed to prefer the 100-line solution over the 1000-line construction.</li>
+        <li><strong>Unrelated code keeps changing in your diffs.</strong> "Surgical Changes" forbids touching comments and code the task doesn't require. Your diffs get reviewable again.</li>
+        <li><strong>You want verifiable done-ness, not vibes.</strong> "Goal-Driven Execution" pushes tests-first and concrete success criteria, so "it works" means something checkable.</li>
+        <li><strong>You use Cursor too.</strong> The repo added Cursor support (PR #92), so the same rules work beyond Claude Code.</li>
+      </ol>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Grab the file into your project root:
+          <pre><code>curl -L -o CLAUDE.md https://raw.githubusercontent.com/multica-ai/andrej-karpathy-skills/main/CLAUDE.md</code></pre>
+        </li>
+        <li>Or just copy its contents into your existing <code>CLAUDE.md</code>. Claude Code picks up project-root instructions automatically at session start — no plugin step needed.</li>
+        <li>If you'd rather install it as a skill/plugin so it applies across projects, clone the repo and follow its installation section (per official docs):
+          <pre><code>git clone https://github.com/multica-ai/andrej-karpathy-skills.git
+cd andrej-karpathy-skills
+cat README.md   # follow the plugin/skill install path for your setup</code></pre>
+        </li>
+        <li>For Cursor users, the README documents the equivalent placement (added April 18) — drop the same rules where Cursor reads project instructions.
+          <pre><code># see the Cursor section in README.md / README.zh.md</code></pre>
+        </li>
+        <li>Verify it's active: start a new Claude Code session on a small ambiguous task and watch whether it states assumptions before coding. If it still charges ahead silently, the file isn't being read — check placement and path.</li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>The heart of the file is the four-principle mapping, which you can adapt to any instruction format:</p>
+      <pre><code>| Principle              | Addresses                                    |
+|------------------------|----------------------------------------------|
+| Think Before Coding    | Wrong assumptions, hidden confusion          |
+| Simplicity First       | Overcomplication, bloated abstractions       |
+| Surgical Changes       | Orthogonal edits, touching unrelated code    |
+| Goal-Driven Execution  | Tests-first, verifiable success criteria     |</code></pre>
+      <p>Because it's plain markdown instructions, nothing stops you from trimming it to the two principles your team struggles with most, or translating the wording into your own house rules. That's arguably the best way to use it — treat the repo as a starting point, not scripture.</p>
+
+      <h2>What's new</h2>
+      <p>The repo has no formal releases — it's a single-file project — but activity tells the story: Cursor support landed April 18 (#92), a Chinese README translation the same day (#93, kept in sync with English including the Cursor section via #95 on April 20), and earlier a plugin-skill path fix (#18). Last push was April 20; development looks stable rather than abandoned, which suits a config file — there isn't much left to change. Note the README leads with promotion for Multica, the authors' own open-source platform for running coding agents with reusable skills.</p>
+
+      <h2>Troubleshooting</h2>
+      <ol>
+        <li><strong>The rules seem to be ignored.</strong> Most common cause: the file isn't in the working directory where the session starts, or you already have a large CLAUDE.md burying it. Fix: put the principles near the top of your existing CLAUDE.md and restart the session.</li>
+        <li><strong>Behavior improves for a few turns, then regresses.</strong> Long conversations dilute system-prompt-like instructions. Fix: re-anchor mid-session ("remember the surgical changes rule") or keep tasks small enough that context stays fresh.</li>
+        <li><strong>Conflicts with other instruction files.</strong> If you run multiple skill packs or a strict linter config, contradictory rules produce inconsistent behavior. Fix: deduplicate overlapping guidance and keep one source of truth per concern.</li>
+        <li><strong>The model follows the letter but not the spirit — e.g., asks about everything now.</strong> Over-eager clarification loops happen when "ask rather than guess" is applied to trivia. Fix: add a line scoping it: ask only when the answer changes architecture or data contracts.</li>
+        <li><strong>Plugin/skill install puts the file somewhere Claude never reads.</strong> This was real enough that PR #18 fixed the plugin skill path. Fix: if installing as a plugin rather than project CLAUDE.md, pull latest main and verify the installed path matches what your client loads.</li>
+      </ol>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

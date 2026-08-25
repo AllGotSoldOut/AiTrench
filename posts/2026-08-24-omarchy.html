@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omarchy — DHH's Opinionated Arch-Based Linux, Installed in Five Minutes</title>
+  <meta name="description" content="Omarchy is Basecamp's opinionated Arch/Hyprland Linux distribution by DHH: one ISO, full-disk encryption by default, and a polished tiling setup out of the box."/>
+  <meta name="post-tags" content="omarchy,basecamp,dhh,linux,arch,hyprland,tiling-wm,developer-setup"/>
+  <meta name="post-category" content="Dev Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Dev Tools</span>
+        <h1>Omarchy: DHH's Opinionated Arch-Based Linux, Installed in Five Minutes</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/basecamp/omarchy">Omarchy</a> is Basecamp's take on what a developer's Linux machine should look like on day one — and with over 30,000 stars roughly a year after the repo appeared, it has clearly hit a nerve. It's an Arch-based distribution built around Hyprland (Wayland tiling), shipped by DHH as a single ISO with strong opinions baked in: full-disk encryption by default, a curated set of terminal tools, Neovim preconfigured, themes that swap your whole desktop look with one command.</p>
+
+      <p>The honest framing: this isn't a distro for people who want to choose their own window manager. It's for people who want DHH's setup — the same environment he uses daily — without spending a weekend assembling it from dotfiles.</p>
+
+      <h2>Why you'd actually use it</h2>
+
+      <ul>
+        <li><strong>Escaping macOS or Windows without losing polish.</strong> Omarchy ships unified clipboard history, screenshots and screen recording, OCR text extraction, dictation, and a proper top bar. The manual even has a dedicated "Coming From Mac or Windows" chapter because that's the core audience.</li>
+        <li><strong>A dev machine that's ready in minutes.</strong> Terminal, Neovim, shell tools, development tooling, browsers, TUIs — all preinstalled and configured to work together. Installation takes under five minutes on most hardware.</li>
+        <li><strong>Gaming out of the box.</strong> There's a whole gaming chapter in the manual; the Arch base means current drivers and Proton-friendly packages.</li>
+        <li><strong>AI-agent-friendly configuration.</strong> The entire system is controllable through the <code>omarchy</code> CLI — themes, brightness, bluetooth, capture — which is explicitly designed so you can have an AI agent customize your setup alongside you.</li>
+        <li><strong>Fleet and handoff installs.</strong> Ctrl+C at the first installer screen defers personal setup until first boot (great for handing a machine to someone else), and unattended installs let the ISO configure itself from a second drive for VMs.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+
+      <ol>
+        <li><strong>Download the ISO</strong> from <a href="https://omarchy.org">omarchy.org</a>.</li>
+        <li><strong>Write it to a USB stick</strong> with balenaEtcher (Mac/Windows) or caligula (Linux):
+          <pre><code># Linux example with caligula
+caligula write omarchy.iso</code></pre></li>
+        <li><strong>Boot off the stick.</strong> You must disable Secure Boot and/or TPM in your BIOS first — they're Microsoft schemes that block unsigned Linux installers.</li>
+        <li><strong>Answer the configuration questions</strong> (keyboard layout, user, etc.) and confirm them. Pick either a full-disk install (wipes the drive) or free-space install for dual booting alongside Windows or another OS. Note: dual-booting with Windows requires turning off BitLocker first. Encryption is on by default; Ctrl+C at the disk-format confirmation opts out.</li>
+        <li><strong>Select your drive and wait.</strong> Under a minute on fast machines, ~5 minutes on older hardware.</li>
+      </ol>
+
+      <p>One gotcha worth repeating: use a wired or 2.4GHz dongle keyboard. Full-disk encryption means no Bluetooth keyboard works at the pre-boot password prompt — same reason Bluetooth keyboards can't reach your BIOS.</p>
+
+      <h2>Code &amp; config samples</h2>
+
+      <p>After install, everything runs through the <code>omarchy</code> CLI. A few examples:</p>
+
+      <pre><code># Update the system
+omarchy update
+
+# List and apply themes (changes the whole desktop look)
+omarchy theme list
+omarchy theme set catppuccin
+
+# Screenshots and recording
+omarchy capture screenshot region copy
+omarchy capture screenrecording --with-microphone-audio
+
+# OCR text out of a screenshot region
+omarchy capture text
+
+# Scriptable menu
+omarchy menu summon style.theme</code></pre>
+
+      <p>Config lives in Lua files under <code>~/.config/hypr/</code>. For example, remapping Caps Lock away from its xcompose role in <code>~/.config/hypr/input.lua</code>:</p>
+
+      <pre><code>hl.config({
+  input = {
+    kb_options = "compose:ralt",
+  },
+})</code></pre>
+
+      <p>Your customizations are managed as dotfiles in a Git branch (<code>omarchy branch</code>), so updates merge cleanly instead of clobbering your changes.</p>
+
+      <h2>What's new</h2>
+
+      <p>Development is very active — the default branch (<code>quattro</code>) saw pushes within a day of this writing, and there's no formal GitHub release; the ISO from omarchy.org is the distribution channel. Recent additions visible in the manual include the expanded <code>omarchy</code> CLI (audio tuning controls, capture commands with webcam overlay), reminders, text extraction &amp; dictation, and the "installing for another owner" flow. The Omacom Foundation also launched with $8 million in funding per the site's news page, which suggests this isn't a weekend project that'll vanish.</p>
+
+      <h2>Troubleshooting</h2>
+
+      <ul>
+        <li><strong>Can't type my disk-encryption password.</strong> You're using a Bluetooth keyboard — it can't connect before boot. Plug in a USB cable or 2.4GHz dongle keyboard.</li>
+        <li><strong>"I broke my system with an update!"</strong> Roll back via system snapshots first. Still broken? Run <code>omarchy-debug</code> and share output in #omarchy-help on Discord, or restore default configs and packages with <code>omarchy-reinstall</code>.</li>
+        <li><strong>Apps look huge on your display.</strong> Omarchy assumes a 2x HiDPI display via <code>GDK_SCALE = 2</code> in <code>~/.config/hypr/monitors.lua</code>. On a 1x display, change <code>local omarchy_gdk_scale = 2</code> to 1 and restart affected apps. For Spotify specifically, Ctrl+Minus shrinks the UI.</li>
+        <li><strong>Caps Lock "doesn't work."</strong> It's remapped to the xcompose key for emoji/completion shortcuts. Remap xcompose elsewhere via <code>kb_options = "compose:ralt"</code> in input.lua.</li>
+        <li><strong>Wi-Fi, Bluetooth, audio, or trackpad suddenly dead.</strong> Before rebooting, restart just that subsystem: Omarchy menu → Update → Hardware has Wi-Fi, Bluetooth, Audio, and Trackpad reloads. That fixes most "it worked five minutes ago" cases.</li>
+        <li><strong>Locked out after too many password attempts.</strong> Hit Ctrl+Alt+F2 for a TTY, log in as root, run <code>faillock --reset --user yourusername</code>.</li>
+      </ul>
+
+      <p>If you've been curious about Linux but bounced off bare Arch installs, Omarchy removes basically every excuse. Just back up your drive first — the full-disk install means exactly that.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

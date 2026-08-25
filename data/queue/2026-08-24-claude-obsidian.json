@@ -1,0 +1,131 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-claude-obsidian",
+  "topic": {
+    "name": "AgriciDaniel/claude-obsidian",
+    "source": "github_trending",
+    "url": "https://github.com/AgriciDaniel/claude-obsidian",
+    "stars": 12011,
+    "description": "Self-organizing AI second brain for Obsidian + Claude Code. Drop any source and Claude reads, links, and files it into one connected knowledge graph of plain Markdown you own. AI note-taking, personal knowledge management (PKM), and an open-source Notion alternative. Based on Karpathy's LLM Wiki pattern.",
+    "language": "Python",
+    "topics": [
+      "agent-skills",
+      "ai-note-taking",
+      "ai-second-brain",
+      "claude-code",
+      "claude-code-skill",
+      "claude-memory",
+      "claude-plugin",
+      "karpathy-llm-wiki",
+      "knowledge-graph",
+      "knowledge-management",
+      "note-taking",
+      "notion-alternative",
+      "obsidian",
+      "obsidian-ai",
+      "obsidian-plugin",
+      "obsidian-second-brain",
+      "open-source",
+      "personal-knowledge-management",
+      "pkm",
+      "second-brain"
+    ],
+    "homepage": "https://agricidaniel.com/blog/claude-obsidian-ai-second-brain",
+    "pushed_at": "2026-08-01",
+    "created_at": "2026-04-07",
+    "default_branch": "main",
+    "_score": 1540.22
+  },
+  "mode": "docs",
+  "readme_excerpt": "<p align=\"center\">\n  <img src=\"assets/cover.png\" alt=\"claude-obsidian cover featuring an astronaut, the Obsidian crystal, and a connected knowledge graph\" width=\"100%\">\n</p>\n\n<h1 align=\"center\">claude-obsidian</h1>\n\n<p align=\"center\">\n  <strong>Build an Obsidian knowledge base that becomes more useful every time you use it.</strong><br>\n  Capture sources, create connected notes, retrieve grounded answers, and keep the vault healthy\u2014without giving up ownership of your files.\n</p>\n\n<p align=\"center\">\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-2563eb.svg\" alt=\"MIT license\"></a>\n  <a href=\"https://agentskills.io\"><img src=\"https://img.shields.io/badge/Agent%20Skills-compatible-2563eb\" alt=\"Agent Skills compatible\"></a>\n  <a href=\"https://code.claude.com/docs/en/plugins\"><img src=\"https://img.shields.io/badge/Claude%20Code-plugin-7c3aed\" alt=\"Claude Code plugin\"></a>\n  <a href=\"CHANGELOG.md\"><img src=\"https://img.shields.io/badge/release-v2.1.0-d97745\" alt=\"Release v2.1.0\"></a>\n</p>\n\n<p align=\"center\">\n  <a href=\"#from-source-to-living-knowledge\">See the workflow</a> \u00b7\n  <a href=\"#quick-start\">Quick start</a> \u00b7\n  <a href=\"#15-skills-one-system\">Explore the skills</a> \u00b7\n  <a href=\"docs/install-guide.md\">Installation guide</a> \u00b7\n  <a href=\"docs/windows-wsl.md\">Windows &amp; WSL</a>\n</p>\n\nclaude-obsidian is a local-first knowledge system for Claude Code and compatible\n[Agent Skills](https://agentskills.io) hosts. It turns source material into\nlinked, source-cited Obsidian pages; answers from the evidence already in the\nvault; and provides explicit workflows for research, retrieval, maintenance,\nand visual mapping.\n\nYour vault remains a normal directory of Markdown, JSON, and source files. It is\nnot hidden in a plugin cache, locked in a cloud database, or silently uploaded\nto a model.\n\n## From source to living knowledge\n\nMost AI note workflows stop after saving text. claude-obsidian is organized\naround a repeatable loop: retain the source, ground the claims, connect the\nknowledge, then put it back to work.\n\n![The claude-obsidian compounding knowledge loop](assets/diagrams/knowledge-loop.svg)\n\n- **Capture with context.** Bring local sources through a visible inbox and\n  preserve immutable, content-addressed copies before synthesis.\n- **Ground every important claim.** Source and claim ledgers retain authority,\n  freshness, support, contradiction, confidence, and review state.\n- **Connect what you learn.** Build linked pages, indexes, Maps of Content,\n  methodology-aware structures, and Obsidian Canvas views.\n- **Use the vault again.** Query, research, retrieve, lint, and fold what is\n  already known instead of starting every conversation from zero.\n\n## See the vault\n\nThe output is meant to remain useful with or without an agent: plain Markdown\nfor portability, Obsidian for navigation and visual exploration.\n\n<p align=\"center\">\n  <img src=\"assets/screenshots/graph-view.png\" alt=\"Example claude-obsidian vault in Obsidian Graph view\" width=\"49%\">\n  <img src=\"assets/screenshots/wiki-map-view.png\" alt=\"Example claude-obsidian knowledge map in Obsidian Canvas\" width=\"49%\">\n</p>\n\n<p align=\"center\">\n  <sub>Linked knowledge in Graph view \u00b7 A visual knowledge map in Obsidian Canvas</sub>\n</p>\n\n## Why it feels different\n\n- **Local by default.** The vault is user-owned and works as ordinary files.\n  Network egress is a separate, explicit decision.\n- **Sources survive the summary.** Notes point back to durable source evidence;\n  unsupported and contradictory claims remain visible.\n- **Knowledge compounds deliberately.** Ingestion, querying, linting, retrieval,\n  research, and rollups share one provenance-aware model.\n- **Parallel agents cannot race the vault.** Workers return drafts. One\n  orchestrator inspects and applies one recoverable transaction.\n- **Capabilities are stated honestly.** Optional tools are detected, maturity\n  is declared, and missing adapters degrade clearly instead of being simulated.\n\nThis is not an automatic transcript recorder, a cloud sync service, a factual\noracle, or a substitute for backups and source control.\n\n## Quick start\n\nThe safest first run uses a source checkout and a separate user vault. Every\nmutating setup command previews its exact operation before it can apply.\n\n### 1. Get the product\n\n```bash\ngit clone https://github.com/AgriciDaniel/claude-obsidian.git\ncd claude-obsidian\n```\n\nThe checkout contains the product. It is not your knowledge vault.\n\n### 2. Initialize a separate vault\n\n```bash\nexport GENERATED_AT=\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"\nexport OPERATION_ID=\"init-reviewed\"\n\npython3 scripts/claude-obsidian.py init \"$HOME/Documents/MyKnowledgeVault\" \\\n  --generated-at \"$GENERATED_AT\" --operation-id \"$OPERATION_ID\"\n```\n\nReview the JSON plan and copy its `approved_plan_sha256`, then apply that exact\noperation:\n\n```bash\npython3 scripts/claude-obsidian.py init \"$HOME/Documents/MyKnowledgeVault\" \\\n  --generated-at \"$GENERATED_AT\" --operation-id \"$OPERATION_ID\" \\\n  --approved-plan-sha256 \"<sha256-from-the-plan>\" --apply\n```\n\nFor an existing Obsidian vault, use the non-destructive `adopt` workflow\ndescribed in the [installation guide](docs/install-guide.md#adopt-an-existing-vault).\n\n### 3. Start from the vault\n\nOpen the new directory in Obsidian, then run Claude Code from that directory\nwith the local plugin:\n\n```bash\ncd \"$HOME/Documents/MyKnowledgeVault\"\nclaude --plugin-dir /absolute/path/to/claude-obsidian\n```\n\nStart with:\n\n```text\n/claude-obsidian:wiki\n```\n\nThen place a source in `inbox/` and invoke\n`/claude-obsidian:wiki-ingest`. Save an answer explicitly with\n`/claude-obsidian:save`; ask the vault with `/claude-obsidian:wiki-query`.\n\nFor Codex, OpenCode, or Gemini, preview and then apply the portable skill links\nfrom the product checkout:\n\n```bash\nbash bin/setup-multi-agent.sh --host codex\nbash bin/setup-multi-agent.sh --host codex --apply\n```\n\nCursor and Windsurf use workspace-local skill discovery. Marketplace setup,\nevery supported host, vau",
+  "readme_images": [
+    "https://img.shields.io/badge/license-MIT-2563eb.svg",
+    "https://img.shields.io/badge/Agent%20Skills-compatible-2563eb",
+    "https://img.shields.io/badge/Claude%20Code-plugin-7c3aed",
+    "https://img.shields.io/badge/release-v2.1.0-d97745"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": {
+      "tag": "v2.1.0",
+      "date": "2026-07-31",
+      "notes": "## Native Windows Compatibility\r\n\r\nNative Windows previously crashed on every vault command with\r\n`AttributeError: os has no attribute 'O_DIRECTORY'` (#147). Now:\r\n\r\n- **Read-only works natively**: inspection, dry-runs, and retrieval run on\r\n  Windows with real equivalent safety checks (path-based alias auditing,\r\n  lstat identity, symlink *and* junction rejection).\r\n- **Writes fail closed, cleanly**: `ERR UNSUPPORTED_PLATFORM` (exit 2) before\r\n  any side effect \u2014 use WSL for mutations.\r\n- **CRLF fixes for every platform**: binary-mode reads end false hash\r\n  mismatches, and retrieval no longer returns zero results on CRLF vaults.\r\n- **Windows CI**: a new `windows-smoke` job plus a 16-test compatibility\r\n  suite guard against regressions.\r\n\r\nFull notes: [CHANGELOG.md](https://github.com/Ag"
+    },
+    "recent_commits": [
+      {
+        "message": "docs(windows): WSL troubleshooting guide; point UNSUPPORTED_PLATFORM at it (#152)",
+        "date": "2026-08-01"
+      },
+      {
+        "message": "docs(windows): WSL troubleshooting guide; point UNSUPPORTED_PLATFORM at it",
+        "date": "2026-08-01"
+      },
+      {
+        "message": "release: refresh audited v2.1.0 manifest",
+        "date": "2026-07-31"
+      },
+      {
+        "message": "release: coordinate v2.1.0 across package, citation, and README surfaces",
+        "date": "2026-07-31"
+      },
+      {
+        "message": "release: sync public marketplace overlay to v2.1.0",
+        "date": "2026-07-31"
+      },
+      {
+        "message": "release: cut v2.1.0 \u2014 native Windows compatibility",
+        "date": "2026-07-31"
+      },
+      {
+        "message": "fix: native Windows crash (os.O_DIRECTORY) \u2014 working dry-runs, fail-closed writes, Windows CI (#150)",
+        "date": "2026-07-31"
+      },
+      {
+        "message": "docs: scope CHANGELOG lock-path note to APFS; document expected_hashes exemption",
+        "date": "2026-07-31"
+      }
+    ],
+    "hot_issues": [
+      {
+        "title": "SessionStart prompt-type hook fails with 'ToolUseContext is required for prompt hooks'",
+        "comments": 7,
+        "url": "https://github.com/AgriciDaniel/claude-obsidian/issues/29",
+        "labels": []
+      },
+      {
+        "title": "Commands (/wiki, /save) not discovered out of box when using git clone",
+        "comments": 7,
+        "url": "https://github.com/AgriciDaniel/claude-obsidian/issues/2",
+        "labels": []
+      },
+      {
+        "title": "setup-vault.sh doesn't move commands/, skills/, hooks/ to .claude/ directory",
+        "comments": 6,
+        "url": "https://github.com/AgriciDaniel/claude-obsidian/issues/11",
+        "labels": []
+      },
+      {
+        "title": ".raw folder not visible in Obsidian \u2014 breaks Web Clipper integration",
+        "comments": 5,
+        "url": "https://github.com/AgriciDaniel/claude-obsidian/issues/5",
+        "labels": []
+      },
+      {
+        "title": "SessionStart prompt hook fails with \"ToolUseContext is required for prompt hooks\"",
+        "comments": 4,
+        "url": "https://github.com/AgriciDaniel/claude-obsidian/issues/40",
+        "labels": []
+      }
+    ]
+  },
+  "tags": [
+    "AgriciDaniel",
+    "agent-skills",
+    "ai-note-taking",
+    "ai-second-brain",
+    "claude-code",
+    "claude-code-skill",
+    "claude-memory",
+    "claude-obsidian"
+  ]
+}

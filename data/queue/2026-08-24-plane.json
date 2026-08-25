@@ -1,0 +1,65 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-plane",
+  "topic": {
+    "name": "makeplane/plane",
+    "source": "github_trending",
+    "url": "https://github.com/makeplane/plane",
+    "stars": 58015,
+    "description": "\ud83d\udd25\ud83d\udd25\ud83d\udd25 Open-source Jira, Linear, Monday, and ClickUp alternative. Plane is a modern project management platform to manage tasks, sprints, docs, and triage.",
+    "language": "TypeScript",
+    "topics": [
+      "boards",
+      "bug-tracker",
+      "django",
+      "docker",
+      "gantt",
+      "issue-tracker",
+      "jira",
+      "jira-alternative",
+      "kanban",
+      "linear",
+      "postgresql",
+      "product-management",
+      "project-management",
+      "project-planning",
+      "python",
+      "react",
+      "redis",
+      "typescipt",
+      "vite",
+      "work-management"
+    ],
+    "homepage": "http://plane.so",
+    "pushed_at": "2026-08-24",
+    "created_at": "2022-11-19",
+    "default_branch": "preview",
+    "_score": 1200.0
+  },
+  "mode": "docs",
+  "readme_excerpt": "<br /><br />\n\n<p align=\"center\">\n<a href=\"https://plane.so\">\n  <img src=\"https://media.docs.plane.so/logo/plane_github_readme.png\" alt=\"Plane Logo\" width=\"400\">\n</a>\n</p>\n<p align=\"center\"><b>Modern project management for all teams</b></p>\n\n<p align=\"center\">\n    <a href=\"https://plane.so/\"><b>Website</b></a> \u2022\n    <a href=\"https://forum.plane.so\"><b>Forum</b></a> \u2022\n    <a href=\"https://x.com/planepowers\"><b>X</b></a> \u2022\n    <a href=\"https://docs.plane.so/\"><b>Documentation</b></a>\n</p>\n\n<p>\n    <a href=\"https://app.plane.so/#gh-light-mode-only\" target=\"_blank\">\n      <img\n        src=\"https://media.docs.plane.so/GitHub-readme/github-top.webp\"\n        alt=\"Plane Screens\"\n        width=\"100%\"\n      />\n    </a>\n</p>\n\nMeet [Plane](https://plane.so/), an open-source project management tool to track issues, run ~sprints~ cycles, and manage product roadmaps without the chaos of managing the tool itself. \ud83e\uddd8\u200d\u2640\ufe0f\n\n> Plane is evolving every day. Your suggestions, ideas, and reported bugs help us immensely. Do not hesitate to join in the conversation on [Forum](https://forum.plane.so) or raise a GitHub issue. We read everything and respond to most.\n\n## \ud83d\ude80 Installation\n\nGetting started with Plane is simple. Choose the setup that works best for you:\n\n- **Plane Cloud**\n  Sign up for a free account on [Plane Cloud](https://app.plane.so)\u2014it's the fastest way to get up and running without worrying about infrastructure.\n\n- **Self-host Plane**\n  Prefer full control over your data and infrastructure? Install and run Plane on your own servers. Follow our detailed [deployment guides](https://developers.plane.so/self-hosting/overview) to get started.\n\n| Installation methods | Docs link                                                                                                                                                                               |\n| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| Docker               | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://developers.plane.so/self-hosting/methods/docker-compose)         |\n| Kubernetes           | [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://developers.plane.so/self-hosting/methods/kubernetes) |\n| Managed hosting      | [<img alt=\"Deploy with Zenith\" src=\"https://cdn.zenith.hosting/buttons/deploy-with-zenith.svg\" height=\"40\">](https://zenith.hosting/host/plane) |\n\n`Instance admins` can configure instance settings with [God mode](https://developers.plane.so/self-hosting/govern/instance-admin).\n\n## \ud83c\udf1f Features\n\n- **Work Items**\n  Efficiently create and manage tasks with a robust rich text editor that supports file uploads. Enhance organization and tracking by adding sub-properties and referencing related issues.\n\n- **Cycles**\n  Maintain your team\u2019s momentum with Cycles. Track progress effortlessly using burn-down charts and other insightful tools.\n\n- **Modules**\n  Simplify complex projects by dividing them into smaller, manageable modules.\n\n- **Views**\n  Customize your workflow by creating filters to display only the most relevant issues. Save and share these views with ease.\n\n- **Pages**\n  Capture and organize ideas using Plane Pages, complete with AI capabilities and a rich text editor. Format text, insert images, add hyperlinks, or convert your notes into actionable items.\n\n- **Analytics**\n  Access real-time insights across all your Plane data. Visualize trends, remove blockers, and keep your projects moving forward.\n\n## \ud83d\udee0\ufe0f Local development\n\nSee [CONTRIBUTING](./CONTRIBUTING.md)\n\n## \u2699\ufe0f Built with\n\n[![React Router](https://img.shields.io/badge/-React%20Router-CA4245?logo=react-router&style=for-the-badge&logoColor=white)](https://reactrouter.com/)\n[![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)](https://www.djangoproject.com/)\n[![Node JS](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white)](https://nodejs.org/en)\n\n## \ud83d\udcf8 Screenshots\n\n  <p>\n    <a href=\"https://plane.so\" target=\"_blank\">\n      <img\n        src=\"https://media.docs.plane.so/GitHub-readme/github-work-items.webp\"\n        alt=\"Plane Views\"\n        width=\"100%\"\n      />\n    </a>\n  </p>\n  <p>\n    <a href=\"https://plane.so\" target=\"_blank\">\n      <img\n        src=\"https://media.docs.plane.so/GitHub-readme/github-cycles.webp\"\n        width=\"100%\"\n      />\n    </a>\n  </p>\n  <p>\n    <a href=\"https://plane.so\" target=\"_blank\">\n      <img\n        src=\"https://media.docs.plane.so/GitHub-readme/github-modules.webp\"\n        alt=\"Plane Cycles and Modules\"\n        width=\"100%\"\n      />\n    </a>\n  </p>\n  <p>\n    <a href=\"https://plane.so\" target=\"_blank\">\n      <img\n        src=\"https://media.docs.plane.so/GitHub-readme/github-views.webp\"\n        alt=\"Plane Analytics\"\n        width=\"100%\"\n      />\n    </a>\n  </p>\n   <p>\n    <a href=\"https://plane.so\" target=\"_blank\">\n      <img\n        src=\"https://media.docs.plane.so/GitHub-readme/github-analytics.webp\"\n        alt=\"Plane Pages\"\n        width=\"100%\"\n      />\n    </a>\n  </p>\n</p>\n\n## \ud83d\udcdd Documentation\n\nExplore Plane's [product documentation](https://docs.plane.so/) and [developer documentation](https://developers.plane.so/) to learn about features, setup, and usage.\n\n## \u2764\ufe0f Community\n\nJoin the Plane community on [GitHub Discussions](https://github.com/orgs/makeplane/discussions) and our [Forum](https://forum.plane.so). We follow a [Code of conduct](https://github.com/makeplane/plane/blob/master/CODE_OF_CONDUCT.md) in all our community channels.\n\nFeel free to ask questions, report bugs, participate in discussions, share ideas, request features, or showcase your projects. We\u2019d love to hear from you!\n\n## \ud83d\udee1\ufe0f Security\n\nIf you discover a security vul",
+  "readme_images": [
+    "https://media.docs.plane.so/logo/plane_github_readme.png",
+    "https://media.docs.plane.so/GitHub-readme/github-top.webp",
+    "https://cdn.zenith.hosting/buttons/deploy-with-zenith.svg",
+    "https://media.docs.plane.so/GitHub-readme/github-work-items.webp",
+    "https://media.docs.plane.so/GitHub-readme/github-cycles.webp",
+    "https://media.docs.plane.so/GitHub-readme/github-modules.webp"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [],
+    "hot_issues": []
+  },
+  "tags": [
+    "boards",
+    "bug-tracker",
+    "django",
+    "docker",
+    "gantt",
+    "issue-tracker",
+    "makeplane",
+    "plane"
+  ]
+}

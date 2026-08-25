@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreeLLMAPI — One /v1 Endpoint for 635 Free LLM Endpoints: Setup Guide</title>
+  <meta name="description" content="FreeLLMAPI aggregates free tiers from 34 LLM providers behind one OpenAI-compatible endpoint with smart routing, failover, and encrypted keys. Here's how to set it up."/>
+  <meta name="post-tags" content="freellmapi,llm,api,proxy,openai,free-tier,typescript"/>
+  <meta name="post-category" content="LLM Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">LLM Tools</span>
+        <h1>FreeLLMAPI: 635 Free Model Endpoints Behind One /v1 URL</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>FreeLLMAPI (<a href="https://github.com/tashfeenahmed/freellmapi">GitHub</a>, MIT) is a self-hosted proxy that stitches the free tiers of 34 LLM providers into a single OpenAI-compatible endpoint. The headline numbers: ~7.4 billion tokens per month of combined free quota, 474 model families, 635 free endpoints — all reachable at one <code>/v1</code> base URL with one unified API key. It's sitting at roughly <strong>19.7k GitHub stars</strong> four months after the first commit, and it's pushing releases daily.</p>
+
+      <p>The pitch is honest about what it is: a router for personal experimentation, not production. You register free accounts at the providers you want (Groq, Google, Cerebras, Mistral, OpenRouter, GitHub Models and so on), drop the keys into an encrypted local store, and every app that speaks OpenAI — Claude Code, Codex CLI, Aider, Cursor, plain SDK code — points at localhost instead of juggling a dozen base URLs and rate limits.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>Coding agents without a billing account.</strong> Run Claude Code or Codex CLI against the free pool. One command (<code>npx freellmapi setup-claude</code>) writes the config; when Groq rate-limits you mid-task, the router fails over to the next model in your chain instead of erroring out.</li>
+        <li><strong>Prototype apps on free quota.</strong> Point any OpenAI SDK at <code>http://localhost:3001/v1</code>. Per-key RPM/RPD/TPM/TPD tracking keeps each request under every provider's cap automatically, so you don't have to hand-manage quotas across ten dashboards.</li>
+        <li><strong>Kill key sprawl.</strong> Provider keys are AES-256-GCM encrypted in SQLite; your apps only ever see one unified bearer token. Revoke it in the dashboard and everything stops at once.</li>
+        <li><strong>A/B answers with Fusion.</strong> Request the virtual <code>fusion</code> model and the router fans your prompt out to a panel of diverse free models in parallel, then a judge model synthesizes one answer. Great for "which of these summaries is right" moments.</li>
+        <li><strong>More than chat.</strong> The same endpoint serves embeddings, image and video generation, speech and transcription — routed across whichever providers offer those media models for free.</li>
+      </ul>
+
+      <figure><img src="../images/2026-08-24-freellmapi/features.png" alt="FreeLLMAPI feature overview diagram"><figcaption>The feature map: OpenAI, Anthropic, Gemini and Ollama wire formats over one router.</figcaption></figure>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Run the one-liner (Docker required). It creates <code>~/freellmapi</code>, generates an encryption key, pulls the image, and starts the container:
+<pre><code>curl -fsSL https://freellmapi.co/install.sh | bash</code></pre>
+        <p>Re-running it is safe: your <code>.env</code> survives and the container updates to <code>:latest</code>.</p>
+        </li>
+        <li>Open the dashboard and add provider keys:
+<pre><code># browse to
+http://localhost:3001</code></pre>
+        <p>Add keys on the <strong>Keys</strong> page, reorder the <strong>Fallback Chain</strong> to taste, then copy the unified API key from the Keys page header.</p>
+        </li>
+        <li>Point a client at it. Anything OpenAI-compatible works — set the base URL to <code>http://localhost:3001/v1</code> with your unified key. For coding agents there are generators:
+<pre><code>npx freellmapi setup-claude --url http://localhost:3001 --api-key &lt;unified-key&gt;</code></pre>
+        <p>Codex, Cline, Continue, Aider, opencode, Goose, Qwen Code, Roo, Cursor and more each have a matching <code>setup-*</code> generator (see docs/clients.md). Every generator supports <code>--dry-run</code> and backs up existing config first. Prefer zero config files? Use the launchers: <code>npx freellmapi launch</code> injects credentials into Claude Code's process only.</p>
+        </li>
+        <li>Smoke-test from curl:
+<pre><code>curl http://localhost:3001/v1/chat/completions \
+  -H "Authorization: Bearer $FREELLMAPI_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "auto", "messages": [{"role": "user", "content": "hello"}]}'</code></pre>
+        </li>
+        <li>On Windows, the easiest path is the desktop <code>.exe</code> installer from Releases — the whole router plus dashboard runs from your system tray with a live-stats popover. No account needed; the tray shows your unified key.
+<pre><code># macOS .dmg / Windows .exe from:
+# https://github.com/tashfeenahmed/freellmapi/releases/latest</code></pre>
+        </li>
+      </ol>
+
+      <figure><img src="../images/2026-08-24-freellmapi/desktop.png" alt="FreeLLMAPI desktop app showing live request stats in a menu-bar popover"><figcaption>The desktop app: router + dashboard in the tray, glass popover with live request stats.</figcaption></figure>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Standard Python client, no special SDK:</p>
+<pre><code>from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:3001/v1",
+    api_key="freellmapi-...",   # your unified key
+)
+
+resp = client.chat.completions.create(
+    model="auto:coding",        # named fallback-chain profile
+    messages=[{"role": "user", "content": "refactor this fn"}],
+)
+print(resp.choices[0].message.content)</code></pre>
+      <p>Switch routing strategy per request via profiles — define a "vision" chain in the dashboard and call it as <code>model="auto:vision"</code>. Sticky sessions keep a conversation pinned to one model for 30 minutes, with an optional compact context-handoff note if the router does switch mid-thread. Agents can also introspect available models and provider health over the built-in MCP server at <code>/mcp</code>.</p>
+
+      <h2>What's new</h2>
+      <p>v0.8.7 landed August 24, 2026, and it's mostly about making the desktop app behave like the server. The embedded server now runs the full boot sequence, which fixes four things that were silently desktop-only broken: automatic backups never fired (the scheduler job wasn't started), the dashboard Logs page stayed empty, a crashed provider socket could take down the whole app, and waking from sleep stalled until the next health cycle — stale sockets are now flushed and keys re-probed immediately. There's also a new "Open Backups Folder" tray item.</p>
+      <p>Same-day commits include "Make a fallback chain mean itself, empty or not" (#1023 — chains created from the dashboard start empty and previously misbehaved), French locale completion, full-width first paint on page load, and secondary routing knobs tucked behind "More options". Development is fast: 637 commits since April.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Claude Desktop / agent discovers zero usable models.</strong> Seen around v0.7.0 (issue #880): some clients filter the <code>/v1/models</code> list aggressively. Regenerate the client config with the current <code>setup-*</code> generator rather than hand-editing, and confirm the catalog synced on the dashboard's Models page.</li>
+        <li><strong>Keys show 401 during health checks.</strong> Issue #976 tracked CI failing because Groq/Google keys returned 401 — usually an expired, revoked, or wrong-org key rather than a router bug. Delete and re-add the key; check the provider console for quota revocations.</li>
+        <li><strong>macOS window won't appear (arm64 builds on newer macOS).</strong> Older installers had this on macOS 26 (issue #807). Grab the latest release — v0.8.7 fixed several desktop-only startup paths.</li>
+        <li><strong>Rate-limit errors despite "automatic failover."</strong> Failover retries the next model on 429/5xx with cooldowns, but if all keys in a chain are exhausted you'll still get errors. Check the per-key budget legend on the dashboard and widen the chain — and note the #1023 fix if you created an empty chain from the UI.</li>
+        <li><strong>CSP errors on a Windows source build.</strong> Git for Windows' <code>core.autocrlf=true</code> rewrote line endings and broke CSP hashes (#784). The repo now pins LF via <code>.gitattributes</code> — re-clone fresh rather than converting files by hand.</li>
+      </ul>
+
+      <p>One last thing worth repeating: the README is explicit that this is for personal experimentation. Free tiers aren't a supported inference substrate — swap in a paid API before anything ships — and upstream providers' terms still apply to traffic proxied through it. The repo even includes a provider-by-provider ToS review if you want the details.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

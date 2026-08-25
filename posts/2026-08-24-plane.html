@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plane — Step-by-Step Guide</title>
+  <meta name="description" content="Plane is an open-source Jira/Linear alternative for issues, cycles, and roadmaps. Here's how to self-host it and actually use it."/>
+  <meta name="post-tags" content="plane,makeplane,jira,linear,project-management,django,docker"/>
+  <meta name="post-category" content="Dev Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Dev Tools</span>
+        <h1>Plane: the open-source project tracker that's eating Jira's lunch</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>Plane is an open-source project management platform — think Jira or Linear, but you can run it on your own box. Issues, cycles (their name for sprints), modules, docs, and a triage inbox all live in one app. It's sitting at ~58k stars on GitHub as of today and gets pushed multiple times a day; the repo has been active since late 2022, so this isn't a weekend hack — it's a mature product with a real company (Plane, makers at plane.so) behind it.</p>
+
+      <p>The pitch in their README is blunt: track issues, run cycles, manage product roadmaps "without the chaos of managing the tool itself." Anyone who has administered a Jira instance knows exactly what chaos they mean.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ol>
+        <li><strong>You're off Jira but can't afford Linear per-seat.</strong> A 12-person startup paying $8–16/user/month adds up fast. Self-hosted Plane is free, and the UX is genuinely close to Linear — keyboard-first issue views, drag-and-drop kanban, cycle burn-downs.</li>
+        <li><strong>Your client work needs hard data isolation.</strong> Agencies running multiple client projects often can't put everything in a shared SaaS tenant. Plane self-hosted means each client's workspace can live on its own instance.</li>
+        <li><strong>You want sprint planning without ceremony.</strong> Cycles give you date-bounded sprints with scope visualization. If your team just needs "what's in this two-week window," it does that without Jira's board-configuration swamp.</li>
+        <li><strong>Roadmap communication with non-engineers.</strong> Modules let you group work items into features (e.g., "Billing v2") and see progress across cycles. Product folks get the roadmap view; engineers keep working in kanban.</li>
+        <li><strong>Triage inbox for OSS maintainers.</strong> The triage feature collects incoming bugs/issues into one queue so maintainers can bulk-label and assign instead of drowning in a flat list.</li>
+      </ol>
+
+      <h2>Getting started</h2>
+      <p>The fastest path is Plane Cloud (free signup at app.plane.so), but if you're reading this you probably want to self-host. The official method is a Docker-based installer script (per official docs at developers.plane.so/self-hosting):</p>
+      <ol>
+        <li>Install Docker and Docker Compose v2 on your server (any Linux box with 4GB RAM minimum works fine).</li>
+        <li>Download the installer:
+          <pre><code>curl -fsSL https://raw.githubusercontent.com/makeplane/plane/master/deploy/selfhost/install.sh | bash</code></pre>
+        </li>
+        <li>The installer creates a <code>plane-app</code> directory and prompts you to configure the environment file:
+          <pre><code>cd plane-app
+nano .env
+
+# Key values to set:
+# SECRET_KEY=...          (generated for you)
+# WEB_URL=http://your-domain.com
+# CORS_ALLOWED_ORIGINS=http://your-domain.com</code></pre>
+        </li>
+        <li>Start everything up:
+          <pre><code>./setup.sh
+docker compose up -d</code></pre>
+          This brings up the web frontend, API (Django), workers, RabbitMQ, Redis, MinIO, and PostgreSQL containers.
+        </li>
+        <li>Open <code>http://your-domain.com</code>, create the first admin account, and set up your first workspace and project.</li>
+      </ol>
+      <p>Behind a reverse proxy? Terminate TLS at nginx/Caddy/Traefik and point <code>WEB_URL</code> at the HTTPS origin, otherwise the frontend will fight you on mixed-content requests.</p>
+
+      <figure>
+        <img src="../images/2026-08-24-plane/work-items.webp" alt="Plane work items view showing kanban boards and issue lists">
+        <figcaption>Work items: list, kanban, spreadsheet, and Gantt layouts over the same issues.</figcaption>
+      </figure>
+      <figure>
+        <img src="../images/2026-08-24-plane/cycles.webp" alt="Plane cycles view with sprint progress">
+        <figcaption>Cycles — Plane's take on sprints, with scope and progress tracking.</figcaption>
+      </figure>
+      <figure>
+        <img src="../images/2026-08-24-plane/modules.webp" alt="Plane modules view grouping issues into features">
+        <figcaption>Modules group related work items into shippable features.</figcaption>
+      </figure>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Plane has a REST API (it's Django under the hood). You can create work items programmatically instead of clicking around:</p>
+      <pre><code>curl -X POST "https://your-domain.com/api/v1/workspaces/my-workspace/projects/&lt;project_id&gt;/issues/" \
+  -H "Authorization: Bearer &lt;API_KEY&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Fix login redirect loop",
+    "description_html": "&lt;p&gt;Users on Safari get stuck after OAuth callback&lt;/p&gt;",
+    "priority": "high"
+  }'</code></pre>
+      <p>A minimal docker-compose override for pinning resource limits on a small VPS:</p>
+      <pre><code># docker-compose.override.yml
+services:
+  plane-api:
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+  plane-worker:
+    deploy:
+      resources:
+        limits:
+          memory: 512m</code></pre>
+      <p>And a cron-friendly backup of Postgres, which is the only container whose data you truly can't lose:</p>
+      <pre><code>docker compose exec plane-db pg_dump -U plane plane > plane-backup-$(date +%F).sql</code></pre>
+
+      <h2>What's new</h2>
+      <p>No tagged release landed in the intel window for this write-up, but the repo shows commits pushed on August 24, 2026 — daily activity on the <code>preview</code> default branch is normal for this project. The team ships continuously and publishes release notes through their forum and docs changelog, so check the releases page before upgrading your self-hosted install. Their upgrade path is documented as "pull new installer, run setup.sh, docker compose up" — always snapshot your database first.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Login works but pages fail to load assets / blank screen.</strong> Cause: <code>WEB_URL</code> doesn't match the origin you're browsing, or CORS origins weren't updated behind a proxy. Fix: set both <code>WEB_URL</code> and <code>CORS_ALLOWED_ORIGINS</code> in <code>.env</code> to the exact scheme+domain users hit, then restart the web/API containers.</li>
+        <li><strong>Uploads disappear after redeploying.</strong> Cause: file uploads live in MinIO by default; if the MinIO volume wasn't persisted, attachments vanish. Fix: make sure the <code>plane-minio-data</code> volume is declared and never pruned by cleanup scripts.</li>
+        <li><strong>Email invites never arrive.</strong> Cause: SMTP isn't configured, so the worker silently drops mail. Fix: fill in the <code>EMAIL_HOST_*</code> variables in <code>.env</code> and restart; test with the password-reset flow rather than invites alone.</li>
+        <li><strong>Everything grinds to a halt on a 2GB VPS.</strong> Cause: the full stack (Django + workers + RabbitMQ + Redis + Postgres + MinIO) wants more headroom than small instances give. Fix: run on 4GB+, add swap, and cap container memory as shown above.</li>
+        <li><strong>Installer script fails mid-run and reruns won't start clean.</strong> Cause: partial compose state from the failed attempt. Fix: <code>docker compose down -v</code> inside the plane-app dir (this deletes volumes — back up first), fix the reported error, and rerun <code>./setup.sh</code>.</li>
+      </ul>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

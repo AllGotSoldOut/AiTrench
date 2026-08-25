@@ -1,0 +1,31 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-claude-plugins-community",
+  "topic": {
+    "name": "anthropics/claude-plugins-community",
+    "source": "github_trending",
+    "url": "https://github.com/anthropics/claude-plugins-community",
+    "stars": 1423,
+    "description": "Community plugin marketplace for Claude Cowork and Claude Code. Read-only mirror \u2014 submit plugins at clau.de/plugin-directory-submission.",
+    "language": "Python",
+    "topics": [],
+    "homepage": "",
+    "pushed_at": "2026-08-24",
+    "created_at": "2026-03-20",
+    "default_branch": "main",
+    "_score": 328.46000000000004
+  },
+  "mode": "docs",
+  "readme_excerpt": "# Claude Plugins \u2014 Community\n\nCommunity-contributed plugins for [Claude Cowork](https://claude.com/product/cowork) and [Claude Code](https://claude.com/product/claude-code).\n\n## What this repo is\n\nA **read-only mirror** of the community plugin marketplace. The `.claude-plugin/marketplace.json` file here is the list of community plugins available to install. It is synced nightly from Anthropic's internal review pipeline.\n\nEvery plugin listed here has been submitted via [claude.ai](https://clau.de/plugin-directory-submission), passed automated security scanning, and been approved for distribution.\n\n## Using this marketplace\n\n### Claude Cowork\n\nInstall plugins from [claude.com/plugins](https://claude.com/plugins/).\n\n### Claude Code\n\n```bash\nclaude plugin marketplace add anthropics/claude-plugins-community\nclaude plugin install <plugin-name>@claude-community\n```\n\n## Submitting a plugin\n\nSubmit via **[clau.de/plugin-directory-submission](https://clau.de/plugin-directory-submission)**. Pull requests opened directly against this repo are closed automatically \u2014 all changes flow from the internal review pipeline.\n\n## Related\n\n- [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) \u2014 Anthropic-maintained plugins\n- [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) \u2014 role-specific knowledge-work plugins\n",
+  "readme_images": [],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [],
+    "hot_issues": []
+  },
+  "tags": [
+    "anthropics",
+    "claude-plugins-community"
+  ]
+}

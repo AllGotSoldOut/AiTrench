@@ -1,0 +1,109 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-ai-job-search",
+  "topic": {
+    "name": "MadsLorentzen/ai-job-search",
+    "source": "github_trending",
+    "url": "https://github.com/MadsLorentzen/ai-job-search",
+    "stars": 34229,
+    "description": "The job search that runs on your machine. AI job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, prep interviews. Fork it and own it.",
+    "language": "Python",
+    "topics": [
+      "ai",
+      "ai-agents",
+      "career",
+      "claude-code",
+      "cover-letter",
+      "cv",
+      "interview-preparation",
+      "job-application",
+      "job-hunting",
+      "job-search",
+      "latex",
+      "resume"
+    ],
+    "homepage": "",
+    "pushed_at": "2026-08-23",
+    "created_at": "2026-03-18",
+    "default_branch": "master",
+    "_score": 1984.58
+  },
+  "mode": "docs",
+  "readme_excerpt": "<p align=\"center\">\n  <img src=\"assets/mascot/pip_flight_loop.gif\" alt=\"Pip, the courier bird\" width=\"200\">\n</p>\n\n# AI Job Search\n\n*The job search that runs on your machine.*\n\n<p align=\"center\">\n  <a href=\"https://trendshift.io/repositories/43622?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-43622\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://trendshift.io/api/badge/trendshift/repositories/43622/daily\" alt=\"MadsLorentzen%2Fai-job-search | Trendshift\" width=\"250\" height=\"55\"/></a>\n</p>\n\n[![CI](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml/badge.svg)](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml)\n\nAn AI-powered job application framework built on [Claude Code](https://claude.com/claude-code). Fork it, fill in your profile, and let Claude evaluate job postings, tailor your CV, write cover letters, and prepare you for interviews.\n\n> Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.\n>\n> This project has **no affiliated cryptocurrency, token, or paid sponsorship program**. Anything claiming otherwise is unauthorized and should be treated as a scam. The only ways to support the project are the Ko-fi link below and contributing on GitHub.\n\n## Does it actually work?\n\nI'm a geophysicist by training. When my position was cut in late 2025, I built this framework to run my own job search - the same `/scrape`, `/apply`, and `/interview` workflow in this repo, used weekly, on my own career. I was upfront about it with every employer I spoke to, and instead of counting against me, it usually sparked a genuine technical conversation.\n\nSixty-nine tailored applications, twenty first interviews, and one signed contract later, I started as an AI engineer in June 2026. People kept asking whether this actually works. It got me hired. Now it's yours.\n\n*The longer version, including the full application funnel, is on [LinkedIn](https://www.linkedin.com/in/mads-lorentzen/).*\n\n<p align=\"center\">\n  <i>Did this save you a Sunday of cover-letter writing? Consider a coffee.<br>\n  Did it land you the job? Maybe two.</i> \u2615\n</p>\n\n<p align=\"center\">\n  <a href=\"https://ko-fi.com/madslorentzen\">\n    <img src=\"https://storage.ko-fi.com/cdn/kofi3.png?v=6\" alt=\"Buy me a coffee at ko-fi.com\" height=\"40\">\n  </a>\n</p>\n\n## What this is\n\nA structured workflow that turns Claude Code into a full-stack job application assistant. The core workflow (self-profiling, fit evaluation, and the drafter-reviewer application pipeline) is **language- and country-agnostic**. The job portal search skills are built for the Danish market (Jobindex, Jobnet, Akademikernes Jobbank, etc.), but the pattern is designed to be swapped for your local job boards.\n\n```\n/setup          /scrape              /apply <url>\n  |                |                     |\n  v                v                     v\nFill in        Search job           Evaluate fit\nyour profile   portals              Score & recommend\n  |                |                     |\n  v                v                     v\nProfile        Present matches      Draft CV + Cover Letter\nfiles ready    with fit ratings     (LaTeX, tailored)\n                   |                     |\n                   v                     v\n               Pick a match         Reviewer agent critiques\n               -> /apply            -> Revise -> Final output\n```\n\nThe framework encodes career guidance best practices, including structured evaluation criteria, forward-looking cover letter framing, and optional salary benchmarking.\n\n## Prerequisites\n\n- [Claude Code](https://claude.com/claude-code) (CLI). Using a different agent tool (Codex, Antigravity, Gemini CLI)? Start at [`AGENTS.md`](AGENTS.md) - the portal search skills work there out of the box, and [community forks](https://github.com/MadsLorentzen/ai-job-search/discussions/78) adapt the full workflow.\n- Python 3.10+\n- [Bun](https://bun.sh) (for job search CLI tools)\n- LaTeX distribution with `lualatex` and `xelatex`: [TeX Live](https://tug.org/texlive/), [MacTeX](https://tug.org/mactex/), [TinyTeX](https://yihui.org/tinytex/), or [MiKTeX](https://miktex.org/). The CV compiles with `lualatex` (pdflatex often fails on modern MiKTeX installs with `fontawesome5` font-expansion errors); the cover letter compiles with `xelatex` because `cover.cls` requires `fontspec`. If using a minimal TeX install such as TinyTeX or BasicTeX, install the extra packages listed in [SETUP.md](SETUP.md#minimal-tex-install-tinytexbasictex).\n- Optional: `pdftotext` from [poppler](https://poppler.freedesktop.org/) (macOS: `brew install poppler`, Debian/Ubuntu: `apt install poppler-utils`, Windows: `choco install poppler`) \u2014 used by `/apply`'s ATS parseability check on the compiled CV. If missing, the check degrades gracefully to a visual keyword review.\n\n## Quick start\n\n> \ud83c\udfa5 **Prefer to see it in action first?** [The Next New Thing did a hands-on walkthrough](https://www.youtube.com/watch?v=HoVxjMNFYv4) of how the workflow is actually used, from setup to a finished application (recorded August 2026 - commands may have evolved since).\n\n### 1. Fork and clone\n\n```bash\ngh repo fork MadsLorentzen/ai-job-search --clone\ncd ai-job-search\n```\n\n> [!IMPORTANT]\n> **A fork of this repo is always public** \u2014 GitHub does not allow private forks of\n> public repositories \u2014 and `/setup` (step 3 below) writes your personal data (name,\n> contact details, employment history, salary expectations) into **tracked** files.\n> If this copy is for your own job search rather than for contributing changes back,\n> use a **private repository** with this repo as `upstream` instead \u2014 the two-minute\n> recipe is in [SETUP.md section 8](SETUP.md#8-pulling-upstream-updates-into-your-fork),\n> and every update workflow works identically. Fork only to contri",
+  "readme_images": [
+    "https://trendshift.io/api/badge/trendshift/repositories/43622/daily",
+    "https://storage.ko-fi.com/cdn/kofi3.png?v=6"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": {
+      "tag": "v1.6.0",
+      "date": "2026-08-19",
+      "notes": "Two themes this release: **things that used to fail silently now fail loudly**, and **the text you wrote actually survives into the documents you send**. Most of it comes from a deep empirical review of the whole template ([#347](https://github.com/MadsLorentzen/ai-job-search/pull/347) - 25 fixes, each carrying the test that would have caught it), alongside a portal-contract series and an onboarding privacy fix from the community.\n\n## Highlights\n\n### All six portal CLIs reject unknown flags (**breaking**, #347)\nA silently discarded flag is worse than an error: on one portal, a plausible-but-wrong flag name returned the **entire database** - 13,862 postings, none matching - with exit 0 and empty stderr, indistinguishable from a real result set. Every CLI now exits 1 with `{\"error\", \"code\": "
+    },
+    "recent_commits": [
+      {
+        "message": "docs(changelog): record the dotted-A.M.B.A. suffix fix (#356)",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "fix(salary): stop dropping the dotted A.M.B.A. suffix in company-name matching (#356)",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "ci(latex-smoke): add a debian:bookworm leg compiling on apt-packaged TeX Live (#346)",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "fix(cache): address PR #349 follow-up feedback (#359)",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "feat(apply,interview): cache company research to skip repeat lookups (#349)",
+        "date": "2026-08-22"
+      },
+      {
+        "message": "chore(release): cut v1.6.0",
+        "date": "2026-08-19"
+      },
+      {
+        "message": "fix(onboarding): warn about public forks at the point of decision (#345) (#348)",
+        "date": "2026-08-19"
+      },
+      {
+        "message": "docs(changelog): record the cross-portal scrape-contract pin (#344)",
+        "date": "2026-08-19"
+      }
+    ],
+    "hot_issues": [
+      {
+        "title": "Scrape randomly generates ghost Linkedin jobs",
+        "comments": 2,
+        "url": "https://github.com/MadsLorentzen/ai-job-search/issues/331",
+        "labels": []
+      },
+      {
+        "title": "Add support for Antigravity and other AI coding CLIs",
+        "comments": 0,
+        "url": "https://github.com/MadsLorentzen/ai-job-search/issues/362",
+        "labels": []
+      },
+      {
+        "title": "An ignore rule's comment points at a path nothing writes to",
+        "comments": 0,
+        "url": "https://github.com/MadsLorentzen/ai-job-search/issues/336",
+        "labels": []
+      }
+    ]
+  },
+  "tags": [
+    "MadsLorentzen",
+    "ai",
+    "ai-agents",
+    "ai-job-search",
+    "career",
+    "claude-code",
+    "cover-letter",
+    "cv"
+  ]
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alishahryar1/free-claude-code — Step-by-Step Guide</title>
+  <meta name="description" content="Free Claude Code (FCC): route Claude Code, Codex, and 7 other coding agents through 50 ToS-friendly providers with 1.3B+ free tokens a month."/>
+  <meta name="post-tags" content="free-claude-code,claude-code,codex,opencode,agents,llm,proxy"/>
+  <meta name="post-category" content="LLM Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">LLM Tools</span>
+        <h1>Free Claude Code: 9 Coding Agents, 50 Providers, Zero Subscription</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><strong>free-claude-code</strong> (FCC) from Alishahryar1 is sitting at ~49K stars, and the pitch is simple: run Claude Code — plus Codex, Pi, OpenCode, Cline, Hermes, DeepSeek Harness, Grok Build, and Muse Code — against a pool of 50 free-tier providers totaling over 1.3 billion free tokens per month. It's an independent open-source project (MIT), explicitly not affiliated with Anthropic.</p>
+
+      <p>The differentiator versus the sketchy "free Claude" proxies you've seen before: FCC describes itself as ToS-friendly. It follows provider terms, drops integrations when they stop being allowed, and routes between free, paid, subscription, and fully local models (LM Studio, llama.cpp, Ollama) from one searchable admin UI. Honestly, that last part is underrated — your coding agent keeps working when a provider has an outage, because after retries are exhausted FCC automatically falls back to your next configured model without restarting the turn.</p>
+
+      <figure><img src="../images/2026-08-24-free-claude-code/pic.png" alt="Claude Code running with Free Claude Code"><figcaption>Claude Code running with FCC.</figcaption></figure>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>You want agentic coding without another subscription.</strong> Point Claude Code at NVIDIA NIM or other free tiers and get real agent sessions on someone else's token budget.</li>
+        <li><strong>You're tired of outages killing mid-task.</strong> Automatic model fallback means a dead provider doesn't strand you halfway through a refactor — FCC moves to your next configured model mid-turn.</li>
+        <li><strong>You have local models gathering dust.</strong> FCC catalogs LM Studio, llama.cpp, and Ollama models alongside cloud providers, so one config serves both privacy-sensitive work and heavy lifting.</li>
+        <li><strong>You want your agent in more places than the terminal.</strong> Clients include VS Code, JetBrains, the Codex App, Discord, and Telegram — plus voice notes via local Whisper or NVIDIA NIM transcription.</li>
+        <li><strong>You burn tokens on terminal noise.</strong> Optional RTK integration filters common command output, and FCC claims up to 90% fewer terminal-output tokens via five no-provider optimizations (quota probes, titles, suggestions, etc.).</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Install (or update later by re-running the same command). When prompted, pick at least one coding agent, optionally RTK:
+<pre><code># macOS / Linux
+curl -fsSL "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.sh" | sh
+
+# Windows PowerShell
+&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.ps1")))</code></pre></li>
+        <li>Start FCC. On Windows or macOS open <strong>Free Claude Code</strong> from your desktop/Start menu/Applications folder. On Linux run:
+<pre><code>fcc-server</code></pre>
+Keep its terminal open. The Admin UI URL appears in the server log; desktop installs also give you a tray/menu-bar icon for Admin, restart, and quit.</li>
+        <li>Configure a provider. The documented default path is NVIDIA NIM: create an API key at build.nvidia.com/settings/api-keys, paste it into <code>NVIDIA_NIM_API_KEY</code> in the Admin UI, keep <code>MODEL</code> on the default (<code>nvidia_nim/nvidia/nemotron-3-super-120b-a12b</code>) or search the dropdown for another model, then click <strong>Validate</strong>, then <strong>Apply</strong>.</li>
+      </ol>
+
+      <figure><img src="../images/2026-08-24-free-claude-code/admin-page.png" alt="Free Claude Code Admin UI"><figcaption>The Admin UI where providers, keys, and models are configured.</figcaption></figure>
+
+      <ol start="4">
+        <li>Run your coding agent through FCC. One launcher per harness:
+<pre><code>fcc-claude      # Claude Code
+fcc-codex       # Codex
+fcc-pi          # Pi
+fcc-opencode    # OpenCode
+fcc-cline       # Cline
+fcc-hermes      # Hermes
+fcc-dsh         # DeepSeek Harness Web
+fcc-grok        # Grok Build
+fcc-muse        # Muse Code</code></pre></li>
+        <li>Pick a model from your agent's native picker — e.g. <code>/model</code> inside Claude Code shows FCC models directly.</li>
+        <li>Optional but recommended: enable <strong>Proxy Authentication</strong> in Admin so the local proxy requires a bearer token.</li>
+      </ol>
+
+      <figure><img src="../images/2026-08-24-free-claude-code/cc-model-picker.png" alt="Claude Code model picker showing FCC models"><figcaption>Select an FCC model from Claude Code's native /model picker.</figcaption></figure>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Everyday management commands:</p>
+<pre><code># check installed version without starting the server
+fcc-server --version
+
+# update = re-run your original install command
+
+# uninstall (stops FCC first); removes FCC + ~/.fcc/,
+# keeps uv, Python, and all your coding agents
+curl -fsSL "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/uninstall.sh" | sh</code></pre>
+<p>Voice input is configured in Admin UI → Messaging → Voice: enable voice notes, choose a transcription backend (<code>cpu</code>, <code>cuda</code>, or <code>nvidia_nim</code>), and select a Whisper model. Local gated Whisper models need <code>HUGGINGFACE_API_KEY</code>; NVIDIA NIM transcription needs <code>NVIDIA_NIM_API_KEY</code>.</p>
+
+      <h2>What's new</h2>
+      <p>Movement is fast — 968 commits and multiple merges per day as of August 24–25, 2026:</p>
+      <ul>
+        <li><strong>LLM7.io added as the 50th provider</strong> (#1536), with routing for its mixed media catalog (#1540).</li>
+        <li>A canonical protocol refactor series was merged and then <strong>reverted</strong> (#1549) — if you saw odd stream behavior over the past few days, updating should normalize it.</li>
+        <li>"Share Chat and Responses stream execution lifecycle" (#1546) unified how OpenAI-style streams are orchestrated.</li>
+        <li>Telegram fix: MarkdownV2 image fallbacks now escape as plain text (#1526).</li>
+      </ul>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>"Provider API request failed"</strong> — the project's most common issue (#342, #620). It's almost always upstream: the free provider rate-limited you, rotated something, or had an outage. Fix: switch models in the picker, re-validate the API key in Admin, and let FCC's fallback move to your next configured model. Long-running turns (1–5 minutes) hitting this mid-stream are reported in #620.</li>
+        <li><strong>FCC silently uses a paid model instead of a free one</strong> — reported in #241. Check the selected model in your client's picker and pin it explicitly rather than leaving "auto"; review your provider order in the Admin UI so free tiers come first.</li>
+        <li><strong>Admin UI unreachable after starting fcc-server on Linux</strong> — the URL prints in the server log, so scroll up; and remember the terminal must stay open. Desktop installs (Windows/macOS) expose the same UI via tray icon instead.</li>
+        <li><strong>Agent lost tools/streaming/thinking after install</strong> — FCC preserves native capabilities like interleaved thinking only when the routed model supports them. If your chosen free tier lacks a feature, pick a compatible model rather than assuming FCC broke.</li>
+        <li><strong>Local proxy exposed on your network</strong> — by default there's no auth on the local proxy. Enable Proxy Authentication in Admin immediately on shared machines.</li>
+      </ul>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

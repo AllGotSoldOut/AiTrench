@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>openai/codex — Step-by-Step Guide</title>
+  <meta name="description" content="Codex CLI: OpenAI's open-source coding agent that runs in your terminal. Install, configure, and avoid the common pitfalls."/>
+  <meta name="post-tags" content="codex,openai,coding-agent,cli,rust,terminal"/>
+  <meta name="post-category" content="Agents"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Agents</span>
+        <h1>Codex CLI: OpenAI's Terminal Coding Agent, Past 117K Stars</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><strong>openai/codex</strong> is a lightweight coding agent that runs locally in your terminal — and it's now one of the most-starred repos on GitHub at over 117K stars. Written in Rust, it reads your codebase, proposes edits, runs commands with your approval, and iterates until the task is done. Unlike the cloud Codex Web agent, everything executes on your machine against your working tree, which is exactly what you want for "fix this failing test in this repo right now."</p>
+
+      <figure><img src="../images/2026-08-24-codex/codex-cli-splash.png" alt="Codex CLI splash screen"><figcaption>Codex CLI running in a terminal.</figcaption></figure>
+
+      <p>The family has grown beyond the CLI: there's an IDE extension (VS Code, Cursor, Windsurf), a desktop app (<code>codex app</code>), and Codex Web at chatgpt.com/codex. But the terminal version is still the fastest way in and the one most people live in.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>Kill a flaky test loop.</strong> Point it at a red CI job: "make <code>test_checkout_flow</code> pass without weakening assertions." It reproduces locally, edits, re-runs, and shows you the diff.</li>
+        <li><strong>Big refactors with review gates.</strong> Rename an API across 40 files. In approval mode you review each proposed command before it runs, so you keep control while it grinds through the mechanical parts.</li>
+        <li><strong>Codebase archaeology.</strong> Ask it where auth tokens are validated and why. It greps, reads, and answers from your actual code — no copy-pasting files into a chat window.</li>
+        <li><strong>Scaffolding inside an existing repo.</strong> "Add a /health endpoint following the pattern in routes/users.py." It matches your conventions instead of generating framework-tutorial code.</li>
+        <li><strong>Vim-mode workflow.</strong> Recent commits added dot-repeat to Vim mode, so keyboard-driven editing inside the TUI keeps getting more real.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Install on Mac or Linux:
+<pre><code>curl -fsSL https://chatgpt.com/codex/install.sh | sh</code></pre></li>
+        <li>Or on Windows (PowerShell):
+<pre><code>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</code></pre></li>
+        <li>Prefer a package manager? Both work:
+<pre><code># Install using npm
+npm install -g @openai/codex
+
+# Install using Homebrew
+brew install --cask codex</code></pre></li>
+        <li>If downloads from <code>releases.openai.com</code> are blocked on your network, force GitHub Releases as the source:
+<pre><code>curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_INSTALLER_USE_RELEASES_OPENAI_COM=false sh
+
+# PowerShell equivalent
+$env:CODEX_INSTALLER_USE_RELEASES_OPENAI_COM='false'; irm https://chatgpt.com/codex/install.ps1 | iex</code></pre></li>
+        <li>Launch it in your project directory and authenticate when prompted:
+<pre><code>cd my-project
+codex</code></pre></li>
+        <li>Describe a task in plain English. Approve or reject its proposed commands and edits as it works. For editor integration instead, install the IDE extension; for a GUI, run <code>codex app</code>.</li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Typical invocation patterns once you're inside the TUI:</p>
+<pre><code># inside codex, natural-language tasks:
+&gt; fix the failing test in tests/test_payments.py and explain the root cause
+&gt; refactor all REST endpoints to use the new auth dependency
+&gt; write a migration adding soft-delete to the orders table</code></pre>
+<p>Common CLI flags:</p>
+<pre><code># resume the most recent session
+codex resume
+
+# non-interactive: run one task and exit
+codex exec "update dependencies in pyproject.toml"</code></pre>
+
+      <h2>What's new</h2>
+      <p>Development is extremely active — the latest release is <strong>rust-v0.149.1</strong> (August 24, 2026), and commits landed the very next day. Notable recent changes from the commit log:</p>
+      <ul>
+        <li>"Route extension hints into context-window metadata" (#40533) — better context-window accounting.</li>
+        <li>"Represent terminal input in approval reviews" (#40528) — approval prompts now show what would be typed into terminals, not just commands.</li>
+        <li>"Retry provider auth commands after initial failures" (#40523) — fewer dead sessions when auth hiccups at startup.</li>
+        <li>"Add hooks for interrupted turns" (#40511) and "Add persisted thread artifact models" (#40509) — groundwork for resumable, persistent agent threads.</li>
+      </ul>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Desktop app freezes/stutters on Windows 11 despite good hardware</strong> — a widely-reported bug (#20214, 100+ comments). Workaround: use the CLI instead of <code>codex app</code>; check the issue for version-specific fixes before reinstalling.</li>
+        <li><strong>macOS app triggers runaway <code>syspolicyd</code>/<code>trustd</code> CPU usage</strong> — tracked in #25719; the security-scanning daemons churn on repeatedly-verified binaries. Quitting and relaunching the app temporarily relieves it; watch the issue for a shipped fix.</li>
+        <li><strong>Codex answers an earlier message instead of your latest one</strong> — a known context-handling bug (#8648). Starting a new session clears the stale conversational state; keeping tasks scoped per-session avoids it.</li>
+        <li><strong>Prompts auto-resolve after ~60 seconds while you're reading</strong> — reported in #28969. There's currently no setting to disable the auto-resolve (per the issue); respond promptly or run in a mode where approvals wait.</li>
+        <li><strong>Want longer context than you're getting</strong> — 1M-token context for GPT-5.5 is the single most-requested enhancement (#19464, 130+ comments). Until it lands, break large tasks into smaller scopes rather than fighting the window.</li>
+      </ul>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

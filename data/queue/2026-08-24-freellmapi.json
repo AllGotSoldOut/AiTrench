@@ -1,0 +1,106 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-freellmapi",
+  "topic": {
+    "name": "tashfeenahmed/freellmapi",
+    "source": "github_trending",
+    "url": "https://github.com/tashfeenahmed/freellmapi",
+    "stars": 19863,
+    "description": "7.4 billion tokens per month. 34 free LLM providers. 635 free model endpoints. All behind one /v1 endpoint, plus any custom OpenAI-compatible endpoint. Smart routing, automatic failover, encrypted keys. Personal experimentation only.",
+    "language": "TypeScript",
+    "topics": [],
+    "homepage": "https://freellmapi.co",
+    "pushed_at": "2026-08-24",
+    "created_at": "2026-04-21",
+    "default_branch": "main",
+    "_score": 1697.26
+  },
+  "mode": "docs",
+  "readme_excerpt": "<div align=\"center\">\n\n# FreeLLMAPI\n\n**7.4 billion tokens per month.  34 free LLM providers. 635 free model endpoints. One OpenAI-compatible endpoint.**\n\nAggregate free tiers from dozens of providers, plus custom OpenAI-compatible chat, embedding, image, and audio endpoints, behind a single `/v1` API. Keys are stored encrypted. A router picks the best available model for each request, falls over to the next provider when one is rate-limited, and tracks per-key usage so you stay under every free-tier cap.\n\n[![CI](https://github.com/tashfeenahmed/freellmapi/actions/workflows/ci.yml/badge.svg)](https://github.com/tashfeenahmed/freellmapi/actions/workflows/ci.yml)\n[![GitHub stars](https://img.shields.io/github/stars/tashfeenahmed/freellmapi?style=flat&logo=github&color=yellow)](https://github.com/tashfeenahmed/freellmapi/stargazers)\n[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)\n[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)\n[![Docker image](https://img.shields.io/badge/ghcr.io-freellmapi-2496ED?logo=docker&logoColor=white)](https://github.com/tashfeenahmed/freellmapi/pkgs/container/freellmapi)\n[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tashfeenahmed/freellmapi)\n\n**[freellmapi.co](https://freellmapi.co/?utm_source=github&utm_medium=readme&utm_campaign=repository&utm_content=readme_top)** \u00b7 browse the full catalog: 474 model families, 635 free endpoints\n\n**English** \u00b7 [\u7b80\u4f53\u4e2d\u6587](docs/i18n/zh-CN/README.md)\n\n<p align=\"center\">\n  <a href=\"https://play.google.com/store/apps/details?id=co.freellmapi.app\"><img src=\"repo-assets/badges/play-store.svg\" height=\"60\" alt=\"Get it on Google Play\"></a>\n  <a href=\"https://github.com/tashfeenahmed/freellmapi/releases/latest\"><img src=\"repo-assets/badges/macos.svg\" height=\"60\" alt=\"Download for macOS\"></a>\n  <a href=\"https://github.com/tashfeenahmed/freellmapi/releases/latest\"><img src=\"repo-assets/badges/windows.svg\" height=\"60\" alt=\"Download for Windows\"></a>\n  <a href=\"docs/install.md#docker-compose\"><img src=\"repo-assets/badges/docker.svg\" height=\"60\" alt=\"Self-host with Docker\"></a>\n</p>\n\n![FreeLLMAPI dashboard \u2014 Models page with the monthly token budget](repo-assets/github-hero.png)\n\n\nYour router updates its own model catalog from a signed feed: new free models, quota changes, and compatibility fixes land without a `git pull`. Free installs get the monthly snapshot, so a model reaches them 30 days after it joins the live feed; premium routers get it the same day.\n**[Go live at freellmapi.co](https://freellmapi.co/?utm_source=github&utm_medium=readme&utm_campaign=premium&utm_content=readme_top#pricing)** ($19/yr, cancel anytime).\n\n</div>\n\n---\n\n## Contents\n\n- [Why this exists](#why-this-exists)\n- [Supported providers](#supported-providers)\n- [Compatible CLIs & coding agents](#compatible-clis--coding-agents)\n- [How it compares](#how-it-compares)\n- [Features](#features)\n- [Quick start](#quick-start)\n- [Desktop app](#desktop-app)\n- [Works with OpenAI-compatible clients](#works-with-openai-compatible-clients)\n- [Languages](#languages)\n- [Premium (live catalog)](#premium-live-catalog)\n- [Using the API](#using-the-api)\n- [Screenshots](#screenshots)\n- [How it works](#how-it-works)\n- [FAQ](#faq)\n- [Limitations](#limitations)\n- [Contributing](#contributing)\n- [Disclaimer](#disclaimer)\n\n**Guides:** [Install & deploy](docs/install.md) \u00b7 [API reference](docs/api.md) \u00b7 [Clients & coding agents](docs/clients.md) \u00b7 [Prompt compression](docs/compression.md) \u00b7 [Architecture & internals](docs/architecture.md) \u00b7 [Documentation index](docs/README.md) \u00b7 [Contributor guide](CONTRIBUTING.md)\n\n## Why this exists\n\nEvery serious AI lab now offers a free tier, a few million tokens a month, a few thousand requests a day. On its own each tier is a toy. Stacked together, they add up to roughly **7.4 billion tokens per month** of working inference capacity, across **474 model families / 635 provider endpoints** from small-and-fast to reasonably capable.\n\nThe problem is that stacking them by hand is painful: thirty-four different SDKs, thirty-four different rate limits, thirty-four places a request can fail. FreeLLMAPI collapses that into one OpenAI-compatible endpoint. Point any OpenAI client library at your local server, and it routes transparently across whichever providers you've added keys for.\n\nAnd the free-tier landscape shifts weekly: providers launch models, retire them, and change quotas without notice. FreeLLMAPI tracks all of that for you. The router pulls a signed model catalog from [freellmapi.co](https://freellmapi.co) on its own, so your install keeps up without a `git pull`. See [Premium (live catalog)](#premium-live-catalog) for how fast it keeps up.\n\n![The free tier, stacked \u2014 ~7.4B tokens of free inference per month across 34 providers](repo-assets/free-tier.png)\n\n## Supported providers\n\n<div align=\"center\">\n<table>\n<tr>\n<td align=\"center\" width=\"150\"><img src=\"repo-assets/providers/google.png\" width=\"44\" alt=\"Google\"><br/><b>Google</b></td>\n<td align=\"center\" width=\"150\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"repo-assets/providers/groq-dark.png\"><img src=\"repo-assets/providers/groq.png\" width=\"44\" alt=\"Groq\"></picture><br/><b>Groq</b></td>\n<td align=\"center\" width=\"150\"><img src=\"repo-assets/providers/cerebras.png\" width=\"44\" alt=\"Cerebras\"><br/><b>Cerebras</b></td>\n<td align=\"center\" width=\"150\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"repo-assets/providers/opencode-dark.png\"><img src=\"repo-assets/providers/opencode.png\" width=\"44\" alt=\"OpenCode Zen\"></picture><br/><b>OpenCode Zen</b></td>\n</tr>\n<tr>\n<td align=\"center\"><img src=\"repo-assets/providers/mistral.png\" width=\"44\" alt=\"Mistral\"><br/><b>Mistral</b></td>\n<td align=\"center\"><img src=\"repo-assets/providers/openrouter.png\" width=\"44\" alt=\"OpenRouter\"><br/><b>OpenRouter</b></td>\n<td align=\"center\"><img src=\"repo-assets/providers/cloudflare.png\" width=\"44\" alt=\"Cloudflare",
+  "readme_images": [
+    "https://flagcdn.com/24x18/us.png",
+    "https://flagcdn.com/24x18/cn.png",
+    "https://flagcdn.com/24x18/es.png",
+    "https://flagcdn.com/24x18/fr.png",
+    "https://flagcdn.com/24x18/br.png",
+    "https://flagcdn.com/24x18/it.png"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": {
+      "tag": "v0.8.7",
+      "date": "2026-08-24",
+      "notes": "## Desktop fixes\n\n- The desktop app's embedded server now runs the full boot sequence the standalone server does. In practice this fixes four things that were silently broken on desktop only (#1017):\n  - **Automatic backups actually run.** The Backups panel's schedule saved but never fired \u2014 the scheduler job was never started.\n  - **The dashboard's Logs page now fills up**, and the desktop log file (`Open Logs Folder`) is credential-redacted \u2014 safe to attach to a bug report.\n  - **A crashed provider socket can no longer take down the whole app** (the server's process safety net now installs).\n  - **Waking from sleep recovers immediately**: stale pooled sockets are flushed and every key is re-probed, instead of waiting for the next health cycle.\n- New tray item: **Open Backups Folder** \u2014 b"
+    },
+    "recent_commits": [
+      {
+        "message": "Make a fallback chain mean itself, empty or not (#1023)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Complete the French locale (#1022)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Bring the desktop boot sequence up to server parity and bump to 0.8.7 (#1017)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Paint pages at full width from the first frame (#1016)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Smooth the playground sidebars and quiet the composer (#1011)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Group the model budget legend by provider pool (#1010)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Tuck the secondary routing knobs behind More options (#1009)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Refresh the free-tier numbers and the stacked-tier graphic (#1006)",
+        "date": "2026-08-23"
+      }
+    ],
+    "hot_issues": [
+      {
+        "title": "Feature Request: Custom Groups",
+        "comments": 5,
+        "url": "https://github.com/tashfeenahmed/freellmapi/issues/960",
+        "labels": []
+      },
+      {
+        "title": "FreeLLMAPI-0.6.9-arm64.dmg \u65e0\u6cd5\u5728 macOS 26 \u663e\u793a\u7a97\u53e3",
+        "comments": 5,
+        "url": "https://github.com/tashfeenahmed/freellmapi/issues/807",
+        "labels": []
+      },
+      {
+        "title": "Israel?",
+        "comments": 4,
+        "url": "https://github.com/tashfeenahmed/freellmapi/issues/946",
+        "labels": []
+      },
+      {
+        "title": "Claude Desktop Model Discovery returns 0 usable models with FreeLLMAPI v0.7.0",
+        "comments": 3,
+        "url": "https://github.com/tashfeenahmed/freellmapi/issues/880",
+        "labels": []
+      },
+      {
+        "title": "CI health-check tests failing: Groq/Google API keys returning 401",
+        "comments": 2,
+        "url": "https://github.com/tashfeenahmed/freellmapi/issues/976",
+        "labels": []
+      }
+    ]
+  },
+  "tags": [
+    "freellmapi",
+    "tashfeenahmed"
+  ]
+}

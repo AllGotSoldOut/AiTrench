@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search — AI Trend Daily</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">AI Trend Daily</a>
+      <form class="searchbar" action="search.html" method="get">
+        <input type="search" id="q" name="q" placeholder="Search guides, tools, tags…" autofocus>
+        <button type="submit">Search</button>
+      </form>
+      <nav><a href="index.html">Home</a></nav>
+    </div>
+  </header>
+  <main class="container">
+    <div id="taglist" class="tagcloud"></div>
+    <h2 class="section-title" id="results-title">All guides</h2>
+    <section class="post-grid" id="results"></section>
+    <p id="noresults" hidden>No guides found — try another term.</p>
+  </main>
+  <script src="search-data.js"></script>
+  <script>
+    function card(p){
+      var tags=(p.tags||[]).slice(0,6).map(function(t){
+        return '<a class="tag" href="search.html?q='+encodeURIComponent(t)+'">'+t+'</a>';}).join(' ');
+      return '<article class="post-card"><span class="post-card-category">'+(p.category||'')+
+        '</span><h2><a href="'+p.file+'">'+p.title+'</a></h2><p class="card-desc">'+
+        (p.description||'')+'</p><div class="card-meta">'+p.date+'</div><div class="card-tags">'+
+        tags+'</div></article>';
+    }
+    function render(){
+      var q=(new URLSearchParams(location.search).get('q')||'').trim().toLowerCase();
+      var box=document.getElementById('results');
+      var list=window.POSTS||[];
+      if(q){ list=list.filter(function(p){
+        return (p.title+' '+p.description+' '+(p.tags||[]).join(' ')+' '+p.category).toLowerCase().indexOf(q)>=0;});}
+      document.getElementById('results-title').textContent =
+        q ? ('Results for "'+q+'" ('+list.length+')') : ('All guides ('+list.length+')');
+      box.innerHTML=list.map(card).join('');
+      document.getElementById('noresults').hidden = list.length>0;
+      document.getElementById('q').value=q;
+      // popular tag cloud
+      var counts={};(window.POSTS||[]).forEach(function(p){(p.tags||[]).forEach(function(t){
+        counts[t.toLowerCase()]=(counts[t.toLowerCase()]||0)+1;});});
+      var top=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).slice(0,24);
+      document.getElementById('taglist').innerHTML=top.map(function(t){
+        return '<a class="tagchip" href="?q='+encodeURIComponent(t)+'">'+t+' <span>'+counts[t]+'</span></a>';}).join('');
+    }
+    render();
+  </script>
+</body>
+</html>

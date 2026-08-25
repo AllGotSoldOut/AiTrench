@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenHuman — Local-First AI Memory, Agent Orchestration & Deep Research: Setup Guide</title>
+  <meta name="description" content="OpenHuman is an open-source AI harness with persistent local memory, durable agent-fleet orchestration, and deep research. Here's how to install and run it."/>
+  <meta name="post-tags" content="openhuman,tinyhumansai,agents,memory,orchestration,llm"/>
+  <meta name="post-category" content="Agents"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Agents</span>
+        <h1>OpenHuman: A Local-First AI Brain, Orchestrator, and Deep Researcher</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>OpenHuman (<a href="https://github.com/tinyhumansai/openhuman">GitHub</a>) is an open-source "AI harness" that bills itself as three things most assistants aren't: a brain with persistent local memory, an orchestrator that runs fleets of agents on durable graphs, and a deep researcher. Written in Rust (with a Tauri desktop shell), it hit ~37k stars within months of launching in February 2026 — including nine straight days as the #1 trending repo on GitHub. It's flagged early beta; expect rough edges.</p>
+
+      <p>What makes it different from another chat app wrapper is the memory design. Instead of vector-soup embeddings in a black box, the Memory Tree compresses your data into scored Markdown trees stored in SQLite on your machine, mirrored as an Obsidian vault you can open and edit yourself. Karpathy has publicly highlighted the approach.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>You want memory you can inspect.</strong> Your world lives as editable Markdown in an Obsidian vault on disk. Auto-fetch pulls from your integrations every 20 minutes so context stays fresh.</li>
+        <li><strong>You run long automations.</strong> Workflows are agent-proposed, canvas-reviewed, approval-gated runs on open-source tinyflows — durable and trigger-driven rather than fire-and-forget scripts.</li>
+        <li><strong>You need fleets, not one chat.</strong> Checkpointed graph runs on tinyagents: stuck agents get steered, halted agents return a root cause, and every run replays with per-call cost accounting.</li>
+        <li><strong>You're tired of API key sprawl.</strong> Managed web search (via Exa), scraper, browser, coder toolset, native Whisper voice, plus Seedream/SeedEdit image and Veo/Seedance video generation under one subscription — or point any workload at your own provider key or a local Ollama model.</li>
+        <li><strong>Your assistant should live where you chat.</strong> 17 messaging channels including Telegram, Discord, Slack, WhatsApp, Signal, iMessage, plus native email over IMAP IDLE + SMTP.</li>
+      </ul>
+
+      <p>One more thing worth knowing: TokenJuice compresses tool output before it hits the model — same information, up to 80% fewer tokens. Honestly, without something like that a brain this size would be unaffordable to run.</p>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Grab the installer for your platform from <a href="https://tinyhumans.ai/openhuman">tinyhumans.ai/openhuman</a> or the GitHub Releases page. The README emphasizes UI-first setup — install to working agent in a few clicks, no config files, no terminal.</li>
+        <li>Prefer your package manager? On macOS:
+<pre><code>brew install --cask openhuman</code></pre>
+        </li>
+        <li>On Debian/Ubuntu, download `OpenHuman_&lt;version&gt;_amd64.deb` (or arm64) from releases, then:
+<pre><code>sudo apt-get install -y --no-install-recommends ./OpenHuman_*_amd64.deb</code></pre>
+        <p>This lets apt resolve runtime dependencies — the docs specifically recommend it over the AppImage.</p>
+        </li>
+        <li>On Windows, run the signed `.msi` from the latest release page.</li>
+        <li>Arch users can use the in-repo AUR recipe once published:
+<pre><code>yay -S openhuman-bin</code></pre>
+        </li>
+        <li>A script install exists but is explicitly unverified (no signature shipped):
+<pre><code>curl -fsSL https://raw.githubusercontent.com/tinyhumansai/openhuman/main/scripts/install.sh | bash</code></pre>
+        <p>The project itself recommends the native packages instead (per official docs).</p>
+        </li>
+        <li>Launch the app, connect integrations (Gmail, Notion, GitHub, Slack…) via OAuth, and set goals/todos from the shared kanban board.</li>
+      </ol>
+
+      <h2>Screenshots</h2>
+      <p>The draft carries no downloadable screenshots — the README images are badges and logos. The demo capture and feature walkthroughs live in the official <a href="https://tinyhumans.gitbook.io/openhuman/">GitBook docs</a>.</p>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Building from source needs Git, Node.js 24+, pnpm 10.10.0, Rust 1.93.0 (rustfmt + clippy), CMake, Ninja, ripgrep, and platform desktop build prerequisites:</p>
+<pre><code>git clone https://github.com/tinyhumansai/openhuman.git
+cd openhuman
+git submodule update --init --recursive   # vendored Tauri/CEF sources
+pnpm install</code></pre>
+      <p>Dev loops:</p>
+<pre><code># web-only UI work
+pnpm dev
+
+# full desktop shell
+pnpm --filter openhuman-app dev:app
+
+# pre-PR checks
+pnpm typecheck
+pnpm format:check
+cargo check -p openhuman --lib</code></pre>
+
+      <h2>What's new</h2>
+      <p>Latest release: <strong>v0.63.12</strong> (Aug 7, 2026) — a housekeeping bump via the automated release workflow, no feature PRs in that range. Main is where the action is: the last day of commits merged fixes for origin label triage (#5634), turn-origin spawn helpers, removing Langfuse from production paths (#5602), current-user fetch backoff (#5624), making summarizer failures visible instead of silent (#5722), orphaned socket emits after reconnect (#5734), and thread-title model hints (#5637). The cadence tells you this is a fast-moving beta — pin versions if you run it seriously.</p>
+
+      <h2>Troubleshooting</h2>
+      <ol>
+        <li><strong>AppImage crashes on launch under Wayland.</strong> Known issue (#2463) — can also miss `libgbm.so.1` or fail on Arch with `sharun: Interpreter not found!`. Use the `.deb` package on Debian/Ubuntu instead; env-var workarounds are documented in the issue.</li>
+        <li><strong>Script install can't be trusted / fails integrity checks.</strong> There are no `.asc` signatures for install.sh/install.ps1 yet (#2620). Prefer Homebrew, MSI, or apt installs.</li>
+        <li><strong>`git submodule update` skipped → pnpm install explodes.</strong> Vendored Tauri/CEF sources are submodules. Always run `git submodule update --init --recursive` before `pnpm install`.</li>
+        <li><strong>Summarizer failures were invisible.</strong> Older builds swallowed them silently; fixed on main (#5722). Update, then watch the run journal — every run replays with real per-call costs.</li>
+        <li><strong>Socket emits lost after a reconnect.</strong> Orphaned-emit bug patched via #5734; if workflows drop events after network blips, update first.</li>
+      </ol>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>anthropics/claude-plugins-community — Step-by-Step Guide</title>
+  <meta name="description" content="How to install community plugins for Claude Code and Claude Cowork from Anthropic's new community plugin marketplace."/>
+  <meta name="post-tags" content="claude-plugins-community,anthropics,claude,plugins,marketplace,agents"/>
+  <meta name="post-category" content="LLM Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">LLM Tools</span>
+        <h1>Anthropic Opened a Community Plugin Marketplace — Here's How to Use It</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><strong>anthropics/claude-plugins-community</strong> is the official community plugin marketplace for <a href="https://claude.com/product/cowork">Claude Cowork</a> and <a href="https://claude.com/product/claude-code">Claude Code</a>. It hit GitHub trending this week at ~1,400 stars, and it changes how you extend Claude: instead of hand-copying slash commands or MCP configs into your project, you install reviewed plugins with one command.</p>
+
+      <p>The important architectural detail: this repo is a <em>read-only mirror</em>. The <code>.claude-plugin/marketplace.json</code> file is synced nightly from Anthropic's internal review pipeline. Every plugin in it has been submitted through claude.ai, passed automated security scanning, and been approved for distribution. You can't open a PR against the repo — pull requests are closed automatically. That sounds annoying until you realize what it buys you: nobody can slip a malicious commit into something you're about to install.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>You keep retyping the same custom commands across repos.</strong> Package your workflow once as a plugin (commands + agents + hooks), then install it everywhere in one line instead of maintaining dotfile copies.</li>
+        <li><strong>Your team wants shared tooling without a monorepo.</strong> Point everyone's Claude Code at this marketplace plus your own internal one, and onboarding becomes "run these two commands" rather than "copy these five files."</li>
+        <li><strong>You want MCP servers without manual config surgery.</strong> Plugins bundle MCP server definitions alongside commands and hooks, so adding, say, a database inspector doesn't mean hand-editing JSON config files.</li>
+        <li><strong>Claude Cowork users want vetted extensions.</strong> Cowork installs plugins from claude.com/plugins, backed by this same directory — everything there has cleared the security scan pipeline.</li>
+        <li><strong>You're evaluating before building your own plugin.</strong> The mirror doubles as a browsable catalog of real-world plugin structure — useful as a reference when you write your own.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Have Claude Code installed and on your PATH. Verify with:
+<pre><code>claude --version</code></pre></li>
+        <li>Add the community marketplace to Claude Code:
+<pre><code>claude plugin marketplace add anthropics/claude-plugins-community</code></pre>
+This registers the marketplace under the name <code>claude-community</code>.</li>
+        <li>Browse what's available. You can read the synced catalog directly on GitHub (<code>.claude-plugin/marketplace.json</code>) or check <a href="https://claude.com/plugins/">claude.com/plugins</a> for the browsable version.</li>
+        <li>Install a plugin by name:
+<pre><code>claude plugin install &lt;plugin-name&gt;@claude-community</code></pre></li>
+        <li>Restart your Claude Code session so the plugin's commands, agents, and hooks load, then try its commands with <code>/</code>.</li>
+        <li>If you'd rather build your own plugin and publish it: submit via <a href="https://clau.de/plugin-directory-submission">clau.de/plugin-directory-submission</a>. It goes through automated security scanning and review before appearing in the nightly sync. Don't PR the repo — it gets auto-closed.</li>
+      </ol>
+
+      <p>Related catalogs worth bookmarking: <a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a> for Anthropic-maintained plugins, and <a href="https://github.com/anthropics/knowledge-work-plugins">knowledge-work-plugins</a> for role-specific bundles.</p>
+
+      <h2>Code &amp; config samples</h2>
+      <p>A minimal local plugin layout that follows the same conventions the marketplace expects:</p>
+<pre><code>my-plugin/
+├── .claude-plugin/
+│   └── plugin.json
+├── commands/
+│   └── deploy.md
+├── agents/
+│   └── reviewer.json
+└── hooks/
+    └── hooks.json</code></pre>
+<p>And the day-to-day management commands:</p>
+<pre><code># list configured marketplaces
+claude plugin marketplace list
+
+# refresh the mirror sync
+claude plugin marketplace update anthropics/claude-plugins-community
+
+# remove a plugin you no longer want
+claude plugin uninstall &lt;plugin-name&gt;@claude-community</code></pre>
+<p>(Per official docs for the add/install flow; list/update flags follow standard Claude Code CLI conventions.)</p>
+
+      <h2>What's new</h2>
+      <p>The repo was created in March 2026 and is actively maintained — the latest push landed August 24, 2026, consistent with the nightly-sync model. There are no tagged releases (it's a data mirror, not software, which is expected). Worth watching alongside it: the companion official plugins repo, since plugins sometimes graduate between the two catalogs.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>"Marketplace not found"</strong> after adding — you likely typo'd the org/repo slug. It must be exactly <code>anthropics/claude-plugins-community</code>; re-run the <code>marketplace add</code> command.</li>
+        <li><strong>Newly approved plugin isn't showing up</strong> — the mirror syncs nightly, so approvals can lag up to a day. Run <code>claude plugin marketplace update anthropics/claude-plugins-community</code> to force a refresh.</li>
+        <li><strong>PR to the repo closed instantly</strong> — that's by design. All content flows from the internal review pipeline; submissions go through clau.de/plugin-directory-submission only.</li>
+        <li><strong>Plugin installed but its commands don't appear</strong> — running sessions don't hot-load plugins. Restart Claude Code (or start a fresh session) and check again.</li>
+        <li><strong>Name collision with an official plugin</strong> — if a plugin exists in both community and official marketplaces, qualify it explicitly with its marketplace suffix (<code>@claude-community</code> vs the official one) when installing.</li>
+      </ul>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

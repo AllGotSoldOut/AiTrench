@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenLogi — A Local-First, No-Account Alternative to Logitech Options+: Setup Guide</title>
+  <meta name="description" content="OpenLogi is a native Rust alternative to Logitech Options+ with button remapping, DPI and SmartShift over HID++, plain TOML config, and zero telemetry."/>
+  <meta name="post-tags" content="openlogi,logitech,hidpp,rust,mouse-remapping,dpi,smartshift,local-first"/>
+  <meta name="post-category" content="Dev Tools"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Dev Tools</span>
+        <h1>OpenLogi: Ditch Logitech Options+ Without Losing Your Mouse's Superpowers</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>OpenLogi (<a href="https://github.com/AprilNEA/OpenLogi">GitHub</a>, Apache-2.0/MIT dual-licensed) is a native, local-first replacement for Logitech Options+, written in Rust with GPUI. It talks to your Logitech mouse, keyboard, and webcam directly over HID++ and UVC — remap buttons, control DPI, tune SmartShift, adjust camera settings — with no account, no telemetry, and no Electron. Around <strong>16k stars</strong> since May 2026, trending hard on GitHub and fresh off a Product Hunt launch.</p>
+
+      <p>The honest hook: Options+ works, but it's heavy, requires sign-in, has no Linux support, and locks everything behind a GUI. OpenLogi runs light on macOS, Windows, and Linux (a first-class platform here), gives gestures to any physical button, keeps all config in one plain TOML file you can sync between machines, and ships a real CLI alongside the GUI.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>You're on Linux with an MX Master.</strong> Options+ simply doesn't run there. OpenLogi installs udev rules so you get full HID++ control — battery state, DPI, thumbwheel — without sudo.</li>
+        <li><strong>You want per-app profiles that actually switch.</strong> Profile overlays auto-switch on app focus (macOS + Windows; X11/XWayland on Linux). Browser profile gets back/forward on the thumbwheel; Blender profile gets something else entirely.</li>
+        <li><strong>Your config should be version-controlled.</strong> One TOML file describes every mapping. Sync it via dotfiles, diff it in git, script it through the CLI.</li>
+        <li><strong>You own a Logitech webcam too.</strong> Brio/StreamCam/C920 controls are written straight to UVC hardware, so zoom/focus/exposure changes apply in Meet, Zoom, OBS — everywhere the camera is used. Litra lights are supported as well, including power that follows camera activity.</li>
+        <li><strong>You hate the ratchet toggle dance.</strong> SmartShift sensitivity, mode toggles, even a permanent-ratchet panel (`0x2111`), plus per-direction gesture bindings with live capture.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li><strong>Quit Logi Options+ first.</strong> Both apps fight over HID++ access and only one can own a given receiver at a time.</li>
+        <li><strong>macOS 13+</strong> — grab the signed `.dmg` from releases, or use Homebrew:
+<pre><code>brew install --cask openlogi</code></pre>
+        <p>To track the newest GitHub release instead of the official cask autobump:</p>
+<pre><code>brew tap aprilnea/tap
+brew install --cask aprilnea/tap/openlogi@latest</code></pre>
+        <p>Install either `openlogi` or `openlogi@latest`, not both (per official docs).</p>
+        </li>
+        <li><strong>Linux</strong> — install the package for your distro from the latest release:
+<pre><code># Debian / Ubuntu
+sudo dpkg -i openlogi_*.deb
+
+# Fedora / RHEL
+sudo rpm -i openlogi-*.rpm
+
+# Arch Linux
+sudo pacman -U openlogi-*.pkg.tar.zst</code></pre>
+        <p>Packages cover x86_64 and arm64 and include udev rules granting user access to `/dev/hidraw*`, `/dev/uinput`, and your mouse's event node. Then enable the background agent:</p>
+<pre><code>systemctl --user enable --now openlogi-agent.service</code></pre>
+        </li>
+        <li><strong>Windows</strong> — signed portable `.zip` or per-user `.msi` (x86_64/arm64) from releases. Both ship `OpenLogi.exe` plus the background agent `openlogi-agent.exe`; keep the two files side by side if you go portable, or the GUI has nothing to connect to.</li>
+        <li>NixOS users can import the repo's NixOS module instead — it installs the package, udev rules, and starts the agent with your graphical session (see docs/INSTALL-linux.md).</li>
+        <li>Launch the app, pick your device, start remapping — or drive it headless via the CLI (see docs/USAGE.md).</li>
+      </ol>
+
+      <h2>Screenshots</h2>
+      <p>No UI screenshots ship with this draft — the repo's README images are logos and badges. The project site at <a href="https://openlogi.org">openlogi.org</a> shows the app in action.</p>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Everything lives in one TOML file. A flavor of what you can express:</p>
+<pre><code>[app_settings]
+# hide the agent tray icon on Windows (GUI toggle is macOS-only)
+show_in_menu_bar = false</code></pre>
+      <p>Beyond basic remapping, the feature set maps to concrete HID++ registers: DPI presets with Cycle/Set-preset actions (`0x2201`), SmartShift mode/sensitivity/ratchet (`0x2111`), native scroll inversion per device (`0x2121`), keyboard static RGB (`0x8070`/`0x8080`). Media key actions use D-Bus MPRIS on Linux; a few macOS-specific actions have no Linux equivalent and become no-ops.</p>
+      <p>The Actions Ring deserves a mention: an eight-slot, cursor-centered overlay of actions (`ShowActionsRing`) with per-application layouts — like a radial menu summoned under your pointer.</p>
+
+      <h2>What's new</h2>
+      <p>No tagged release yet and no curated release notes — the repo pushes straight to master (last push Aug 25, 2026) and warns plainly that it's "under active development and not yet stable." Recent momentum centers on Windows validation (install/upgrade/uninstall of the MSI tested end-to-end on Windows 11 with real hardware) and expanding webcam support. Watch the repo to catch the first stable release.</p>
+
+      <h2>Troubleshooting</h2>
+      <ol>
+        <li><strong>Devices don't respond / nothing is detected.</strong> Logi Options+ (or Solaar) is still running and holding the receiver. Only one application can own a HID++ device — quit the others before starting OpenLogi.</li>
+        <li><strong>Linux GUI won't talk to the device without sudo.</strong> The udev rules didn't apply. Reboot or reload udev after installing the package; on non-systemd distros follow the manual setup in docs/INSTALL-linux.md.</li>
+        <li><strong>Windows GUI opens but shows no devices.</strong> You're using the portable zip and moved `OpenLogi.exe` away from `openlogi-agent.exe`. The agent owns all device I/O — keep both files side by side, check the tray icon, and restart the agent.</li>
+        <li><strong>Some actions do nothing on Linux.</strong> Expected for macOS-specific actions with no universal equivalent; media keys need D-Bus MPRIS. Also note per-app overlays only work on X11/XWayland right now, not native Wayland.</li>
+        <li><strong>Config changed under you after an update.</strong> The project warns features and config may still change pre-stability. Keep your TOML in git so updates that alter semantics show up as diffs.</li>
+      </ol>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

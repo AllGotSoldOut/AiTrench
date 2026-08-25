@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes Agent — The Self-Improving AI Agent: Setup Guide</title>
+  <meta name="description" content="Hermes Agent by Nous Research is an open-source AI agent with a built-in learning loop — skills, memory, cron, and messaging gateways. Here's how to install and use it."/>
+  <meta name="post-tags" content="hermes-agent,nousresearch,ai,ai-agent,agents,llm,python"/>
+  <meta name="post-category" content="Agents"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Agents</span>
+        <h1>Hermes Agent: The AI Agent That Learns From Working With You</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>Hermes Agent (<a href="https://github.com/NousResearch/hermes-agent">GitHub</a>, MIT) is the open-source AI agent from Nous Research, and it has quietly become one of the biggest repos on GitHub — roughly <strong>236k stars</strong>. The differentiator isn't raw model access; it's that Hermes is built to get better at your specific work over time. After a complex task it writes itself a skill, improves that skill during later use, nudges itself to persist knowledge into memory, and can search its own past conversations when you ask about something you discussed weeks ago.</p>
+
+      <p>The other half of the pitch: it's not tied to your laptop. Run it on a $5 VPS, a GPU cluster, or serverless backends (Modal, Daytona) that hibernate when idle and cost nearly nothing between sessions — then talk to it from Telegram, Discord, Slack, WhatsApp, or Signal while it works in the cloud.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>An assistant that remembers being corrected.</strong> The agent-curated memory loop means "we always use pnpm, never npm" said once sticks around. Skills are compatible with the agentskills.io open standard, so what it learns isn't locked into one tool.</li>
+        <li><strong>Unattended automations.</strong> A built-in cron scheduler delivers results to any connected platform: a daily repo digest to Slack at 8am, nightly backups, weekly dependency audits — all described in natural language, no crontab syntax.</li>
+        <li><strong>One brain, every chat app.</strong> A single gateway process bridges Telegram, Discord, Slack, WhatsApp, Signal and the CLI, with voice memo transcription and conversation continuity across platforms. Start a task on your phone, finish it in the terminal.</li>
+        <li><strong>Parallel workstreams.</strong> Spawn isolated subagents for concurrent jobs, or have the agent write Python scripts that call its own tools via RPC — collapsing multi-step pipelines into single low-context turns.</li>
+        <li><strong>No provider lock-in.</strong> Use Nous Portal, OpenRouter, OpenAI, Anthropic, or your own endpoint; switch with <code>hermes model</code> and nothing else changes.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Install. On Linux, macOS, WSL2, or Termux:
+<pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+        On native Windows, run PowerShell:
+<pre><code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+        <p>The Windows installer provisions uv, Python 3.11, Node.js, ripgrep, ffmpeg, and a portable MinGit under <code>%LOCALAPPDATA%\hermes</code> — no admin rights, no interference with any system Git you already have.</p>
+        </li>
+        <li>Reload your shell and start chatting:
+<pre><code>source ~/.bashrc    # or: source ~/.zshrc
+hermes</code></pre>
+        </li>
+        <li>Pick your model:
+<pre><code>hermes model</code></pre>
+        <p>If you'd rather not collect five API keys for search, image gen, TTS and a cloud browser, <code>hermes setup --portal</code> wires everything through Nous Portal's single subscription instead.</p>
+        </li>
+        <li>Run the full setup wizard once to configure tools, channels, and workspace in one pass:
+<pre><code>hermes setup
+hermes tools     # toggle which tools are enabled</code></pre>
+        </li>
+        <li>Connect messaging (optional but it's the fun part):
+<pre><code>hermes gateway   # starts the Telegram/Discord/Slack/WhatsApp/Signal bridge</code></pre>
+        </li>
+        <li>Coming from OpenClaw? There's a migration path:
+<pre><code>hermes claw migrate --dry-run    # preview first
+hermes claw migrate              # persona, memories, skills, keys, settings</code></pre>
+        </li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Daily-driver commands worth memorizing:</p>
+<pre><code>hermes config set &lt;key&gt; &lt;value&gt;   # set individual config values
+hermes config get &lt;key&gt;           # read one back
+hermes doctor                     # diagnose issues
+hermes update                     # update to latest</code></pre>
+      <p>For contributors, the installer creates a full git checkout at <code>$HERMES_HOME/hermes-agent</code> (usually <code>~/.hermes/hermes-agent</code>) matching the managed-install layout:</p>
+<pre><code>cd "${HERMES_HOME:-$HOME/.hermes}/hermes-agent"
+uv pip install -e ".[all,dev]"
+scripts/run_tests.sh</code></pre>
+      <p>Skills are plain markdown files in <code>~/.hermes/skills/</code> — write one yourself describing a procedure and the agent loads it whenever the trigger matches. That's also how the agent saves its own learnings after complex tasks.</p>
+
+      <h2>What's new</h2>
+      <p>The current stable tag is v2026.8.19 (v0.20.5), released August 19, 2026 — a rollup of roughly 323 merged PRs (~746 commits, +111k lines) since the previous tag. Highlights: Bot Mode group-room threads for chat platforms, foldable conversation summaries, PDF/file attachments with drag &amp; drop, a keyless web tier (five-vendor free rotation with ring failover, so fresh installs get web search with zero API keys), and a CLI polish wave — fuzzy <code>/model</code> picker, Ctrl+P command palette, richer <code>/status</code>.</p>
+      <p>Commits since then show the pace: browser snapshots now truncate-and-store instead of paying for LLM summarization, terminal environments became pluggable via a plugin registry, the TUI/gateway WebSocket reconnect replay was fixed to actually deliver events, and long Signal/cron deliveries are chunked instead of truncated.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Windows Defender quarantines <code>uv.exe</code>.</strong> Almost certainly a false positive on Astral's unsigned Rust binary — ML antivirus engines flag it routinely. The README documents a full verification flow using GitHub attestations (<code>gh attestation verify</code>) plus hash comparison, and recommends whitelisting the <em>folder</em> (<code>%LOCALAPPDATA%\hermes\bin</code>), not the file hash, since uv updates each version.</li>
+        <li><strong>"Skills index is stale or degraded" warning.</strong> This is a known tracked issue (#66616, watchdog-generated). It usually resolves after the skills indexer finishes rebuilding; if it persists, <code>hermes doctor</code> will point at the degraded component before you go deleting anything.</li>
+        <li><strong>Shell commands misbehave on Windows.</strong> Hermes runs shell commands through its bundled Git Bash. If a command fails oddly, check whether it assumed PowerShell/cmd syntax; if you have your own Git installed, the installer uses that instead of MinGit.</li>
+        <li><strong>Gateway messages arrive duplicated or events lag after a disconnect.</strong> Fixed in recent commits ("make WS reconnect replay actually deliver events") — run <code>hermes update</code> rather than debugging your bot token.</li>
+        <li><strong>Dev setup keeps breaking mid-session.</strong> If you clone manually, put the venv <em>outside</em> the source tree — a venv inside the checkout can be wiped by a relative-path command the agent runs against its own files, destroying the runtime while it's working.</li>
+      </ul>
+
+      <p>Full docs live at <a href="https://hermes-agent.nousresearch.com/docs/">hermes-agent.nousresearch.com/docs</a>, and the Discord is active if you hit something odd.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

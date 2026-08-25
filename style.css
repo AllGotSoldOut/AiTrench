@@ -224,3 +224,38 @@ body {
   .steps li { padding-left: 56px; }
   .steps li::before { width: 28px; height: 28px; font-size: 0.85rem; }
 }
+
+/* ── Header search + tags ── */
+.header-inner { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.header-inner .logo { margin-right: auto; }
+.searchbar { display: flex; flex: 1 1 260px; max-width: 420px; }
+.searchbar input {
+  flex: 1; padding: 8px 12px; border: 1px solid var(--border);
+  border-radius: 8px 0 0 8px; background: var(--surface); color: var(--text); font-size: 0.95rem;
+}
+.searchbar button {
+  padding: 8px 14px; border: none; border-radius: 0 8px 8px 0;
+  background: var(--accent); color: #fff; cursor: pointer; font-size: 0.95rem;
+}
+.searchbar button:hover { background: var(--accent-hover, #3b82f6); }
+.hero { text-align: center; padding: 40px 0 10px; }
+.hero h1 { font-size: 2rem; margin-bottom: 10px; }
+.hero p { color: var(--text-dim); max-width: 640px; margin: 0 auto 18px; }
+.tagcloud { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 16px 0; }
+.tagchip {
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+}
+.tagchip span { color: var(--accent); margin-left: 4px; }
+.tagchip:hover { border-color: var(--accent); color: var(--text); }
+.post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.card-desc { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 10px; }
+.card-meta { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 8px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.card-tags .tag { font-size: 0.75rem; padding: 2px 8px; }
+.post article figure, .post figure { margin: 18px 0; text-align: center; }
+.post figure img { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); }
+.post figcaption { font-size: 0.85rem; color: var(--text-dim); margin-top: 6px; }
+.troubleshoot-item { border-left: 3px solid var(--accent); padding: 8px 14px; margin: 14px 0; background: var(--surface); border-radius: 0 8px 8px 0; }
+.troubleshoot-item .symptom { font-weight: 600; }

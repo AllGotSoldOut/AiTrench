@@ -1,0 +1,83 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-free-claude-code",
+  "topic": {
+    "name": "Alishahryar1/free-claude-code",
+    "source": "github_trending",
+    "url": "https://github.com/Alishahryar1/free-claude-code",
+    "stars": 49154,
+    "description": "Use Claude Code, Codex, Pi, and OpenCode for free (1.3B+ free tokens) from your terminal, app, IDE, or phone like OpenClaw (voice supported + ToS friendly)",
+    "language": "Python",
+    "topics": [],
+    "homepage": "",
+    "pushed_at": "2026-08-25",
+    "created_at": "2026-01-28",
+    "default_branch": "main",
+    "_score": 2183.08
+  },
+  "mode": "docs",
+  "readme_excerpt": "<div align=\"center\">\n\n<h1>\n  <picture>\n    <source media=\"(prefers-color-scheme: light)\" srcset=\"assets/free-claude-code-wordmark-light.svg\">\n    <img src=\"assets/free-claude-code-wordmark-dark.svg\" alt=\"Free Claude Code\" width=\"610\">\n  </picture>\n</h1>\n\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)\n[![Python 3.14](https://img.shields.io/badge/python-3.14-3776ab.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)\n[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json&style=for-the-badge)](https://github.com/astral-sh/uv)\n[![Testing: Pytest](https://img.shields.io/badge/Testing-Pytest-00c0ff.svg?style=for-the-badge)](https://github.com/Alishahryar1/free-claude-code/actions/workflows/tests.yml)\n[![Type checking: Ty](https://img.shields.io/badge/type%20checking-ty-ffcc00.svg?style=for-the-badge)](https://pypi.org/project/ty/)\n[![Code style: Ruff](https://img.shields.io/badge/code%20formatting-ruff-f5a623.svg?style=for-the-badge)](https://github.com/astral-sh/ruff)\n[![Logging: Loguru](https://img.shields.io/badge/logging-loguru-4ecdc4.svg?style=for-the-badge)](https://github.com/Delgan/loguru)\n\n[Quick Start](#quick-start) \u00b7 [Providers](#choose-a-provider) \u00b7 [Clients](#connect-your-client) \u00b7 [Integrations](#optional-integrations) \u00b7 [Manage](#manage-your-installation)\n\n</div>\n\n<p align=\"center\">\n  <em>Independent open-source project. Not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic.</em>\n</p>\n\n## What You Get\n\n- **50 ToS-friendly providers. 1.3B+ free tokens every month.** Use free, paid, subscription, and local models from one searchable UI without putting your account at risk. FCC follows provider terms and removes integrations if they stop being allowed.\n- **9 coding agents. One model catalog.** Run [Claude Code](https://code.claude.com/docs/en/overview), [Codex](https://github.com/openai/codex), [Pi](https://github.com/earendil-works/pi), [OpenCode](https://github.com/anomalyco/opencode), [Cline](https://github.com/cline/cline), [Hermes](https://github.com/NousResearch/hermes-agent), [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), [Grok Build](https://github.com/xai-org/grok-build), or [Muse Code](https://research.meta.ai/blog/introducing-muse-code-and-muse-spark-1-2/) with your FCC models.\n- **Keep coding through provider outages.** After retries are exhausted, FCC automatically tries your next configured model without making you restart the turn\u2014across every client.\n- **Up to 90% fewer terminal-output tokens.** Optional [RTK](https://github.com/rtk-ai/rtk) filters common command output, while five FCC optimizations handle quota probes, command-prefix detection, titles, suggestions, and filepaths without calling a provider.\n- **Terminal, desktop, IDE, or phone.** Work through native launchers, [VS Code](https://code.visualstudio.com/), [Codex App](https://learn.chatgpt.com/docs/app), [JetBrains](https://www.jetbrains.com/), [Discord](https://discord.com/), or [Telegram](https://telegram.org/).\n- **Voice notes in. Code out.** Talk to your agent using local [Whisper](https://github.com/openai/whisper) or [NVIDIA NIM](https://docs.nvidia.com/nim/speech/latest/asr/deploy-asr-models/whisper.html) transcription.\n- **Agent capabilities stay intact.** Stream responses, use tools, preserve native interleaved thinking for maximum performance, send images, and route [Fable](https://www.anthropic.com/claude/fable), [Opus](https://www.anthropic.com/claude/opus), [Sonnet](https://www.anthropic.com/claude/sonnet), and [Haiku](https://www.anthropic.com/claude/haiku) independently with compatible models.\n\nFree-tier availability and limits are controlled by each provider and may change.\n\n<div align=\"center\">\n  <img src=\"assets/pic.png\" alt=\"Claude Code running with Free Claude Code\" width=\"700\">\n  <p><em>Claude Code running with FCC.</em></p>\n</div>\n\n## Quick Start\n\n<a id=\"install\"></a>\n\n### 1. Install Or Update\n\nmacOS/Linux:\n\n```bash\ncurl -fsSL \"https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.sh\" | sh\n```\n\nWindows PowerShell:\n\n```powershell\n& ([scriptblock]::Create((irm \"https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.ps1\")))\n```\n\nRe-run the same command to update. When prompted, choose at least one coding agent and optionally RTK. You can review the installers before running them: [install.sh](scripts/install.sh) and [install.ps1](scripts/install.ps1).\n\n### 2. Start FCC\n\n#### Windows\n\nOpen **Free Claude Code** from your desktop or Start menu.\n\n#### macOS\n\nOpen **Free Claude Code** from your desktop or Applications folder.\n\n#### Linux\n\nRun:\n\n```bash\nfcc-server\n```\n\nFCC opens the Admin UI after starting. On Windows and macOS, use the tray or\nmenu-bar icon to open Admin, restart, or quit. When using `fcc-server`, keep its\nterminal open.\n\n<a id=\"nvidia-nim-provider\"></a>\n\n### 3. Configure NVIDIA NIM\n\n1. Create an API key at [build.nvidia.com/settings/api-keys](https://build.nvidia.com/settings/api-keys).\n2. Open the Admin UI URL from the server log.\n3. Paste the key into `NVIDIA_NIM_API_KEY`.\n4. Leave `MODEL` on the default `nvidia_nim/nvidia/nemotron-3-super-120b-a12b`, or search the model dropdown and select another model.\n5. Click **Validate**, then **Apply**.\n\nTo protect the local proxy with a bearer token, enable **Proxy Authentication**\nin Admin.\n\n<div align=\"center\">\n  <img src=\"assets/admin-page.png\" alt=\"Free Claude Code Admin UI\" width=\"700\">\n</div>\n\n### 4. Run Your Coding Agent\n\nClaude Code:\n\n```bash\nfcc-claude\n```\n\nCodex:\n\n```bash\nfcc-codex\n```\n\nPi:\n\n```bash\nfcc-pi\n```\n\nOpenCode:\n\n```bash\nfcc-opencode\n```\n\nCline:\n\n```bash\nfcc-cline\n```\n\nHermes:\n\n```bash\nfcc-hermes\n```\n\nDeepSeek Harness Web:\n\n```bash\nfcc-dsh\n```\n\nGrok Build:\n\n```bash\nfcc-grok\n```\n\nMuse Code:\n\n```bash\nfcc-muse\n```\n",
+  "readme_images": [],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [
+      {
+        "message": "Revert canonical protocol refactor series (#1549)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Share Chat and Responses stream execution lifecycle (#1546)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Canonicalize request ingress (#1542)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Canonicalize provider output events (#1541)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Route OpenCode models by catalog transport (#1540)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Add LLM7.io as the 50th provider (#1536)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "docs: simplify launcher and voice setup (#1535)",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Escape Telegram MarkdownV2 image fallback as plain text (#1526)",
+        "date": "2026-08-23"
+      }
+    ],
+    "hot_issues": [
+      {
+        "title": "Provider API request failed",
+        "comments": 32,
+        "url": "https://github.com/Alishahryar1/free-claude-code/issues/342",
+        "labels": []
+      },
+      {
+        "title": "After processing everything, it's showing a paid model.",
+        "comments": 18,
+        "url": "https://github.com/Alishahryar1/free-claude-code/issues/241",
+        "labels": []
+      },
+      {
+        "title": "Claude runs for 1\u20135 minutes and then returns the error \u201cProvider API request failed\u201d (request_id=req_6daa90b7ff41). How ",
+        "comments": 17,
+        "url": "https://github.com/Alishahryar1/free-claude-code/issues/620",
+        "labels": []
+      }
+    ]
+  },
+  "tags": [
+    "Alishahryar1",
+    "free-claude-code"
+  ]
+}

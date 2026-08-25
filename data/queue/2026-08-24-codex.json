@@ -1,0 +1,123 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-codex",
+  "topic": {
+    "name": "openai/codex",
+    "source": "github_trending",
+    "url": "https://github.com/openai/codex",
+    "stars": 117319,
+    "description": "Lightweight coding agent that runs in your terminal",
+    "language": "Rust",
+    "topics": [],
+    "homepage": "",
+    "pushed_at": "2026-08-25",
+    "created_at": "2025-04-13",
+    "default_branch": "main",
+    "_score": 2200.0
+  },
+  "mode": "docs",
+  "readme_excerpt": "<p align=\"center\"><strong>Codex CLI</strong> is a coding agent from OpenAI that runs locally on your computer.\n<p align=\"center\">\n  <img src=\"https://github.com/openai/codex/blob/main/.github/codex-cli-splash.png\" alt=\"Codex CLI splash\" width=\"80%\" />\n</p>\n</br>\nIf you want Codex in your code editor (VS Code, Cursor, Windsurf), <a href=\"https://developers.openai.com/codex/ide\">install in your IDE.</a>\n</br>If you want the desktop app experience, run <code>codex app</code> or visit <a href=\"https://chatgpt.com/codex?app-landing-page=true\">the Codex App page</a>.\n</br>If you are looking for the <em>cloud-based agent</em> from OpenAI, <strong>Codex Web</strong>, go to <a href=\"https://chatgpt.com/codex\">chatgpt.com/codex</a>.</p>\n\n---\n\n## Quickstart\n\n### Installing and running Codex CLI\n\nRun the following on Mac or Linux to install Codex CLI:\n\n```shell\ncurl -fsSL https://chatgpt.com/codex/install.sh | sh\n```\n\nRun the following on Windows to install Codex CLI:\n\n```shell\npowershell -ExecutionPolicy ByPass -c \"irm https://chatgpt.com/codex/install.ps1 | iex\"\n```\n\nThe standalone installers download from `https://releases.openai.com/codex` by default and fall back to GitHub Releases if a metadata or asset download is unavailable. To force GitHub Releases, set `CODEX_INSTALLER_USE_RELEASES_OPENAI_COM` to `false` (`0` and `no` are also accepted):\n\n```shell\ncurl -fsSL https://chatgpt.com/codex/install.sh | CODEX_INSTALLER_USE_RELEASES_OPENAI_COM=false sh\n```\n\n```powershell\n$env:CODEX_INSTALLER_USE_RELEASES_OPENAI_COM='false'; irm https://chatgpt.com/codex/install.ps1 | iex\n```\n\nCodex CLI can also be installed via the following package managers:\n\n```shell\n# Install using npm\nnpm install -g @openai/codex\n```\n\n```shell\n# Install using Homebrew\nbrew install --cask codex\n```\n\nThen simply run `codex` to get started.\n\n<details>\n<summary>You can also go to the <a href=\"https://github.com/openai/codex/releases/latest\">latest GitHub Release</a> and download the appropriate binary for your platform.</summary>\n\nEach GitHub Release contains many executables, but in practice, you likely want one of these:\n\n- macOS\n  - Apple Silicon/arm64: `codex-aarch64-apple-darwin.tar.gz`\n  - x86_64 (older Mac hardware): `codex-x86_64-apple-darwin.tar.gz`\n- Linux\n  - x86_64: `codex-x86_64-unknown-linux-musl.tar.gz`\n  - arm64: `codex-aarch64-unknown-linux-musl.tar.gz`\n\nEach archive contains a single entry with the platform baked into the name (e.g., `codex-x86_64-unknown-linux-musl`), so you likely want to rename it to `codex` after extracting it.\n\n</details>\n\n### Using Codex with your ChatGPT plan\n\nRun `codex` and select **Sign in with ChatGPT**. We recommend signing into your ChatGPT account to use Codex as part of your Plus, Pro, Business, Edu, or Enterprise plan. [Learn more about what's included in your ChatGPT plan](https://help.openai.com/en/articles/11369540-codex-in-chatgpt).\n\nYou can also use Codex with an API key, but this requires [additional setup](https://developers.openai.com/codex/auth#sign-in-with-an-api-key).\n\n## Docs\n\n- [**Codex Documentation**](https://developers.openai.com/codex)\n- [**Contributing**](./docs/contributing.md)\n- [**Installing & building**](./docs/install.md)\n- [**Open source fund**](./docs/open-source-fund.md)\n\nThis repository is licensed under the [Apache-2.0 License](LICENSE).\n",
+  "readme_images": [
+    "https://github.com/openai/codex/blob/main/.github/codex-cli-splash.png"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": {
+      "tag": "rust-v0.149.1",
+      "date": "2026-08-24",
+      "notes": "\n\n## Changelog\n\nFull Changelog: https://github.com/openai/codex/compare/rust-v0.149.0...rust-v0.149.1\n\n\n\n"
+    },
+    "recent_commits": [
+      {
+        "message": "Route extension hints into context-window metadata (#40533)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Represent terminal input in approval reviews (#40528)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Retry provider auth commands after initial failures (#40523)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Add dot-repeat to Vim mode (#40521)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Add hooks for interrupted turns (#40511)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Add persisted thread artifact models (#40509)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Persist realtime events in the thread timeline (#40508)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "Route cyber Trusted Access links by plan type (#40504)",
+        "date": "2026-08-25"
+      }
+    ],
+    "hot_issues": [
+      {
+        "title": "Support 1M token context for GPT-5.5 in Codex",
+        "comments": 132,
+        "url": "https://github.com/openai/codex/issues/19464",
+        "labels": [
+          "enhancement",
+          "context"
+        ]
+      },
+      {
+        "title": "Codex App frequently freezes/stutters on Windows 11 Pro despite sufficient system resources",
+        "comments": 108,
+        "url": "https://github.com/openai/codex/issues/20214",
+        "labels": [
+          "bug",
+          "windows-os",
+          "app",
+          "performance"
+        ]
+      },
+      {
+        "title": "Codex Desktop for macOS repeatedly triggers `syspolicyd` / `trustd` CPU and memory runaway",
+        "comments": 85,
+        "url": "https://github.com/openai/codex/issues/25719",
+        "labels": [
+          "bug",
+          "app",
+          "computer-use",
+          "performance"
+        ]
+      },
+      {
+        "title": "Add setting to disable the auto-resolve in 60 seconds for questions",
+        "comments": 83,
+        "url": "https://github.com/openai/codex/issues/28969",
+        "labels": [
+          "bug",
+          "CLI",
+          "config",
+          "plan"
+        ]
+      },
+      {
+        "title": "Codex replies to earlier messages instead of latest one in conversations",
+        "comments": 83,
+        "url": "https://github.com/openai/codex/issues/8648",
+        "labels": [
+          "bug",
+          "context",
+          "agent"
+        ]
+      }
+    ]
+  },
+  "tags": [
+    "codex",
+    "openai"
+  ]
+}

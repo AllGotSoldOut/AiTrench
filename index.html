@@ -3,65 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Trend Daily — Install guides for trending AI tools</title>
-  <meta name="description" content="Daily how-to install guides for trending AI repos: real commands, configs, and verification.">
+  <title>AI Trend Daily — Step-by-step guides for trending AI tools</title>
+  <meta name="description" content="Fresh step-by-step guides for the hottest trending AI repos and tools.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
-    <div class="container">
+    <div class="container header-inner">
       <a href="index.html" class="logo">AI Trend Daily</a>
-      <nav><a href="index.html">Home</a></nav>
+      <form class="searchbar" action="search.html" method="get">
+        <input type="search" name="q" placeholder="Search guides, tools, tags…" aria-label="Search">
+        <button type="submit">Search</button>
+      </form>
+      <nav><a href="index.html">Home</a><a href="search.html">Browse tags</a></nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <h1>AI Trend Daily</h1>
-      <p class="hero-desc">Install guides for the hottest AI tools — commands, not recaps.</p>
-      <p class="hero-sub">Each post is a copy-paste how-to: prerequisites, install commands, config, and how to verify it worked.</p>
-    </div>
-  </section>
-
   <main class="container">
-    <h2 class="section-title">Sample guides</h2>
-    <div class="post-grid">
-      <article class="post-card">
-        <span class="post-card-category">NousResearch/hermes-agent</span>
-        <h2><a href="posts/2026-08-20-hermes-agent.html">How to Install Hermes Agent</a></h2>
-        <div class="post-card-meta">
-          <span>August 20, 2026</span>
-          <span class="sep">·</span>
-          <span>Windows / Linux / macOS</span>
-        </div>
-        <p class="post-card-desc">PowerShell and curl installers, <code>hermes setup --portal</code>, <code>hermes doctor</code>, first chat, optional gateway.</p>
-        <a href="posts/2026-08-20-hermes-agent.html" class="read-more">Read the guide &rarr;</a>
-      </article>
+    <section class="hero">
+      <h1>Guides for what's trending in AI — today.</h1>
+      <p>Step-by-step install &amp; setup walkthroughs, use cases, code samples and troubleshooting, updated daily from the trending repos everyone's talking about.</p>
+      <div class="tagcloud"><a class="tagchip" href="search.html?q=agents">agents <span>7</span></a><a class="tagchip" href="search.html?q=llm">llm <span>7</span></a><a class="tagchip" href="search.html?q=claude-code">claude-code <span>5</span></a><a class="tagchip" href="search.html?q=codex">codex <span>3</span></a><a class="tagchip" href="search.html?q=rust">rust <span>3</span></a><a class="tagchip" href="search.html?q=python">python <span>2</span></a><a class="tagchip" href="search.html?q=agent-skills">agent-skills <span>2</span></a><a class="tagchip" href="search.html?q=openai">openai <span>2</span></a><a class="tagchip" href="search.html?q=terminal">terminal <span>2</span></a><a class="tagchip" href="search.html?q=proxy">proxy <span>2</span></a><a class="tagchip" href="search.html?q=golang">golang <span>2</span></a><a class="tagchip" href="search.html?q=liweiyi88">liweiyi88 <span>2</span></a><a class="tagchip" href="search.html?q=ai">ai <span>2</span></a><a class="tagchip" href="search.html?q=ai-agent">ai-agent <span>2</span></a><a class="tagchip" href="search.html?q=local-first">local-first <span>2</span></a><a class="tagchip" href="search.html?q=docker">docker <span>2</span></a><a class="tagchip" href="search.html?q=ai-engineering-from-scratch">ai-engineering-from-scratch <span>1</span></a><a class="tagchip" href="search.html?q=rohitg00">rohitg00 <span>1</span></a><a class="tagchip" href="search.html?q=course">course <span>1</span></a><a class="tagchip" href="search.html?q=ai-job-search">ai-job-search <span>1</span></a><a class="tagchip" href="search.html?q=madslorentzen">madslorentzen <span>1</span></a><a class="tagchip" href="search.html?q=career">career <span>1</span></a><a class="tagchip" href="search.html?q=cv">cv <span>1</span></a><a class="tagchip" href="search.html?q=cover-letter">cover-letter <span>1</span></a></div>
+    </section>
 
-      <article class="post-card">
-        <span class="post-card-category">langgenius/dify</span>
-        <h2><a href="posts/2026-08-19-dify.html">How to Self-Host Dify with Docker Compose</a></h2>
-        <div class="post-card-meta">
-          <span>August 19, 2026</span>
-          <span class="sep">·</span>
-          <span>Docker Compose</span>
-        </div>
-        <p class="post-card-desc">Clone latest release, copy <code>.env</code>, <code>docker compose up -d</code>, admin at <code>/install</code>, add a model.</p>
-        <a href="posts/2026-08-19-dify.html" class="read-more">Read the guide &rarr;</a>
+    <h2 class="section-title">Latest guides</h2>
+    <section class="post-grid">
+      <article class="post-card" data-tags="ai-engineering-from-scratch rohitg00 course agents llm python">
+        <span class="post-card-category">Learning</span>
+        <h2><a href="posts/2026-08-24-ai-engineering-from-scratch.html">AI Engineering from Scratch</a></h2>
+        <p class="card-desc">A free, build-first curriculum of 511 lessons across 20 phases for learning AI engineering — now with certification prep and five languages.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=ai-engineering-from-scratch">ai-engineering-from-scratch</a> <a class="tag" href="search.html?q=rohitg00">rohitg00</a> <a class="tag" href="search.html?q=course">course</a> <a class="tag" href="search.html?q=agents">agents</a> <a class="tag" href="search.html?q=llm">llm</a> </div>
       </article>
-
-      <article class="post-card">
-        <span class="post-card-category">open-webui/open-webui</span>
-        <h2><a href="posts/2026-08-18-open-webui.html">How to Install Open WebUI (Docker + Ollama)</a></h2>
-        <div class="post-card-meta">
-          <span>August 18, 2026</span>
-          <span class="sep">·</span>
-          <span>Docker</span>
-        </div>
-        <p class="post-card-desc"><code>docker run</code> on port 3000, persist volume, connect Ollama, pull Gemma, set <code>WEBUI_SECRET_KEY</code>.</p>
-        <a href="posts/2026-08-18-open-webui.html" class="read-more">Read the guide &rarr;</a>
+      <article class="post-card" data-tags="ai-job-search madslorentzen claude-code career cv cover-letter agents">
+        <span class="post-card-category">Productivity</span>
+        <h2><a href="posts/2026-08-24-ai-job-search.html">AI Job Search</a></h2>
+        <p class="card-desc">An open-source job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, and prep interviews — on your own machine.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=ai-job-search">ai-job-search</a> <a class="tag" href="search.html?q=madslorentzen">madslorentzen</a> <a class="tag" href="search.html?q=claude-code">claude-code</a> <a class="tag" href="search.html?q=career">career</a> <a class="tag" href="search.html?q=cv">cv</a> </div>
       </article>
-    </div>
+      <article class="post-card" data-tags="andrej-karpathy-skills multica-ai claude-code llm coding-agents">
+        <span class="post-card-category">LLM Tools</span>
+        <h2><a href="posts/2026-08-24-andrej-karpathy-skills.html">Andrej Karpathy Skills</a></h2>
+        <p class="card-desc">A single CLAUDE.md file that fixes Claude Code&#x27;s worst coding habits, derived from Andrej Karpathy&#x27;s observations on LLM coding pitfalls.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=andrej-karpathy-skills">andrej-karpathy-skills</a> <a class="tag" href="search.html?q=multica-ai">multica-ai</a> <a class="tag" href="search.html?q=claude-code">claude-code</a> <a class="tag" href="search.html?q=llm">llm</a> <a class="tag" href="search.html?q=coding-agents">coding-agents</a> </div>
+      </article>
+      <article class="post-card" data-tags="awesome-agent-skills voltagent agent-skills claude-code codex gemini-cli cursor">
+        <span class="post-card-category">Agents</span>
+        <h2><a href="posts/2026-08-24-awesome-agent-skills.html">Awesome Agent Skills</a></h2>
+        <p class="card-desc">How to use VoltAgent/awesome-agent-skills, a curated list of 1000+ agent skills from official dev teams that work with Claude Code, Codex, Gemini CLI, and Curso</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=awesome-agent-skills">awesome-agent-skills</a> <a class="tag" href="search.html?q=voltagent">voltagent</a> <a class="tag" href="search.html?q=agent-skills">agent-skills</a> <a class="tag" href="search.html?q=claude-code">claude-code</a> <a class="tag" href="search.html?q=codex">codex</a> </div>
+      </article>
+      <article class="post-card" data-tags="awesome-gpt-image-2 freestylefly gpt-image-2 image-prompts prompt-engineering chatgpt ai-image-generation">
+        <span class="post-card-category">LLM Tools</span>
+        <h2><a href="posts/2026-08-24-awesome-gpt-image-2.html">awesome-gpt-image-2</a></h2>
+        <p class="card-desc">awesome-gpt-image-2 is a prompt-as-code engine and template library for GPT Image 2, with 530+ reverse-engineered cases and 20+ industrial templates.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=awesome-gpt-image-2">awesome-gpt-image-2</a> <a class="tag" href="search.html?q=freestylefly">freestylefly</a> <a class="tag" href="search.html?q=gpt-image-2">gpt-image-2</a> <a class="tag" href="search.html?q=image-prompts">image-prompts</a> <a class="tag" href="search.html?q=prompt-engineering">prompt-engineering</a> </div>
+      </article>
+      <article class="post-card" data-tags="claude-obsidian agricidaniel claude-code obsidian ai-second-brain pkm knowledge-graph agent-skills">
+        <span class="post-card-category">Productivity</span>
+        <h2><a href="posts/2026-08-24-claude-obsidian.html">claude-obsidian</a></h2>
+        <p class="card-desc">claude-obsidian turns Obsidian + Claude Code into a self-organizing AI second brain: drop any source, and Claude reads, links, and files it into a Markdown know</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=claude-obsidian">claude-obsidian</a> <a class="tag" href="search.html?q=agricidaniel">agricidaniel</a> <a class="tag" href="search.html?q=claude-code">claude-code</a> <a class="tag" href="search.html?q=obsidian">obsidian</a> <a class="tag" href="search.html?q=ai-second-brain">ai-second-brain</a> </div>
+      </article>
+      <article class="post-card" data-tags="claude-plugins-community anthropics claude plugins marketplace agents">
+        <span class="post-card-category">LLM Tools</span>
+        <h2><a href="posts/2026-08-24-claude-plugins-community.html">anthropics/claude-plugins-community</a></h2>
+        <p class="card-desc">How to install community plugins for Claude Code and Claude Cowork from Anthropic&#x27;s new community plugin marketplace.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=claude-plugins-community">claude-plugins-community</a> <a class="tag" href="search.html?q=anthropics">anthropics</a> <a class="tag" href="search.html?q=claude">claude</a> <a class="tag" href="search.html?q=plugins">plugins</a> <a class="tag" href="search.html?q=marketplace">marketplace</a> </div>
+      </article>
+      <article class="post-card" data-tags="codex openai coding-agent cli rust terminal">
+        <span class="post-card-category">Agents</span>
+        <h2><a href="posts/2026-08-24-codex.html">openai/codex</a></h2>
+        <p class="card-desc">Codex CLI: OpenAI&#x27;s open-source coding agent that runs in your terminal. Install, configure, and avoid the common pitfalls.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=codex">codex</a> <a class="tag" href="search.html?q=openai">openai</a> <a class="tag" href="search.html?q=coding-agent">coding-agent</a> <a class="tag" href="search.html?q=cli">cli</a> <a class="tag" href="search.html?q=rust">rust</a> </div>
+      </article>
+      <article class="post-card" data-tags="free-claude-code claude-code codex opencode agents llm proxy">
+        <span class="post-card-category">LLM Tools</span>
+        <h2><a href="posts/2026-08-24-free-claude-code.html">Alishahryar1/free-claude-code</a></h2>
+        <p class="card-desc">Free Claude Code (FCC): route Claude Code, Codex, and 7 other coding agents through 50 ToS-friendly providers with 1.3B+ free tokens a month.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=free-claude-code">free-claude-code</a> <a class="tag" href="search.html?q=claude-code">claude-code</a> <a class="tag" href="search.html?q=codex">codex</a> <a class="tag" href="search.html?q=opencode">opencode</a> <a class="tag" href="search.html?q=agents">agents</a> </div>
+      </article>
+      <article class="post-card" data-tags="freellmapi llm api proxy openai free-tier typescript">
+        <span class="post-card-category">LLM Tools</span>
+        <h2><a href="posts/2026-08-24-freellmapi.html">FreeLLMAPI</a></h2>
+        <p class="card-desc">FreeLLMAPI aggregates free tiers from 34 LLM providers behind one OpenAI-compatible endpoint with smart routing, failover, and encrypted keys. Here&#x27;s how to set</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=freellmapi">freellmapi</a> <a class="tag" href="search.html?q=llm">llm</a> <a class="tag" href="search.html?q=api">api</a> <a class="tag" href="search.html?q=proxy">proxy</a> <a class="tag" href="search.html?q=openai">openai</a> </div>
+      </article>
+      <article class="post-card" data-tags="gosnakego go golang snake-game terminal liweiyi88">
+        <span class="post-card-category">Learning</span>
+        <h2><a href="posts/2026-08-24-gosnakego.html">gosnakego</a></h2>
+        <p class="card-desc">gosnakego is a tiny terminal snake game written in Go — a single binary, arrow keys, no dependencies. Here&#x27;s how to play it and what the source teaches.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=gosnakego">gosnakego</a> <a class="tag" href="search.html?q=go">go</a> <a class="tag" href="search.html?q=golang">golang</a> <a class="tag" href="search.html?q=snake-game">snake-game</a> <a class="tag" href="search.html?q=terminal">terminal</a> </div>
+      </article>
+      <article class="post-card" data-tags="hermes-agent nousresearch ai ai-agent agents llm python">
+        <span class="post-card-category">Agents</span>
+        <h2><a href="posts/2026-08-24-hermes-agent.html">Hermes Agent</a></h2>
+        <p class="card-desc">Hermes Agent by Nous Research is an open-source AI agent with a built-in learning loop — skills, memory, cron, and messaging gateways. Here&#x27;s how to install and</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=hermes-agent">hermes-agent</a> <a class="tag" href="search.html?q=nousresearch">nousresearch</a> <a class="tag" href="search.html?q=ai">ai</a> <a class="tag" href="search.html?q=ai-agent">ai-agent</a> <a class="tag" href="search.html?q=agents">agents</a> </div>
+      </article>
+      <article class="post-card" data-tags="maka apache agent-runtime ai-agent llm event-sourcing local-first">
+        <span class="post-card-category">Agents</span>
+        <h2><a href="posts/2026-08-24-maka.html">Apache Maka</a></h2>
+        <p class="card-desc">Apache Maka (Incubating) is a local-first AI agent runtime and desktop workspace that records every model message and tool call as a recoverable execution log.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=maka">maka</a> <a class="tag" href="search.html?q=apache">apache</a> <a class="tag" href="search.html?q=agent-runtime">agent-runtime</a> <a class="tag" href="search.html?q=ai-agent">ai-agent</a> <a class="tag" href="search.html?q=llm">llm</a> </div>
+      </article>
+      <article class="post-card" data-tags="omarchy basecamp dhh linux arch hyprland tiling-wm developer-setup">
+        <span class="post-card-category">Dev Tools</span>
+        <h2><a href="posts/2026-08-24-omarchy.html">Omarchy</a></h2>
+        <p class="card-desc">Omarchy is Basecamp&#x27;s opinionated Arch/Hyprland Linux distribution by DHH: one ISO, full-disk encryption by default, and a polished tiling setup out of the box.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=omarchy">omarchy</a> <a class="tag" href="search.html?q=basecamp">basecamp</a> <a class="tag" href="search.html?q=dhh">dhh</a> <a class="tag" href="search.html?q=linux">linux</a> <a class="tag" href="search.html?q=arch">arch</a> </div>
+      </article>
+      <article class="post-card" data-tags="onedump liweiyi88 database-backup dba backup mysql postgresql golang s3">
+        <span class="post-card-category">Infrastructure</span>
+        <h2><a href="posts/2026-08-24-onedump.html">Onedump</a></h2>
+        <p class="card-desc">Onedump is a Go-based database admin tool that backs up MySQL and PostgreSQL to local disk, S3, Google Drive, Dropbox, and SFTP from a single config file.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=onedump">onedump</a> <a class="tag" href="search.html?q=liweiyi88">liweiyi88</a> <a class="tag" href="search.html?q=database-backup">database-backup</a> <a class="tag" href="search.html?q=dba">dba</a> <a class="tag" href="search.html?q=backup">backup</a> </div>
+      </article>
+      <article class="post-card" data-tags="openclaw ai assistant agents own-your-data molty">
+        <span class="post-card-category">Agents</span>
+        <h2><a href="posts/2026-08-24-openclaw.html">OpenClaw</a></h2>
+        <p class="card-desc">OpenClaw is an open-source personal AI assistant that runs locally and meets you in WhatsApp, Telegram, Slack, Discord and more. Here&#x27;s how to set it up.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=openclaw">openclaw</a> <a class="tag" href="search.html?q=ai">ai</a> <a class="tag" href="search.html?q=assistant">assistant</a> <a class="tag" href="search.html?q=agents">agents</a> <a class="tag" href="search.html?q=own-your-data">own-your-data</a> </div>
+      </article>
+      <article class="post-card" data-tags="openhuman tinyhumansai agents memory orchestration llm">
+        <span class="post-card-category">Agents</span>
+        <h2><a href="posts/2026-08-24-openhuman.html">OpenHuman</a></h2>
+        <p class="card-desc">OpenHuman is an open-source AI harness with persistent local memory, durable agent-fleet orchestration, and deep research. Here&#x27;s how to install and run it.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=openhuman">openhuman</a> <a class="tag" href="search.html?q=tinyhumansai">tinyhumansai</a> <a class="tag" href="search.html?q=agents">agents</a> <a class="tag" href="search.html?q=memory">memory</a> <a class="tag" href="search.html?q=orchestration">orchestration</a> </div>
+      </article>
+      <article class="post-card" data-tags="openlogi logitech hidpp rust mouse-remapping dpi smartshift local-first">
+        <span class="post-card-category">Dev Tools</span>
+        <h2><a href="posts/2026-08-24-openlogi.html">OpenLogi</a></h2>
+        <p class="card-desc">OpenLogi is a native Rust alternative to Logitech Options+ with button remapping, DPI and SmartShift over HID++, plain TOML config, and zero telemetry.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=openlogi">openlogi</a> <a class="tag" href="search.html?q=logitech">logitech</a> <a class="tag" href="search.html?q=hidpp">hidpp</a> <a class="tag" href="search.html?q=rust">rust</a> <a class="tag" href="search.html?q=mouse-remapping">mouse-remapping</a> </div>
+      </article>
+      <article class="post-card" data-tags="plane makeplane jira linear project-management django docker">
+        <span class="post-card-category">Dev Tools</span>
+        <h2><a href="posts/2026-08-24-plane.html">Plane</a></h2>
+        <p class="card-desc">Plane is an open-source Jira/Linear alternative for issues, cycles, and roadmaps. Here&#x27;s how to self-host it and actually use it.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=plane">plane</a> <a class="tag" href="search.html?q=makeplane">makeplane</a> <a class="tag" href="search.html?q=jira">jira</a> <a class="tag" href="search.html?q=linear">linear</a> <a class="tag" href="search.html?q=project-management">project-management</a> </div>
+      </article>
+      <article class="post-card" data-tags="posthog analytics feature-flags session-replay ab-testing experiments ai-analytics">
+        <span class="post-card-category">Dev Tools</span>
+        <h2><a href="posts/2026-08-24-posthog.html">PostHog</a></h2>
+        <p class="card-desc">PostHog bundles analytics, session replay, feature flags, experiments, and error tracking in one open-source platform. Here&#x27;s how to get started.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=posthog">posthog</a> <a class="tag" href="search.html?q=analytics">analytics</a> <a class="tag" href="search.html?q=feature-flags">feature-flags</a> <a class="tag" href="search.html?q=session-replay">session-replay</a> <a class="tag" href="search.html?q=ab-testing">ab-testing</a> </div>
+      </article>
+      <article class="post-card" data-tags="vaultwarden bitwarden rust docker password-manager security self-hosted">
+        <span class="post-card-category">Security</span>
+        <h2><a href="posts/2026-08-24-vaultwarden.html">Vaultwarden</a></h2>
+        <p class="card-desc">Vaultwarden is a lightweight Rust server that&#x27;s fully compatible with official Bitwarden clients — the easiest way to self-host your password vault.</p>
+        <div class="card-meta"><span class="post-date">Aug 24, 2026</span></div>
+        <div class="card-tags"><a class="tag" href="search.html?q=vaultwarden">vaultwarden</a> <a class="tag" href="search.html?q=bitwarden">bitwarden</a> <a class="tag" href="search.html?q=rust">rust</a> <a class="tag" href="search.html?q=docker">docker</a> <a class="tag" href="search.html?q=password-manager">password-manager</a> </div>
+      </article>
+    </section>
   </main>
 
   <footer class="site-footer">

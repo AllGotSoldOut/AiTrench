@@ -1,0 +1,46 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-onedump",
+  "topic": {
+    "name": "liweiyi88/onedump",
+    "source": "trendshift",
+    "url": "https://github.com/liweiyi88/onedump",
+    "stars": 989,
+    "description": "Effortless database administration tool",
+    "language": "Go",
+    "topics": [
+      "backup",
+      "database-backup",
+      "dba",
+      "dump",
+      "file-sync",
+      "go",
+      "golang",
+      "slow-log"
+    ],
+    "homepage": "",
+    "pushed_at": "2026-07-25",
+    "created_at": "2022-09-24",
+    "default_branch": "main",
+    "_score": 169.78
+  },
+  "mode": "docs",
+  "readme_excerpt": "<p align=\"center\">\n<img src=\"docs/logo.png\" alt=\"Onedump\" title=\"Onedump\" />\n</p>\n\n[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)\n[![GoDoc](https://godoc.org/github.com/liweiyi88/onedump?status.svg)](https://godoc.org/github.com/liweiyi88/onedump)\n![tests](https://github.com/liweiyi88/onedump/actions/workflows/tests.yaml/badge.svg)\n[![codecov](https://codecov.io/gh/liweiyi88/onedump/branch/main/graph/badge.svg?token=ROIDLHX41V)](https://codecov.io/gh/liweiyi88/onedump)\n[![Go Report Card](https://goreportcard.com/badge/github.com/liweiyi88/onedump)](https://goreportcard.com/report/github.com/liweiyi88/onedump)\n[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/liweiyi88/onedump/blob/main/LICENSE.md)\n\nOnedump is a database administration tool that streamlines backup and restore tasks across multiple databases and storage destinations.\n\n## Features\n* Database backup from different sources to different destinations.\n* MySQL dump with zero dependencies (with built-in mysql native dumper). \n* Supports dumpers with dependencies (`mysqldump` and `pg_dump`).\n* MySQL binlog backup to AWS S3.\n* MySQL restore from binlogs.\n* MySQL slow log parser.\n* Resumable and concurrent SFTP file transfers.\n* Loads configuration from S3 bucket.\n* Slack notification.\n* Maintained docker image that contains all dependencies.\n\n## Table of Contents\n\n* [Installation](#installation)\n  - [Binary](#binary)\n  - [Docker image](#docker-image)\n* [Prerequisites](#prerequisites)\n* [Run Onedump](#run-onedump)\n* [How it works](#how-it-works)\n* [The native MySQL dumper](#the-native-mysql-dumper) \n* [The slow log parser](#the-slow-log-parser)\n* [MySQL binlog backup to AWS S3](#mysql-binlog-backup-to-aws-s3)\n* [MySQL binlog restore](#mysql-binlog-restore)\n* [Resumable and concurrent SFTP file transfers](#resumable-and-concurrent-sftp-file-transfers)\n* [Contribution](#contribution)\n\n### Supported source databases\n- MySQL\n- PostgreSQL\n\n### Supported storage destinations\n\n- Local file system\n- AWS S3\n- Google Drive\n- Dropbox\n- SFTP\n\n\n## Installation\n`onedump` provides both binaries and Docker images via the release process.\n\n### Binary\n`onedump` binaries are available at https://github.com/liweiyi88/onedump/releases. Use the latest version of the binary that is suitable for your OS.\nAfter downloading the binary and moving it to a folder that is in your `$PATH` environment variable (e.g., `/usr/local/bin/onedump`), give it executable permissions (e.g., `sudo chmod +x /usr/local/bin/onedump`). Then you should be able to run it:\n```\n$ onedump\n```\n\n### Docker image\n\nDocker images are also available in [Docker Hub](https://hub.docker.com/r/julianli/onedump/tags).\n\n#### When to use the Docker image\n1. You want run `onedump` in Kubernetes, ECS, or any other container environment.\n\n2. Currently, `onedump` does not provide a native PostgreSQL dumper out of the box. Therefore, for PostgreSQL, you need to have `pg_dump` installed on the same machine. The Docker image includes `pg_dump`, making it easier to run `onedump` without additional manual installation.\n\n3. When the current native MySQL dumper doesn't fit your needs and you need `mysqldump`.\n\n#### Use a specific pg_dump version\nThe docker image contains `mysql` client, `postgresql15-client` and `postgresql16-client`. By default it uses `postgresql16-client`. However, you can pass an environemnt `PG_VERSION` to swtich postgresql client version between `15` and `16`. For example, `docker run -e PG_VERSION=15 julianli/onedump:v1.5.0-arm64 -f config.yaml`.\n\n> Although we maintain both `ARM64` and `AMD64` Docker images, usually what you need is the `AMD64` image on your production Linux machine. For example: `julianli/onedump:v1.5.0-amd64`*\n\n## Prerequisites\n\n`onedump` provides a native MySQL dumper, allowing you to use the `onedump` binary to dump your MySQL database contents without needing `mysqldump` be installed on your machine.\n\nIf you need more advanced MySQL dump features or for PostgreSQL dump, you may want to use `mysqldump` or `pg_dump` dumper, which you need to install the below dependencies on the machine.\n\nMySQL: `mysql-client`  \nPostgreSQL: `postgresql-client`\n\n> If you use the Docker image we maintain, these tools are included by default. Alternatively, you can extend or build the Docker image yourself if you need further customization.\n\n## Run onedump\n\n`onedump` has just one simple command to load a config file and dump DB contents based on the configuration. It has two ways of loading the config file.\n\n### Option 1. Load configuration file from local directory\nAfter installing onedump, you should be able to run it as a simple cli command. For example:\n\n```\n$ onedump -f /path/to/config.yaml\n```\n\nThe config.yaml contains all DB backup jobs in yaml format. For all configurable items. see [configuration](./docs/CONFIG_REF.md)\n\n### Option 2. Load configuration from an S3 bucket\nMoreover, instead of loading your config file from a local directory, you can also store it in an AWS S3 bucket. Run the cli command to load the config file from an S3 bucket\n```\n$ onedump -f backup-config/config.yaml --s3-bucket mybucket\n```\nIn this case, you pass the `--s3-bucket` option to indicate onedump that it should load the configuration content from an s3 bucket called `mybucket`. Then  onedump will treat the file path option `backup-config/config.yaml` as the s3 key. By default, onedump will use any AWS environment variables to interact with S3, if environment variables are not found, then it will use the credentials of the default profile in your `~/.aws/credentials` file. To overwirte these default credentials, you can pass `--aws-key`, `--aws-region` and `--aws-secret` options.\n\n### Configuration examples\n\nFor all configurable items and instructions. see [configuration](./docs/CONFIG_REF.md)\n\n#### Dump a local DB to 2 local directories\n```\njobs:\n- name: local-dump\n  dbdriver: mysql\n  dbdsn: root@tcp(12",
+  "readme_images": [],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [],
+    "hot_issues": []
+  },
+  "tags": [
+    "backup",
+    "database-backup",
+    "dba",
+    "dump",
+    "file-sync",
+    "go",
+    "liweiyi88",
+    "onedump"
+  ]
+}

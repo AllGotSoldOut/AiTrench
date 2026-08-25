@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gosnakego — A Snake Game in Pure Go: Play and Read the Code</title>
+  <meta name="description" content="gosnakego is a tiny terminal snake game written in Go — a single binary, arrow keys, no dependencies. Here's how to play it and what the source teaches."/>
+  <meta name="post-tags" content="gosnakego,go,golang,snake-game,terminal,liweiyi88"/>
+  <meta name="post-category" content="Learning"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Learning</span>
+        <h1>gosnakego: Snake in Your Terminal, Written in Pure Go</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/liweiyi88/gosnakego">gosnakego</a> (MIT) is exactly what the README says: a snake game written in Go. No frameworks, no engine, no config file. You download one binary, run it, steer with arrow keys. It's a small project — low star count, last touched in late 2023 — but it resurfaced on trending lists recently because it hits a sweet spot: it's one of the cleanest little examples of terminal game programming in Go you'll find, with a source tree small enough to read over coffee.</p>
+
+      <p>Honestly, that's the reason to care. Not because the world needed another snake clone, but because "render a game loop in a terminal" touches goroutines, input handling, tick timing, and state management — all in a repo where <code>main.go</code> plus a <code>snake/</code> package is basically the whole story.</p>
+
+      <figure><img src="../images/2026-08-24-gosnakego/gosnakego.gif" alt="Animated GIF of gosnakego gameplay in a terminal"><figcaption>Gameplay: snake, food, walls, score — all rendered in plain terminal output.</figcaption></figure>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>A five-minute Go build exercise.</strong> Clone it, run <code>go build</code>, and you have a working binary. Then break things on purpose: change the tick rate, resize the board, make food spawn two at a time. Small codebases like this are ideal for learning by modification.</li>
+        <li><strong>Learn terminal rendering without dependencies.</strong> The game draws by writing to standard output — no TUI framework required to follow along, which makes the render loop obvious if you've ever wondered how terminal games work.</li>
+        <li><strong>Goroutines in practice.</strong> Input handling and game ticking run concurrently; seeing how a tiny game coordinates them is a friendlier introduction than most concurrency tutorials.</li>
+        <li><strong>An afternoon fork project.</strong> Add a high-score file, wrap-around walls, or obstacle levels. The whole game logic lives under <code>snake/</code>, so there's nowhere for complexity to hide.</li>
+        <li><strong>A zero-install office distraction.</strong> One static binary, no runtime, works anywhere Go binaries run — including a Raspberry Pi or an SSH box.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Grab the prebuilt binary for your OS from the <a href="https://github.com/liweiyi88/gosnakego/releases">releases page</a>.</li>
+        <li>Move it somewhere on your executable path:
+<pre><code>mv ~/Downloads/gosnakego /usr/local/bin/gosnakego
+chmod +x /usr/local/bin/gosnakego   # if needed</code></pre>
+        </li>
+        <li>Start the game:
+<pre><code>gosnakego</code></pre>
+        </li>
+        <li>Use the <strong>arrow keys</strong> to control the direction (per official docs). Eat, grow, avoid yourself.</li>
+        <li>Prefer building from source? The repo builds with the standard toolchain:
+<pre><code>git clone https://github.com/liweiyi88/gosnakego.git
+cd gosnakego
+go build -o gosnakego
+./gosnakego</code></pre>
+        </li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>The entry point is minimal — the interesting structure sits in the <code>snake/</code> package:</p>
+<pre><code>gosnakego/
+├── main.go          # entry point: sets up and starts the game
+├── snake/           # game logic package
+├── go.mod / go.sum  # module files
+└── assets/          # logo + gameplay GIF</code></pre>
+      <p>Once built, the binary is fully static — copy it between machines and it just runs. There are no config files or flags documented; the game is intentionally self-contained (per official docs).</p>
+      <p>If you want to experiment, start with the game-loop timing: shortening the tick interval makes the game harder, lengthening it makes it a gentle demo for kids. That one constant is the highest-leverage line in the codebase.</p>
+
+      <h2>What's new</h2>
+      <p>Nothing recent, and that's worth saying plainly. The latest commit is a typo fix from November 6, 2023, and there are no releases tagged after that — the eight tags on the repo date from its active period. Treat this as a stable, finished toy rather than a maintained product: it works, it compiles on modern Go, and it isn't changing. If something breaks with a future Go release, fixing it is part of the learning exercise.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong><code>command not found: gosnakego</code></strong> — the binary isn't on your <code>PATH</code>. Move it to <code>/usr/local/bin/</code> (as the README suggests) or run it by explicit path, e.g. <code>./gosnakego</code>.</li>
+        <li><strong>"Permission denied" when running the downloaded binary</strong> — downloads don't carry the execute bit. Run <code>chmod +x gosnakego</code>, or on macOS possibly approve it in System Settings → Privacy &amp; Security since it's unsigned.</li>
+        <li><strong>Arrow keys print escape characters instead of steering</strong> — your terminal emulator isn't passing raw keypresses through properly, which can happen in some multiplexers or unusual terminals. Try a plain local terminal window rather than inside tmux or a web-based SSH client.</li>
+        <li><strong>Flickering or garbled display</strong> — terminal games redraw by rewriting output; slow or high-latency connections exaggerate this. Play locally, or reduce terminal window size so each frame is cheaper to draw.</li>
+        <li><strong>Build fails on a very new Go toolchain</strong> — the repo predates recent Go releases and its <code>go.mod</code> declares an older version. Usually fixed automatically by the toolchain, but if not, check the error against <code>go.mod</code> before assuming the code is broken.</li>
+      </ul>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

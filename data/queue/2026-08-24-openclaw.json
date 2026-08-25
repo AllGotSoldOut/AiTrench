@@ -1,0 +1,87 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-openclaw",
+  "topic": {
+    "name": "openclaw/openclaw",
+    "source": "github_trending",
+    "url": "https://github.com/openclaw/openclaw",
+    "stars": 387470,
+    "description": "Your own personal AI assistant. Any OS. Any Platform. The lobster way. \ud83e\udd9e ",
+    "language": "TypeScript",
+    "topics": [
+      "ai",
+      "assistant",
+      "crustacean",
+      "molty",
+      "openclaw",
+      "own-your-data",
+      "personal"
+    ],
+    "homepage": "https://openclaw.ai",
+    "pushed_at": "2026-08-25",
+    "created_at": "2025-11-24",
+    "default_branch": "main",
+    "_score": 2200.0
+  },
+  "mode": "docs",
+  "readme_excerpt": "# OpenClaw \ud83e\udd9e \u2014 Your assistant, on your devices, in your chats\n\n<p align=\"center\">\n  <picture>\n    <source media=\"(prefers-color-scheme: light)\" srcset=\"https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-banner-light.png\">\n    <img src=\"https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-banner-dark.png\" alt=\"OpenClaw \u2014 EXFOLIATE! EXFOLIATE! Your personal AI assistant, running on your own devices.\">\n  </picture>\n</p>\n\n<p align=\"center\">\n  <a href=\"https://github.com/openclaw/openclaw/actions/workflows/ci.yml\"><img src=\"https://img.shields.io/github/actions/workflow/status/openclaw/openclaw/ci.yml?branch=main&style=flat-square&label=ci\" alt=\"CI status\"></a>\n  <a href=\"https://www.npmjs.com/package/openclaw\"><img src=\"https://img.shields.io/npm/v/openclaw?style=flat-square&label=npm\" alt=\"npm version\"></a>\n  <a href=\"https://nodejs.org\"><img src=\"https://img.shields.io/node/v/openclaw?style=flat-square\" alt=\"Node.js version\"></a>\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-green?style=flat-square\" alt=\"License: MIT\"></a>\n  <a href=\"https://discord.gg/clawd\"><img src=\"https://img.shields.io/discord/1456350064065904867?label=discord&logo=discord&logoColor=white&color=5865F2&style=flat-square\" alt=\"Discord\"></a>\n</p>\n\nOpenClaw is a personal AI assistant that runs on your devices and meets you in the channels you already use. It is designed for a single operator and connects models, tools, messaging channels, and optional companion apps through one Gateway.\n\n[Website](https://openclaw.ai) \u00b7 [Docs](https://docs.openclaw.ai) \u00b7 [Getting started](https://docs.openclaw.ai/start/getting-started) \u00b7 [Showcase](https://docs.openclaw.ai/start/showcase) \u00b7 [FAQ](https://docs.openclaw.ai/help/faq) \u00b7 [Vision](VISION.md) \u00b7 [DeepWiki](https://deepwiki.com/openclaw/openclaw)\n\n## Install\n\nThe installer supports macOS, Linux, and Windows. It provisions a supported Node.js runtime when needed.\n\n```bash\n# macOS / Linux / WSL2\ncurl -fsSL https://openclaw.ai/install.sh | bash\n```\n\n```powershell\n# Windows PowerShell\niwr -useb https://openclaw.ai/install.ps1 | iex\n```\n\nAlready manage Node.js? Install the published package instead (Node 22.22.3+, 24.15+, or 25.9+):\n\n```bash\nnpm install -g openclaw@latest --allow-scripts=openclaw\n```\n\nThat command is for npm 12 or npm 11.16+. On npm 11.15 and earlier, omit\n`--allow-scripts=openclaw`. See the\n[installation guide](https://docs.openclaw.ai/install) for the lifecycle script\ncontract, Docker, Nix, and other deployment paths.\n\n## Quick start\n\nOn a fresh install, the installer scripts start onboarding automatically.\nComplete the wizard they open. If you installed the package directly with npm,\npnpm, or Bun, run:\n\n```bash\nopenclaw onboard --install-daemon\n```\n\nAfter onboarding:\n\n```bash\nopenclaw gateway status\nopenclaw dashboard\n```\n\nOnboarding verifies model access, creates the workspace, and configures the Gateway. The last command opens the Control UI; send a message there to confirm the assistant is working. See the [getting started guide](https://docs.openclaw.ai/start/getting-started) for channel setup and troubleshooting.\n\n## How it fits together\n\n- The [Gateway](https://docs.openclaw.ai/gateway) is the local control plane for sessions, tools, events, and channel connections.\n- The [Control UI](https://docs.openclaw.ai/web/control-ui), CLI, and [TUI](https://docs.openclaw.ai/web/tui) connect to the Gateway.\n- [Channels](https://docs.openclaw.ai/channels) bring the assistant to WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, and other messaging services.\n- [Companion apps and nodes](https://docs.openclaw.ai/platforms) add voice, Canvas, camera, screen, and device-local actions on supported platforms.\n\nOpenClaw works with hosted and local [model providers](https://docs.openclaw.ai/concepts/model-providers). Its [tools](https://docs.openclaw.ai/tools), [skills](https://docs.openclaw.ai/tools/skills), and [plugins](https://docs.openclaw.ai/plugins) extend what an assistant can do.\n\n## Security\n\nTreat inbound messages as untrusted input. DM-capable channels pair unknown senders by default; approve a pairing request with `openclaw pairing approve <channel> <code>`.\n\nTools run on the host for the main session unless you configure sandboxing. Read the [security guide](https://docs.openclaw.ai/gateway/security), [exposure runbook](https://docs.openclaw.ai/gateway/security/exposure-runbook), and [sandboxing guide](https://docs.openclaw.ai/gateway/sandboxing) before connecting other users or exposing the Gateway remotely.\n\n## Documentation\n\n| Goal                             | Start here                                                                                                                                                                                                                                                           |\n| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| Configure models and auth        | [Models](https://docs.openclaw.ai/concepts/models) \u00b7 [Model providers](https://docs.openclaw.ai/concepts/model-providers)                                                                                                                                            |\n| Connect a messaging service      | [Channels](https://docs.openclaw.ai/channels)                                                                                                                                                                                                                        |\n| Add tools, skills, and plugins   | [Tools](https://docs.openclaw.ai/tools) \u00b7 [Skills](https://docs.openclaw.ai/tools/skills) \u00b7 [Plugins](https://docs.openclaw.ai/plugins",
+  "readme_images": [
+    "https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-banner-dark.png",
+    "https://img.shields.io/github/actions/workflow/status/openclaw/openclaw/ci.yml?branch=main&style=flat-square&label=ci",
+    "https://img.shields.io/npm/v/openclaw?style=flat-square&label=npm",
+    "https://img.shields.io/node/v/openclaw?style=flat-square",
+    "https://img.shields.io/badge/license-MIT-green?style=flat-square",
+    "https://img.shields.io/discord/1456350064065904867?label=discord&logo=discord&logoColor=white&color=5865F2&style=flat-square"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": {
+      "tag": "v2026.7.1-2",
+      "date": "2026-08-04",
+      "notes": "\n### Fixes\n\n- **npm plugin updates:** accept singleton-array metadata from newer npm clients so tracked official plugins can install and update to correction releases. (#108336)\n\n"
+    },
+    "recent_commits": [
+      {
+        "message": "fix(anthropic): keep Agent SDK session warm after first turn (#128985)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "fix: /models stops working after an unrelated config edit and never recovers (#128608)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "fix(cli): render models refresh JSON failures (#128981)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "fix(qa): clean partial cloud proof startup (#128977)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "fix(ui): move limited access into Inbox (#128941)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "fix(ui): enable slash commands in new-session composer (#128969)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "feat(codex): upgrade main to app-server 0.149.1 (#128370)",
+        "date": "2026-08-25"
+      },
+      {
+        "message": "refactor(ui): compact live activity filters (#128972)",
+        "date": "2026-08-25"
+      }
+    ],
+    "hot_issues": []
+  },
+  "tags": [
+    "ai",
+    "assistant",
+    "crustacean",
+    "molty",
+    "openclaw",
+    "own-your-data"
+  ]
+}

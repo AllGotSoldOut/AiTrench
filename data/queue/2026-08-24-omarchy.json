@@ -1,0 +1,31 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-omarchy",
+  "topic": {
+    "name": "basecamp/omarchy",
+    "source": "github_trending",
+    "url": "https://github.com/basecamp/omarchy",
+    "stars": 30311,
+    "description": "Beautiful, Modern & Opinionated Linux",
+    "language": "Shell",
+    "topics": [],
+    "homepage": "https://omarchy.org",
+    "pushed_at": "2026-08-25",
+    "created_at": "2025-06-01",
+    "default_branch": "quattro",
+    "_score": 806.22
+  },
+  "mode": "docs",
+  "readme_excerpt": "# Omarchy\n\nOmarchy is a beautiful, modern & opinionated Linux distribution by DHH.\n\nRead more at [omarchy.org](https://omarchy.org).\n\n## The Omarchy Manual\n\nThe manual lives in [`manual/`](manual/), which is its authoritative source. It's\nmirrored to [learn.omacom.io](https://learn.omacom.io/2/the-omarchy-manual), where\nits screenshots are also hosted.\n\n- [Welcome to Omarchy!](manual/01-welcome-to-omarchy.md)\n\n**The Basics**\n\n- [Getting Started](manual/02-getting-started.md)\n- [Coming From Mac or Windows](manual/03-coming-from-mac-or-windows.md)\n- [Navigation](manual/04-navigation.md)\n- [The top bar](manual/05-the-top-bar.md)\n- [Themes](manual/06-themes.md)\n- [Hotkeys](manual/07-hotkeys.md)\n- [Unified Clipboard & History](manual/08-unified-clipboard-history.md)\n- [Reminders](manual/09-reminders.md)\n- [Notices](manual/10-notices.md)\n- [Text Extraction & Dictation](manual/11-text-extraction-dictation.md)\n- [Screenshots & Recording](manual/12-screenshots-recording.md)\n- [Toggles, idle & screensaver](manual/13-toggles-idle-screensaver.md)\n- [Omarchy CLI](manual/14-omarchy-cli.md)\n\n**The Applications**\n\n- [Terminal](manual/15-terminal.md)\n- [Neovim](manual/16-neovim.md)\n- [AI](manual/17-ai.md)\n- [Development Tools](manual/18-development-tools.md)\n- [Shell Tools](manual/19-shell-tools.md)\n- [Shell Functions](manual/20-shell-functions.md)\n- [TUIs](manual/21-tuis.md)\n- [GUIs](manual/22-guis.md)\n- [Browsers](manual/23-browsers.md)\n- [Commercial apps/services](manual/24-commercial-apps-services.md)\n- [Web Apps](manual/25-web-apps.md)\n- [Gaming](manual/26-gaming.md)\n- [Filling out PDFs](manual/27-filling-out-pdfs.md)\n- [Windows VM](manual/28-windows-vm.md)\n- [Other Packages](manual/29-other-packages.md)\n\n**Configuration**\n\n- [Updates](manual/30-updates.md)\n- [Dotfiles](manual/31-dotfiles.md)\n- [Shell plugins](manual/32-shell-plugins.md)\n- [Monitors](manual/33-monitors.md)\n- [Keyboard, Mouse, Trackpad](manual/34-keyboard-mouse-trackpad.md)\n- [Networking](manual/35-networking.md)\n- [System sleep](manual/36-system-sleep.md)\n- [Hardware authentication](manual/37-hardware-authentication.md)\n- [Fonts](manual/38-fonts.md)\n- [Backgrounds](manual/39-backgrounds.md)\n- [Prompt](manual/40-prompt.md)\n- [Branding](manual/41-branding.md)\n- [Common tweaks](manual/42-common-tweaks.md)\n- [Making your own theme](manual/43-making-your-own-theme.md)\n\n**The Rest**\n\n- [Mac support](manual/44-mac-support.md)\n- [Troubleshooting](manual/45-troubleshooting.md)\n- [FAQ](manual/46-faq.md)\n- [System snapshots](manual/47-system-snapshots.md)\n- [Security](manual/48-security.md)\n- [Omarchy on...](manual/49-omarchy-on.md)\n- [Dual Boot Install](manual/50-dual-boot-install.md)\n- [Unattended Installs](manual/51-unattended-installs.md)\n\n## License\n\nOmarchy is released under the [MIT License](https://opensource.org/licenses/MIT).\n",
+  "readme_images": [],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [],
+    "hot_issues": []
+  },
+  "tags": [
+    "basecamp",
+    "omarchy"
+  ]
+}

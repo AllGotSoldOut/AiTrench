@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Engineering from Scratch — Step-by-Step Guide</title>
+  <meta name="description" content="A free, build-first curriculum of 511 lessons across 20 phases for learning AI engineering — now with certification prep and five languages."/>
+  <meta name="post-tags" content="ai-engineering-from-scratch,rohitg00,course,agents,llm,python"/>
+  <meta name="post-category" content="Learning"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Learning</span>
+        <h1>AI Engineering from Scratch: the 511-Lesson Curriculum That's Taking Over GitHub</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/rohitg00/ai-engineering-from-scratch">ai-engineering-from-scratch</a> is a free, open-source AI engineering curriculum by Rohit Ghumare — and it just crossed ~48,000 GitHub stars. The pitch is in the tagline: "Learn it. Build it. Ship it for others." It covers everything from transformers and NLP to agents, MCP, swarm intelligence, reinforcement learning, computer vision, even Rust and TypeScript alongside Python — organized as 511 lessons across 20 phases.</p>
+
+      <p>Why is it trending right now? The August release (v2026.08) added three big things: a certification prep program covering all four Claude credentials from the July 2026 exam guides, translations of the course into five additional languages, and a rebuilt navigation layer for all those lessons. Commits landed as recently as August 23 improving site UX and "agent readiness" — more on that below.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ol>
+        <li><strong>You're a backend dev pivoting into AI work.</strong> You don't need another list of paper summaries — you need a path from "I can call an API" to "I built and shipped an agent system." The phase structure gives you exactly that ladder, and every lesson is meant to be built through, not skimmed.</li>
+        <li><strong>You're prepping for an AI-related certification.</strong> The new certifications section turns public exam blueprints into study paths. The first program covers all four Claude credentials (Associate, Developer, Architect Foundations, Architect Professional) with 33 lessons, runnable labs, diagnostics, capstones, and 295 original assessment questions — free.</li>
+        <li><strong>You learn best by writing the code yourself.</strong> Lessons emphasize implementing things from scratch: transformers, retrieval pipelines, agent loops. If you've ever felt like tutorial-watching wasn't sticking, this build-first format fixes that.</li>
+        <li><strong>You want an AI-native study workflow.</strong> Claude Code, Codex, Cursor, or any SKILL.md-compatible agent can teach a route, run labs, quiz you, and track your progress. Your coding assistant becomes your tutor.</li>
+        <li><strong>English isn't your first language.</strong> Landing pages are committed to the repo in Spanish, French, Portuguese, German, Italian, Chinese, Japanese, Korean, Hindi, Arabic, Russian, and Turkish. English remains canonical; lesson pages are machine-translated on a separate branch.</li>
+      </ol>
+
+      <h2>Getting started</h2>
+      <p>No install ceremony beyond git and Python. Here's the fastest path:</p>
+      <ol>
+        <li>Clone the repo:
+          <pre><code>git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch</code></pre>
+        </li>
+        <li>Browse the table of contents to pick your entry phase — start at Phase 1 if you're new to ML, or jump to the agents/MCP phases if you already know deep learning basics. The ROADMAP.md file lays out all 20 phases:
+          <pre><code>cat ROADMAP.md</code></pre>
+        </li>
+        <li>Create an isolated environment for lesson code so experiments don't pollute your system Python:
+          <pre><code>python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate</code></pre>
+        </li>
+        <li>If you want the agent-tutor flow, install the course as a skill for your coding agent (per official docs):
+          <pre><code>npx skills add rohitg00/ai-engineering-from-scratch</code></pre>
+        </li>
+        <li>Prefer reading in a browser? The companion site at <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> mirrors the curriculum with the new navigation, certifications section, and language switcher.</li>
+      </ol>
+
+      <h2>Code &amp; config samples</h2>
+      <p>The curriculum's whole philosophy is "from scratch," so expect lessons that build primitives before reaching for frameworks. A typical transformer lesson walks you through attention from raw NumPy-style tensors before showing you the PyTorch equivalent. For the agent phases, you'll wire up an MCP server yourself — the kind of exercise most tutorials skip. Exact starter snippets live inside each lesson directory in the repo; the README points you to the contents table as the canonical index, so treat that as your source of truth rather than copying setup code secondhand.</p>
+
+      <h2>What's new</h2>
+      <p>The <strong>v2026.08</strong> release (August 10, 2026) shipped the certification prep program, multi-language support, and rebuilt lesson navigation. Since then, development has been rapid — multiple merges on August 23 alone, including PR #426 ("improve motion, responsive UX, and agent readiness"), a fix to keep one canonical MCP route (#423 series), and routine rebuilds of the site's data.js. The repo was created March 18, 2026 and hit nearly 48k stars in five months — that pace tells you the demand for structured, free AI engineering education is real.</p>
+
+      <h2>Troubleshooting</h2>
+      <ol>
+        <li><strong>Lesson code errors with version mismatches.</strong> Course material evolves fast; a snippet written against last month's library may break today. Fix: pin the versions shown in each lesson's requirements and read the lesson's changelog notes before debugging your own code.</li>
+        <li><strong>You cloned the repo but can't find translated lessons.</strong> Only landing pages are committed to main. Full lesson translations live on the <code>translations</code> branch (per docs/i18n.md). Fix: <code>git checkout translations</code> or use the website's language switcher.</li>
+        <li><strong>The skill-based tutoring flow doesn't pick up your progress.</strong> Agent-driven learning depends on your tool supporting SKILL.md properly and having write access to its state files. Fix: verify your agent supports SKILL.md, run it from the repo root, and check that it isn't sandboxed away from the workspace directory.</li>
+        <li><strong>Duplicate MCP routes confuse your agent.</strong> This was a real bug fixed on August 23 ("keep one canonical MCP route"). Fix: pull latest main — if you forked, rebase onto upstream so you get the deduplicated route.</li>
+        <li><strong>Certification prep questions feel off compared to the real exam.</strong> These are original assessment questions built from public blueprints, not leaked exams. Fix: use them as practice signals only and cross-check against the official July 2026 exam guides linked in the certifications section.</li>
+      </ol>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

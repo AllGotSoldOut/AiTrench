@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>claude-obsidian — Step-by-Step Guide</title>
+  <meta name="description" content="claude-obsidian turns Obsidian + Claude Code into a self-organizing AI second brain: drop any source, and Claude reads, links, and files it into a Markdown knowledge graph you own."/>
+  <meta name="post-tags" content="claude-obsidian,agricidaniel,claude-code,obsidian,ai-second-brain,pkm,knowledge-graph,agent-skills"/>
+  <meta name="post-category" content="Productivity"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Productivity</span>
+        <h1>claude-obsidian: A Self-Organizing AI Second Brain for Obsidian</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p><a href="https://github.com/AgriciDaniel/claude-obsidian">AgriciDaniel/claude-obsidian</a> is a local-first knowledge system that turns Obsidian plus Claude Code into what the README calls an "AI second brain." Drop any source — a PDF, a video transcript, a URL, meeting notes — into your vault folder, and Claude Code reads it, writes linked source-cited notes, files them into your existing graph, and answers questions grounded in what's already there. It's based on Karpathy's LLM Wiki pattern, sits at about 12,000 stars, and just shipped v2.1.0 with native Windows support.</p>
+
+      <p>The part I care about: your vault stays plain Markdown, JSON, and source files. No plugin cache, no cloud database, nothing silently uploaded to a model. If you bail on the tool tomorrow, you keep everything.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>Research capture that actually gets filed.</strong> You've got 40 open browser tabs and a Downloads folder full of papers. Dump them in an inbox folder; Claude extracts, summarizes with citations back to sources, and links each note to related pages you already have.</li>
+        <li><strong>A Notion replacement that's just files.</strong> If you want AI-assisted PKM without locking your notes in someone's cloud database, this is that — an open-source alternative where grep still works.</li>
+        <li><strong>Grounded Q&amp;A over your own reading.</strong> Ask "what did I learn about X last month?" and get answers retrieved from the vault with citations to the source notes, instead of the model guessing from training data.</li>
+        <li><strong>Vault maintenance you never do manually.</strong> Explicit workflows for deduplication, orphan-note cleanup, link repair, and health checks — the chores that kill most Obsidian vaults after six months.</li>
+        <li><strong>Claude Code users who want persistent memory.</strong> Skills are standard Agent Skills format (agentskills.io compatible), so the system also works with other skill-capable hosts.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Prereqs: Obsidian, Claude Code, and Python installed. On Windows, note the v2.1.0 caveat below (WSL needed for write operations).</li>
+        <li>Clone the repo:
+          <pre><code>git clone https://github.com/AgriciDaniel/claude-obsidian.git
+cd claude-obsidian</code></pre></li>
+        <li>Run the vault setup script to initialize a new vault or wire up an existing one:
+          <pre><code>./setup-vault.sh /path/to/your/vault</code></pre></li>
+        <li>Open Claude Code inside the vault directory so it discovers the plugin's commands and skills:
+          <pre><code>cd /path/to/your/vault
+claude</code></pre></li>
+        <li>Capture your first source — save a file into the inbox and ask Claude to process it, then retrieve with grounded answers via the wiki commands (<code>/wiki</code>, <code>/save</code>).</li>
+      </ol>
+
+      <p>The repo's docs cover edge cases well: there's a dedicated installation guide at <code>docs/install-guide.md</code> and a Windows &amp; WSL guide at <code>docs/windows-wsl.md</code>.</p>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Typical session flow once installed:</p>
+      <pre><code># In Claude Code, inside your vault:
+&gt; /save https://example.com/interesting-post   # clip a source
+&gt; summarize the new source and link it to my RAG notes
+&gt; /wiki what are the tradeoffs I noted between
+    embedding models for local retrieval?</code></pre>
+
+      <p>The vault layout stays boring on purpose:</p>
+      <pre><code>my-vault/
+├── inbox/            # drop raw sources here
+├── notes/            # Claude-written, source-cited pages
+├── .raw/             # original downloaded sources
+└── .claude/          # skills, commands, hooks</code></pre>
+
+      <h2>What's new</h2>
+      <p><strong>v2.1.0</strong> (July 31, 2026) is all about Windows. Previously native Windows crashed on every vault command with <code>AttributeError: os has no attribute 'O_DIRECTORY'</code> (#147). Now read-only operations — inspection, dry-runs, retrieval — work natively with equivalent safety checks (path-based alias auditing, lstat identity, symlink and junction rejection). Write operations deliberately fail closed with <code>ERR UNSUPPORTED_PLATFORM</code> (exit 2) before touching anything; mutations need WSL. The release also fixed CRLF handling everywhere: binary-mode reads ended false hash mismatches, and retrieval no longer returns zero results on CRLF vaults. A new <code>windows-smoke</code> CI job plus a 16-test compatibility suite guards against regressions. Follow-up commits on August 1 added a WSL troubleshooting guide and pointed the <code>UNSUPPORTED_PLATFORM</code> error at it (#152).</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>"ToolUseContext is required for prompt hooks" on session start.</strong> Cause: the SessionStart hook is configured as a prompt-type hook, which some Claude Code versions reject (issues #29 and #40 — the most-active bug reports). Fix: remove or convert the SessionStart prompt hook in <code>.claude/settings.json</code>, or update to the latest release.</li>
+        <li><strong>/wiki and /save commands not found after git clone install.</strong> Cause: cloning the repo doesn't place commands/skills/hooks into your vault's <code>.claude/</code> directory (#2), and older versions of setup-vault.sh skipped that copy step (#11). Fix: run the current setup script against your vault, or manually copy <code>commands/</code>, <code>skills/</code>, and <code>hooks/</code> into <code>.claude/</code>, then restart Claude Code.</li>
+        <li><strong>.raw folder invisible in Obsidian, breaking Web Clipper flows.</strong> Cause: Obsidian hides dot-prefixed folders by default (#5). Fix: reveal hidden files in Obsidian's settings, or configure the clipper to write to a non-dot folder.</li>
+        <li><strong><code>ERR UNSUPPORTED_PLATFORM</code> on native Windows.</strong> Not a bug — v2.1.0 intentionally fails closed before any write side effect; only reads work natively. Fix: perform mutations from WSL per <code>docs/windows-wsl.md</code>.</li>
+        <li><strong>Retrieval returns zero results / false hash mismatches.</strong> Cause on pre-2.1 installs: CRLF line endings confusing text handling. Fix: upgrade to v2.1.0, which reads in binary mode and handles CRLF vaults correctly.</li>
+      </ul>
+
+      <p>If you live in Obsidian and use Claude Code, this is the most complete implementation of Karpathy's LLM Wiki idea I've seen packaged for real use — and v2.1.0 finally made it usable outside Unix-land.</p>
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

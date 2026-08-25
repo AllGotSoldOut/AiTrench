@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw — Your Personal AI Assistant on Your Own Devices: Setup Guide</title>
+  <meta name="description" content="OpenClaw is an open-source personal AI assistant that runs locally and meets you in WhatsApp, Telegram, Slack, Discord and more. Here's how to set it up."/>
+  <meta name="post-tags" content="openclaw,ai,assistant,agents,own-your-data,molty"/>
+  <meta name="post-category" content="Agents"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a><a href="../search.html">Search</a></nav>
+    </div>
+  </header>
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">Agents</span>
+        <h1>OpenClaw: Your Personal AI Assistant, On Your Devices, In Your Chats</h1>
+        <div class="post-meta"><span class="post-date">August 24, 2026</span></div>
+      </div>
+
+      <p>OpenClaw (<a href="https://github.com/openclaw/openclaw">GitHub</a>, MIT) is a personal AI assistant that runs on your own hardware and shows up in the messaging apps you already use — WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Google Chat. It's built for a single operator: one Gateway process connects your model providers, tools, skills, plugins, and channels. The numbers tell you how much this idea resonates: roughly <strong>387k GitHub stars</strong> in under a year, developed openly by the non-profit OpenClaw Foundation.</p>
+
+      <p>The pitch is simple: instead of pasting your life into someone else's cloud chatbot, you run the assistant where your data lives, and it reaches you wherever you already are. It was originally built for "Molty", Peter Steinberger's space-lobster assistant — hence the lobster emoji everywhere.</p>
+
+      <h2>Why you'd actually use it</h2>
+      <ul>
+        <li><strong>A assistant that texts you back.</strong> Connect Telegram or WhatsApp as a channel, then message it from your phone like a person: "summarize the PDF I dropped in my workspace and ping me when done."</li>
+        <li><strong>One brain across every device.</strong> The Gateway is the single control plane for sessions and tools; the CLI, TUI, and web Control UI all attach to the same assistant state, so your context doesn't fragment per app.</li>
+        <li><strong>Local model support.</strong> Point it at hosted providers or run local models — useful if you don't want conversation content leaving your network at all.</li>
+        <li><strong>Extensible without forking.</strong> Skills, tools, and plugins extend behavior; new capabilities usually ship as plugins on the plugin SDK and get shared through ClawHub.</li>
+        <li><strong>Voice and device actions.</strong> Companion apps and nodes add voice, Canvas, camera, screen access, and device-local actions on supported platforms.</li>
+      </ul>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Run the installer (macOS, Linux, Windows; it provisions Node.js if needed):
+<pre><code># macOS / Linux / WSL2
+curl -fsSL https://openclaw.ai/install.sh | bash</code></pre>
+<pre><code># Windows PowerShell
+iwr -useb https://openclaw.ai/install.ps1 | iex</code></pre>
+        </li>
+        <li>If you already manage Node yourself (Node 22.22.3+, 24.15+, or 25.9+), install the npm package instead:
+<pre><code>npm install -g openclaw@latest --allow-scripts=openclaw</code></pre>
+        <p>That flag form needs npm 12 or npm 11.16+; on npm 11.15 and earlier drop `--allow-scripts=openclaw`.</p>
+        </li>
+        <li>Fresh installs launch onboarding automatically. If you installed via npm directly, run:
+<pre><code>openclaw onboard --install-daemon</code></pre>
+        <p>Onboarding verifies model access, creates your workspace, and configures the Gateway.</p>
+        </li>
+        <li>Check status and open the Control UI:
+<pre><code>openclaw gateway status
+openclaw dashboard</code></pre>
+        <p>Send a message in the Control UI to confirm everything works.</p>
+        </li>
+        <li>Connect a messaging channel (Telegram, WhatsApp, Discord…) following the channels guide, then approve any sender pairing requests:
+<pre><code>openclaw pairing approve &lt;channel&gt; &lt;code&gt;</code></pre>
+        </li>
+      </ol>
+
+      <h2>Screenshots</h2>
+      <p>No official UI screenshots are bundled with this draft — the repo's README images are logos and badges. Check the <a href="https://docs.openclaw.ai/start/showcase">official showcase</a> for real captures of the Control UI.</p>
+
+      <h2>Code &amp; config samples</h2>
+      <p>Running from source is a pnpm workspace (plain `npm install` at the root is not supported):</p>
+<pre><code>git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+pnpm install
+pnpm build
+pnpm ui:build</code></pre>
+      <p>Everyday CLI surface you'll actually touch:</p>
+<pre><code># daemon + control plane health
+openclaw gateway status
+
+# approve an unknown sender pairing request from a DM-capable channel
+openclaw pairing approve telegram AB12CD</code></pre>
+      <p>New capabilities belong in plugins rather than core forks — build against the plugin SDK and publish through ClawHub.</p>
+
+      <h2>What's new</h2>
+      <p>Latest tagged release: <strong>v2026.7.1-2</strong> (Aug 4, 2026), which fixed npm plugin updates accepting singleton-array metadata from newer npm clients so tracked official plugins install correctly (#108336). Main has been moving fast since — recent commits include keeping Anthropic Agent SDK sessions warm after the first turn (#128985), fixing `/models` breaking permanently after an unrelated config edit (#128608), slash commands enabled in the new-session composer (#128969), and upgrading the Codex integration to app-server 0.149.1 (#128370).</p>
+
+      <h2>Troubleshooting</h2>
+      <ol>
+        <li><strong>`/models` stops working after a config edit and never recovers.</strong> Known bug recently patched on main (#128608). Update to the latest build rather than hunting your config.</li>
+        <li><strong>npm plugin installs fail with newer npm clients.</strong> Fixed in v2026.7.1-2 (singleton-array metadata handling). Bump your install before debugging plugin manifests.</li>
+        <li><strong>Unknown senders can't talk to the bot on DM-capable channels.</strong> That's by design — unknown senders get paired by default. Approve them with `openclaw pairing approve &lt;channel&gt; &lt;code&gt;`.</li>
+        <li><strong>Tools ran outside a sandbox.</strong> Tools run on the host for the main session unless you configure sandboxing. Read the security guide and sandboxing docs before connecting other users or exposing the Gateway remotely.</li>
+        <li><strong>Gateway unreachable after reboot.</strong> If you skipped the installer path, make sure the daemon was actually registered — re-run `openclaw onboard --install-daemon`, then check `openclaw gateway status`.</li>
+      </ol>
+
+    </div>
+  </article>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>

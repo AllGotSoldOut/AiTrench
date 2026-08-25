@@ -1,0 +1,90 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-awesome-agent-skills",
+  "topic": {
+    "name": "VoltAgent/awesome-agent-skills",
+    "source": "github_trending",
+    "url": "https://github.com/VoltAgent/awesome-agent-skills",
+    "stars": 31976,
+    "description": "A curated collection of 1000+ agent skills from official dev teams and the community, compatible with Claude Code, Codex, Gemini CLI, Cursor, and more.",
+    "language": "",
+    "topics": [
+      "agent-skills",
+      "ai-agents",
+      "awesome",
+      "awesome-list",
+      "claude-code",
+      "claude-code-skills",
+      "claude-skills",
+      "codex-skills",
+      "cursor-skills",
+      "gemini-skills",
+      "opencode-skills",
+      "skills"
+    ],
+    "homepage": "https://officialskills.sh/",
+    "pushed_at": "2026-08-24",
+    "created_at": "2025-10-28",
+    "default_branch": "main",
+    "_score": 1839.52
+  },
+  "mode": "docs",
+  "readme_excerpt": "\n<a href=\"https://github.com/VoltAgent/voltagent\">\n     <img width=\"1500\" alt=\"claude-skills\" src=\"https://github.com/user-attachments/assets/a890e563-e999-4b1f-8ce1-20399b0574f8\" />\n</a>\n\n\n<br/>\n<br/>\n\n<div align=\"center\">\n    <strong>A collection of official Agent Skills from leading development teams and the community.\n    <br />\n    Hand-picked, not AI-slop generated.\n    </strong>\n    <br />\n    <br />\n\n</div>\n\n<div align=\"center\">\n\n[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)\n![Skills Count](https://img.shields.io/badge/Skills-1497+-blue?style=flat-square)\n![Last Update](https://img.shields.io/github/last-commit/VoltAgent/awesome-agent-skills?label=Last%20update&style=flat-square)\n<a href=\"https://github.com/VoltAgent/voltagent\">\n  <img alt=\"VoltAgent\" src=\"https://cdn.voltagent.dev/website/logo/logo-2-svg.svg\" height=\"20\" />\n</a>\n[![Discord](https://img.shields.io/discord/1361559153780195478.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://s.voltagent.dev/discord)\n\n\n</div>\n\n</div>\n\n# Awesome Agent Skills\n\nUnlike many bulk-generated skill repositories, this collection focuses on real-world Agent Skills created and used by actual engineering teams, not mass AI\u2011generated stuff.\n\nThis collection features official skills published by leading development teams, including Anthropic, Google Labs, Vercel, Stripe, Cloudflare, Netlify, Trail of Bits, Sentry, Expo, Hugging Face, Figma, and more, alongside community-built skills.\n\nCompatible with Claude Code, Codex, Antigravity, Gemini CLI, Cursor, GitHub Copilot, OpenCode, Windsurf, and more. See the table below for paths and documentation.\n\nThe most contributed Agent Skills repository, built and maintained together with the community.\n\n\n## \ud83d\udc9b Sponsors\n\n|  |  |\n| :-: | :-- |\n| <a href=\"https://www.testmuai.com\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://cdn.voltagent.dev/awesome-repo/testmui/testmuai-white.png\"><img alt=\"TestMu AI\" src=\"https://cdn.voltagent.dev/awesome-repo/testmui/testmuai-black.png\" width=\"425\"></picture></a> | [TestMu AI (formerly LambdaTest)](https://www.testmuai.com) is an AI-native testing cloud platform built for modern engineering teams. Covering everything from autonomous test creation and fast execution to testing AI agents, chatbots and voice assistants. |\n| <a href=\"https://modem.dev/go/awesome-agent-skills\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://cdn.voltagent.dev/awesome-repo/modemlabs/modemlabs-dark.svg\"><img alt=\"Modem\" src=\"https://cdn.voltagent.dev/awesome-repo/modemlabs/modemlab-light.svg\" width=\"425\"></picture></a> | [Modem](https://modem.dev/go/awesome-agent-skills) is an AI product teammate that takes scattered discussions and turns them into a company-specific context that surfaces insights, automates actions, and closes the loop with teammates and customers. |\n\n<br />\n\n<a href=\"https://sponsors.voltagent.dev/#awesome-agent-skills\"><img src=\"https://img.shields.io/badge/\ud83d\udce9_Become_a_Sponsor-Contact_Us-blue?style=for-the-badge&logoColor=white\" alt=\"Become a Sponsor\" /></a>\n\n\n## Table of Contents\n\n### Official Skills by\n\n| | | | | \n|---|---|---|---|\n| [Claude](#official-claude-skills) | [VoltAgent](#skills-by-voltagent) | [TestMu AI](#skills-by-testmu-ai) | [Modem Dev](#skills-by-modem-dev) |\n| [Angular](#skills-by-angular) | [Composio](#skills-by-composio-team) | [Supabase](#skills-by-supabase-team) | [Google Gemini](#skills-by-google-gemini) |\n| [Stripe](#skills-by-stripe-team) | [Courier](#skills-by-courier) | [CallStack](#skills-by-callstack) | [Expo](#skills-by-expo-team) |\n| [Better Auth](#skills-by-better-auth-team) | [Tinybird](#skills-by-tinybird-team) | [HashiCorp](#skills-by-hashicorp-team-for-terraform) | [Sanity](#skills-by-sanity-team) |\n| [Firecrawl](#skills-by-firecrawl-team) | [Neon](#skills-by-neon-team) | [ClickHouse](#skill-by-clickhouse) | [Remotion](#skills-by-remotion) |\n| [Replicate](#skills-by-replicate) | [Typefully](#skills-by-typefully) | [Vercel](#skills-by-vercel-engineering-team) | [Cloudflare](#skills-by-cloudflare-team) |\n| [Netlify](#skills-by-netlify-team) | [Google Labs (Stitch)](#skills-by-google-labs-stitch) | [Google Workspace CLI](#skills-by-google-workspace-cli) | [Hugging Face](#skills-by-hugging-face-team) |\n| [Trail of Bits](#security-skills-by-trail-of-bits-team) | [Sentry](#skills-by-sentry-team-for-their-dev-team) | [Microsoft](#skills-by-microsoft) | [fal.ai](#skills-by-falai-team) |\n| [WordPress](#skills-by-wordpress-development-team) | [OpenAI](#skills-by-openai) | [Figma](#skills-by-figma) | [Corey Haines](#marketing-skills-by-corey-haines) |\n| [Binance](#skills-by-binance) | [Dean Peters](#product-manager-skills-by-dean-peters) | [Pawe\u0142 Huryn](#product-management-skills-by-pawel-huryn) | [MiniMax](#skills-by-minimax-team) |\n| [DuckDB](#skills-by-duckdb) | [GSAP](#skills-by-gsap-greensock) | [Garry Tan (gstack)](#skills-by-garry-tan-gstack) | [Notion](#skills-by-notion) |\n| [Resend](#skills-by-resend) | [Addy Osmani (Web Quality)](#skills-by-addy-osmani-web-quality) | [MongoDB](#skills-by-mongodb) | [Kim Barrett (Advertising)](#advertising-skills-by-kim-barrett) |\n| [Apollo GraphQL](#skills-by-apollo-graphql) | [Auth0](#skills-by-auth0) | [Brave](#skills-by-brave) | [Browserbase](#skills-by-browserbase) |\n| [CodeRabbit](#skills-by-coderabbit) | [Coinbase](#skills-by-coinbase) | [Datadog Labs](#skills-by-datadog-labs) | [Firebase](#skills-by-firebase) |\n| [Flutter](#skills-by-flutter) | [Venice.ai](#skills-by-veniceai) | [Red Hat](#skills-by-redhat) | [Community](#community-skills) |\n| [Redis](#skills-by-redis) | [NVIDIA](#skills-by-nvidia) | [Google Cloud](#skills-by-google-cloud) | [Quality Standards](#skill-quality-standards) |\n\n\n\n<br/>\n\nYou ship products with AI, but every launch still dies quietly because nobody posts about it. [EveryFeed](https://everyfeed.ai/) plugs your AI assistant into a social workspace that drafts, schedules, and publishes ",
+  "readme_images": [
+    "https://github.com/user-attachments/assets/a890e563-e999-4b1f-8ce1-20399b0574f8",
+    "https://cdn.voltagent.dev/website/logo/logo-2-svg.svg",
+    "https://cdn.voltagent.dev/awesome-repo/testmui/testmuai-black.png",
+    "https://cdn.voltagent.dev/awesome-repo/modemlabs/modemlab-light.svg",
+    "https://img.shields.io/badge/\ud83d\udce9_Become_a_Sponsor-Contact_Us-blue?style=for-the-badge&logoColor=white",
+    "https://cdn.voltagent.dev/awesome-repo/everyfeed-social.png"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [
+      {
+        "message": "Merge pull request #938 from KhazP/add-vibe-coding-prompt-template",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Merge branch 'main' into add-vibe-coding-prompt-template",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Merge pull request #931 from lindblomstefan/main",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Merge pull request #930 from citlyze-bot/patch-1",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Merge pull request #929 from hedralab/main",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Update README",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Merge pull request #940 from liamka/add-apitube-news-api-skill",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Merge branch 'main' into add-apitube-news-api-skill",
+        "date": "2026-08-23"
+      }
+    ],
+    "hot_issues": []
+  },
+  "tags": [
+    "VoltAgent",
+    "agent-skills",
+    "ai-agents",
+    "awesome",
+    "awesome-agent-skills",
+    "awesome-list",
+    "claude-code",
+    "claude-code-skills"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-maka",
+  "topic": {
+    "name": "apache/maka",
+    "source": "github_trending",
+    "url": "https://github.com/apache/maka",
+    "stars": 2989,
+    "description": "Apache Maka (Incubating) is a local-first AI agent workspace. Model messages, tool calls, tool results, permission decisions, and termination events are recorded as an append-only log.",
+    "language": "TypeScript",
+    "topics": [
+      "agent-runtime",
+      "ai",
+      "ai-agent",
+      "apache",
+      "cli",
+      "desktop",
+      "electron",
+      "event-sourcing",
+      "incubator",
+      "llm",
+      "local-first",
+      "maka",
+      "tool-use",
+      "typescript"
+    ],
+    "homepage": "",
+    "pushed_at": "2026-08-25",
+    "created_at": "2026-05-27",
+    "default_branch": "main",
+    "_score": 1359.78
+  },
+  "mode": "docs",
+  "readme_excerpt": "<!--\n  Licensed to the Apache Software Foundation (ASF) under one\n  or more contributor license agreements.  See the NOTICE file\n  distributed with this work for additional information\n  regarding copyright ownership.  The ASF licenses this file\n  to you under the Apache License, Version 2.0 (the\n  \"License\"); you may not use this file except in compliance\n  with the License.  You may obtain a copy of the License at\n\n      http://www.apache.org/licenses/LICENSE-2.0\n\n  Unless required by applicable law or agreed to in writing,\n  software distributed under the License is distributed on an\n  \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n  KIND, either express or implied.  See the License for the\n  specific language governing permissions and limitations\n  under the License.\n-->\n\n<h1 align=\"center\">\n  <img src=\"apps/desktop/assets/app-icons/sky.png\" alt=\"Maka\" width=\"72\" valign=\"middle\" /> Apache Maka (Incubating)\n</h1>\n\n<p align=\"center\"><sub>Incubating at The Apache Software Foundation</sub></p>\n\n<p align=\"center\">\n  <a href=\"https://github.com/apache/maka/stargazers\"><img src=\"https://img.shields.io/github/stars/apache/maka?style=flat&label=%E2%98%85&color=4C8DFF\" alt=\"GitHub stars\" /></a>\n  <a href=\"https://github.com/apache/maka/releases\"><img src=\"https://img.shields.io/github/downloads/apache/maka/total?style=flat&label=downloads&color=4C8DFF\" alt=\"GitHub downloads\" /></a>\n  <a href=\"./LICENSE\"><img src=\"https://img.shields.io/badge/license-Apache%202.0-4C8DFF?style=flat\" alt=\"License: Apache 2.0\" /></a>\n  <img src=\"https://img.shields.io/badge/macOS-arm64-4C8DFF?style=flat&logo=apple&logoColor=white\" alt=\"macOS Apple Silicon\" />\n  <img src=\"https://img.shields.io/badge/Windows-preview-9BB8F0?style=flat&logo=windows&logoColor=white\" alt=\"Windows unsigned preview\" />\n  <img src=\"https://img.shields.io/badge/Linux-soon-D0D4DA?style=flat&logo=linux&logoColor=6B7280\" alt=\"Linux not yet supported\" />\n</p>\n\n<p align=\"center\">\n  <a href=\"./README.zh-CN.md\"><img src=\"https://img.shields.io/badge/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-4C8DFF?style=flat\" alt=\"\u4e2d\u6587\u6587\u6863\" /></a>\n</p>\n\n<p align=\"center\">\n  <strong>A local-first Agent workspace built for real work.</strong><br/>\n  Maka inspects projects, runs tools under a sandbox boundary, and records\n  model messages and tool calls as recoverable execution facts \u2014 on your\n  machine, through one Runtime Host.\n</p>\n\n![Maka \u2014 Your work. Your agent.](./.github/assets/maka-hero.en.png)\n\n> [!NOTE]\n> Apache Maka (Incubating) is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Apache Incubator PMC. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision-making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF. [DISCLAIMER-WIP](./DISCLAIMER-WIP) records the issues the project is currently aware of.\n\n> [!IMPORTANT]\n> Maka is under active development. The macOS Apple Silicon desktop build is an early public release; data formats, CLI commands, and experimental capabilities may still change.\n\n## Why Maka\n\n- **Your machine, your data.** Sessions, settings, and run records stay local by default. You bring the model: a cloud API, a local model, or a compatible gateway.\n- **The record is kept.** Model messages, tool calls, tool results, and how a turn ended are written down. The UI and the next model call are views of that record, not the only copy.\n- **Shorter context is not deleted history.** Maka can omit old tool output from the next prompt without throwing away the saved evidence.\n- **One place runs the agent.** Desktop, the terminal, and Maka evaluation all go through Runtime Host. Eval only owns the experiment and its scores.\n\nRead [Maka Backend Architecture](./ARCHITECTURE.md) for the design.\n\n## Surfaces\n\n| Entry point | Best for | Current capability |\n|---|---|---|\n| **Desktop** | Daily interaction, file and Artifact workflows, model and permission setup | Electron + React with streaming sessions, tool timelines, branching, search, and recovery |\n| **TUI / CLI** | Using Maka in the current project directory or running one non-interactive Turn | `maka`, `maka run`; shares workspace and model connections with Desktop |\n| **Eval** | Reproducible benchmark experiments across Maka and external subjects | `maka eval run <spec> --out <directory>` |\n\n## Current capabilities\n\n### Agent Runtime\n\n- Multiple model connections, streaming output, thinking, usage, and clearer provider errors;\n- Built-in tools: `Read`, `Write`, `Edit`, `Bash`, `Glob`, `Grep`. Computer Use and catalog skills are optional and not on by default;\n- Tools that leave the sandbox must be approved; runs can be aborted; failures are classified;\n- A durable execution record, crash recovery, and optional resume of an interrupted turn.\n\n### Desktop workspace\n\n- Create, archive, search, rename, retry, regenerate, and branch sessions from a Turn;\n- Artifact lists and previews, workspace instructions, model settings, and sandbox settings;\n- Local memory and web search when configured;\n- Chat apps (IM bots) are experimental. See [IM onboarding](./docs/architecture/bot-onboarding-runtime.zh-CN.md).\n\n### Evaluation\n\n- Declarative multi-arm experiments expanded into task \u00d7 repetition \u00d7 subject cells;\n- Immutable per-cell attempts with targeted infrastructure replacement and earliest-valid selection;\n- A small result kernel for score, normalized usage, attributable cost, duration, status, failure reason, and artifacts;\n- Maka subjects execute only through Runtime Host; external subjects use generic external subject adapters.\n\n## Quick start\n\n### Releases and downloads\n\nApache Maka has not made an Apache release yet. Everything currently published from this repository or from",
+  "readme_images": [
+    "https://img.shields.io/github/stars/apache/maka?style=flat&label=%E2%98%85&color=4C8DFF",
+    "https://img.shields.io/github/downloads/apache/maka/total?style=flat&label=downloads&color=4C8DFF",
+    "https://img.shields.io/badge/license-Apache%202.0-4C8DFF?style=flat",
+    "https://img.shields.io/badge/macOS-arm64-4C8DFF?style=flat&logo=apple&logoColor=white",
+    "https://img.shields.io/badge/Windows-preview-9BB8F0?style=flat&logo=windows&logoColor=white",
+    "https://img.shields.io/badge/Linux-soon-D0D4DA?style=flat&logo=linux&logoColor=6B7280"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [],
+    "hot_issues": []
+  },
+  "tags": [
+    "agent-runtime",
+    "ai",
+    "ai-agent",
+    "apache",
+    "cli",
+    "desktop",
+    "maka"
+  ]
+}

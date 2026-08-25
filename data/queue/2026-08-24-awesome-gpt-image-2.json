@@ -1,0 +1,107 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-awesome-gpt-image-2",
+  "topic": {
+    "name": "freestylefly/awesome-gpt-image-2",
+    "source": "github_trending",
+    "url": "https://github.com/freestylefly/awesome-gpt-image-2",
+    "stars": 15844,
+    "description": "Prompt as Code | GPT-Image2 \u5de5\u4e1a\u7ea7\u63d0\u793a\u8bcd\u5f15\u64ce\u4e0e\u6a21\u677f\u5e93\uff0c530+ \u4e2a\u6848\u4f8b\u9006\u5411\u5de5\u7a0b\uff0c20+ \u5957\u5de5\u4e1a\u7ea7\u6a21\u677f\uff0c\u5e76\u63d0\u70bc\u51faSkills\uff0c\u6301\u7eed\u66f4\u65b0\u4e2d",
+    "language": "JavaScript",
+    "topics": [
+      "agents",
+      "ai-image-generation",
+      "chatgpt",
+      "dsh-plugin",
+      "gpt-image-2",
+      "image-prompts",
+      "prompt-as-code",
+      "prompt-engineering",
+      "skills",
+      "workflow-automation"
+    ],
+    "homepage": "https://gpt-image2.canghe.ai",
+    "pushed_at": "2026-08-24",
+    "created_at": "2026-04-25",
+    "default_branch": "main",
+    "_score": 1616.88
+  },
+  "mode": "docs",
+  "readme_excerpt": "<p align=\"center\"><img src=\"./data/images/banner.svg\" alt=\"GPT-Image2 Prompt System\" width=\"800\" /></p>\n\n<h3 align=\"center\">Prompt as Code | GPT-Image2 Industrial Prompt Engine & Template Library, 500+ Reverse-Engineered Cases, 20+ Industrial Templates</h3>\n\n<p align=\"center\">\n  <a href=\"https://github.com/freestylefly/awesome-gpt-image-2\"><img src=\"https://img.shields.io/github/stars/freestylefly/awesome-gpt-image-2?style=flat-square&color=rgb(25%2C%20121%2C%20255)\" alt=\"Stars\"></a>\n  <a href=\"https://github.com/freestylefly/awesome-gpt-image-2\"><img src=\"https://img.shields.io/github/forks/freestylefly/awesome-gpt-image-2?style=flat-square&color=green\" alt=\"Forks\"></a>\n  <a href=\"https://github.com/freestylefly/awesome-gpt-image-2\"><img src=\"https://img.shields.io/badge/Cases-532-blueviolet?style=flat-square\" alt=\"Cases\"></a>\n  <a href=\"https://github.com/freestylefly/awesome-gpt-image-2\"><img src=\"https://img.shields.io/badge/100%25-Original_AI_Rewritten-green?style=flat-square\" alt=\"Original\"></a>\n  <a href=\"https://github.com/sponsors/freestylefly\"><img src=\"https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ff69b4?style=flat-square\" alt=\"Sponsor\"></a>\n</p>\n\n<p align=\"center\">\n  <a href=\"https://trendshift.io/repositories/28623?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-28623\">\n    <img src=\"https://trendshift.io/api/badge/repositories/28623\" alt=\"freestylefly/awesome-gpt-image-2 | Trendshift\" width=\"250\" height=\"55\">\n  </a>\n</p>\n\n<p align=\"center\">\n  <strong>English</strong> | <a href=\"./README.zh-CN.md\">\u7b80\u4f53\u4e2d\u6587</a> | <a href=\"./README.ja.md\">\u65e5\u672c\u8a9e</a>\n</p>\n\n## \ud83c\udf10 Visual Website\n\nUse the live site at [gpt-image2.canghe.ai](https://gpt-image2.canghe.ai/) to browse the gallery as a product experience: open large previews, copy full prompts, filter by style or scenario, test generation after Google sign-in, and jump back to the source case on GitHub.\n\n<p align=\"center\">\n  <a href=\"https://gpt-image2.canghe.ai/\">\n    <img src=\"data/images/site-preview.png\" alt=\"GPT-Image2 Gallery website preview\" width=\"900\">\n  </a>\n</p>\n\n## Paid Community\n\nThe GPT-Image2 discussion group is now a paid community. Sign in on the [community page](https://gpt-image2.canghe.ai/community), make a one-time **\u00a59.90** Alipay payment, and the protected group QR will appear only after the server confirms payment.\n\nFor payment, access, refund, or product questions, follow the WeChat official account **\u82cd\u4f55** or scan the card below and send a message.\n\n<p align=\"center\">\n  <img src=\"src/assets/canghe-official-account.png\" alt=\"\u82cd\u4f55 WeChat official account QR code and search card\" width=\"760\">\n</p>\n\n## \u2764\ufe0f Sponsors\n\n> [Want to appear here?](data/images/sponsors/wechat-personal.jpg) Support the project through GitHub Sponsors, or search \u82cd\u4f55 on WeChat and send your product name plus a short sponsorship note.\n\n| Sponsor | Description |\n| ------- | ----------- |\n| <a href=\"https://apimart.ai/register?aff=oQgzUQ\"><img src=\"data/images/sponsors/apimart.jpg\" alt=\"APIMart\" width=\"240\"></a> | Thanks to APIMart for sponsoring this project! APIMart is a low-cost API platform for AI image & video generation \u2014 GPT-Image-2 from `$0.006/image`, 160+ images per dollar. One async API covers both image and video: submit a task, get an ID, fetch results via polling or callback. Batch tens of thousands of images without timeouts, switch models without changing code. Pay-as-you-go with no monthly fee \u2014 [sign up here](https://apimart.ai/register?aff=oQgzUQ) to get started. |\n| <a href=\"https://www.hiapi.ai/zh/register?aff=DzuH\"><img src=\"data/images/sponsors/hiapi.jpg\" alt=\"hiapi\" width=\"240\"></a> | Thanks to hiapi for sponsoring this project! hiapi is an AI image & video generation API platform \u2014 GPT-Image-2 (text-to-image, image edit, 1K\u20134K) alongside video models like Seedance, Kling and Wan, all through one unified async API: submit a task, get a `task_id`, fetch results by polling or callback, batch without timeouts, switch models without code changes. Every result is stored on hiapi's own CDN with **persistent storage**, so your image/video URLs stay available long-term and can be fetched anytime \u2014 no rushing to download and back them up yourself. Native Remote MCP and Agent Skills plug straight into Claude Code & Cursor. Chinese UI & docs, WeChat Pay, pay-as-you-go with no monthly fee \u2014 new users get $1 free credit (~50 images). [Sign up here](https://www.hiapi.ai/en/register?aff=DzuH&utm_source=github&utm_medium=sponsor&utm_campaign=awesome-gpt-image-2). |\n| <a href=\"https://www.packyapi.ai/register?aff=CV0c\"><img src=\"data/images/sponsors/packycode.png\" alt=\"PackyCode\" width=\"240\"></a> | Thanks to PackyCode for sponsoring this project! PackyCode is a stable, high-performance API relay provider for Claude Code, Codex, Gemini, and more. Automatic failover, smart routing, and unlimited concurrency help turn AI coding into a reliable productivity tool. [Register here](https://www.packyapi.ai/register?aff=CV0c) to get started. |\n| <a href=\"https://pptoken.cc/\"><img src=\"data/images/sponsors/pptoken.png\" alt=\"PPToken\" width=\"240\"></a> | Project sponsor. PPToken provides API relay and key distribution for ChatGPT, Claude, Gemini, and other mainstream AI models, with low-latency access, high availability, pay-as-you-go billing, and flexible subscription plans. |\n\n<a name=\"section-vision\"></a>\n\n## \u26a1\ufe0f Project Vision\n\nAfter GPT-Image2 became widely available, AI image generation moved from \"can it make an image?\" to \"can it make stable, controllable, reusable images?\" This project turns scattered community examples into Prompt-as-Code assets that are easier for agents and automation workflows to reuse.\n\nThe core goal is simple: compress prose-style prompts into structured protocols. When you need batch generation, template systems, or production workflows, this structure is more valuable than a pile of isolated examples.\n\n- \ud83e\uddf1 Atomic schema: split subjects, lighting, materials, layout, and visual details int",
+  "readme_images": [
+    "https://img.shields.io/github/stars/freestylefly/awesome-gpt-image-2?style=flat-square&color=rgb(25%2C%20121%2C%20255)",
+    "https://img.shields.io/github/forks/freestylefly/awesome-gpt-image-2?style=flat-square&color=green",
+    "https://img.shields.io/badge/Cases-532-blueviolet?style=flat-square",
+    "https://img.shields.io/badge/100%25-Original_AI_Rewritten-green?style=flat-square",
+    "https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ff69b4?style=flat-square",
+    "https://trendshift.io/api/badge/repositories/28623"
+  ],
+  "screenshots": [],
+  "intel": {
+    "latest_release": null,
+    "recent_commits": [
+      {
+        "message": "fix: restore dialog scroll position instantly",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Remove DolOffer sponsor",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Remove outdated README sponsor entries",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Add Trendshift achievement badge",
+        "date": "2026-08-24"
+      },
+      {
+        "message": "Add GPT Image 2 prompt cases 527-532",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "docs: move APIMart sponsor to first position",
+        "date": "2026-08-21"
+      },
+      {
+        "message": "Move PackyCode sponsor to second position",
+        "date": "2026-08-20"
+      },
+      {
+        "message": "Add GPT Image 2 prompt cases 521-526",
+        "date": "2026-08-20"
+      }
+    ],
+    "hot_issues": [
+      {
+        "title": "\u4f8b 326\uff1a\u7ea2\u84dd\u649e\u8272\u9ad8\u8ddf\u8bf1\u60d1 \u660e\u663e\u548c\u63d0\u4f9b\u7684\u63d0\u793a\u8bcd\u4e0d\u4e00\u81f4",
+        "comments": 4,
+        "url": "https://github.com/freestylefly/awesome-gpt-image-2/issues/3",
+        "labels": []
+      },
+      {
+        "title": "\u5728\u7ebf\u53ef\u89c6\u5316\u5c55\u793a\u7ad9\u70b9",
+        "comments": 5,
+        "url": "https://github.com/freestylefly/awesome-gpt-image-2/issues/2",
+        "labels": []
+      },
+      {
+        "title": "\u4e00\u4e2a\u4eba\u7684\u9020\u5047\uff0c\u6574\u4e2a\u793e\u533a\u4e70\u5355\uff08\u8fc7\u6765\u4eba\u7684\u5fe0\u544a\uff09",
+        "comments": 1,
+        "url": "https://github.com/freestylefly/awesome-gpt-image-2/issues/13",
+        "labels": []
+      }
+    ]
+  },
+  "tags": [
+    "agents",
+    "ai-image-generation",
+    "awesome-gpt-image-2",
+    "chatgpt",
+    "dsh-plugin",
+    "freestylefly",
+    "gpt-image-2",
+    "image-prompts"
+  ]
+}
