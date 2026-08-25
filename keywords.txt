@@ -1,0 +1,19 @@
+# How-to YouTube Blog - Keyword List
+# ============================
+# One search query per line. Lines starting with # are ignored.
+# The cron job picks one keyword per day (round-robin) and searches YouTube for it,
+# picks the best matching video, fetches its transcript, and generates a step-by-step blog post.
+#
+# Edit this file anytime to add/remove/change topics.
+# Each line is used as a YouTube search query (yt-dlp "ytsearch:QUERY").
+
+how to install hermes agent
+how to install docker on windows
+how to install python on windows 11
+how to install node js
+how to install git on windows
+how to install vscode
+how to install wsl 2
+how to install ubuntu on windows
+how to install rust
+how to install go programming language

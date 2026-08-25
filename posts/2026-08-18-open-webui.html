@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Install Open WebUI with Docker and Ollama</title>
+  <meta name="description" content="Run Open WebUI with Docker, persist data, connect Ollama, pull a model, and verify at localhost:3000.">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">AI Trend Daily</a>
+      <nav><a href="../index.html">Home</a></nav>
+    </div>
+  </header>
+
+  <article class="post">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-category">open-webui/open-webui</span>
+        <h1>How to Install Open WebUI (Docker + Ollama)</h1>
+        <div class="post-meta">
+          <span>August 18, 2026</span>
+          <span class="sep">·</span>
+          <span>Install · Docker · Local LLM UI</span>
+        </div>
+      </div>
+
+      <div class="post-intro">
+        <p class="trending-note">Trending: <a href="https://github.com/open-webui/open-webui" target="_blank" rel="noopener">open-webui/open-webui</a> — self-hosted ChatGPT-style UI for Ollama and OpenAI-compatible APIs. 149k+ GitHub stars.</p>
+        <p>Official path is Docker. This guide runs the container, persists data, talks to Ollama on the host, pulls a small model, and checks the UI at <code>http://localhost:3000</code>.</p>
+      </div>
+
+      <h2 class="steps-title">What you need</h2>
+      <ul class="prereqs">
+        <li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a> installed and running. WebSocket must be allowed on the network path to the container.</li>
+        <li>Optional: <a href="https://ollama.com/download" target="_blank" rel="noopener">Ollama</a> on the host if you want local models (skip if you use the <code>:ollama</code> image that bundles it).</li>
+        <li>NVIDIA GPU (optional): NVIDIA Container Toolkit, then use the <code>:cuda</code> image with <code>--gpus all</code>.</li>
+      </ul>
+
+      <h2 class="steps-title">Step-by-step</h2>
+      <ol class="steps">
+        <li>
+          <div class="step-content">
+            <h3>Install Ollama on the host (recommended split)</h3>
+            <p>Linux:</p>
+            <pre><code>curl -fsSL https://ollama.com/install.sh | sh
+ollama --version</code></pre>
+            <p>Windows / macOS: install from ollama.com, then confirm in a new terminal:</p>
+            <pre><code>ollama --version</code></pre>
+            <p>Pull a small model so the UI has something to chat with:</p>
+            <pre><code>ollama pull gemma3:4b
+ollama list</code></pre>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <h3>Pull and run Open WebUI</h3>
+            <p>Standard image, data volume, port 3000, restart on boot, reach Ollama on the host:</p>
+            <pre><code>docker pull ghcr.io/open-webui/open-webui:main
+
+docker run -d \
+  -p 3000:8080 \
+  --add-host=host.docker.internal:host-gateway \
+  -v open-webui:/app/backend/data \
+  --name open-webui \
+  --restart always \
+  ghcr.io/open-webui/open-webui:main</code></pre>
+            <p>Windows PowerShell (one line):</p>
+            <pre><code>docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main</code></pre>
+            <p><code>-v open-webui:/app/backend/data</code> keeps chats and users across container recreates. <code>-p 3000:8080</code> maps host 3000 → container 8080.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <h3>Confirm the container is up</h3>
+            <pre><code>docker ps --filter name=open-webui
+docker logs -f open-webui</code></pre>
+            <p>Stop following logs with Ctrl+C once you see it listening. Open:</p>
+            <pre><code>http://localhost:3000</code></pre>
+            <p>Create the first account — that user becomes admin.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <h3>Point the UI at Ollama if models are missing</h3>
+            <p>Default is often <code>http://host.docker.internal:11434</code>. If the model list is empty, set it explicitly:</p>
+            <pre><code>docker rm -f open-webui
+
+docker run -d \
+  -p 3000:8080 \
+  -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
+  --add-host=host.docker.internal:host-gateway \
+  -v open-webui:/app/backend/data \
+  --name open-webui \
+  --restart always \
+  ghcr.io/open-webui/open-webui:main</code></pre>
+            <p>Linux host-network alternative (UI then on port 8080):</p>
+            <pre><code>docker run -d --network=host \
+  -e OLLAMA_BASE_URL=http://127.0.0.1:11434 \
+  -v open-webui:/app/backend/data \
+  --name open-webui --restart always \
+  ghcr.io/open-webui/open-webui:main</code></pre>
+            <p>If Ollama only binds localhost and Docker still cannot reach it, set Ollama to listen on all interfaces, then restart:</p>
+            <pre><code># Linux systemd drop-in
+sudo systemctl edit ollama.service
+# add:
+# [Service]
+# Environment="OLLAMA_HOST=0.0.0.0"
+sudo systemctl restart ollama</code></pre>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <h3>Chat with a model</h3>
+            <p>In the UI, pick <code>gemma3:4b</code> (or whatever you pulled) and send a test prompt. From the host you can also:</p>
+            <pre><code>ollama run gemma3:4b "Reply with the word pong only."</code></pre>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <h3>Optional: one container with Ollama bundled</h3>
+            <p>CPU:</p>
+            <pre><code>docker run -d -p 3000:8080 \
+  -v ollama:/root/.ollama \
+  -v open-webui:/app/backend/data \
+  --name open-webui --restart always \
+  ghcr.io/open-webui/open-webui:ollama</code></pre>
+            <p>NVIDIA GPU:</p>
+            <pre><code>docker run -d -p 3000:8080 --gpus all \
+  -v ollama:/root/.ollama \
+  -v open-webui:/app/backend/data \
+  --name open-webui --restart always \
+  ghcr.io/open-webui/open-webui:ollama</code></pre>
+            <p>CUDA image without bundled Ollama: <code>ghcr.io/open-webui/open-webui:cuda</code> plus <code>--gpus all</code>.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <h3>Persist the secret key (avoid logout on every recreate)</h3>
+            <pre><code>openssl rand -hex 32</code></pre>
+            <p>Pass it on every <code>docker run</code>:</p>
+            <pre><code>-e WEBUI_SECRET_KEY="paste-the-hex-here"</code></pre>
+            <p>Without this, recreating the container logs everyone out even if the volume is intact.</p>
+          </div>
+        </li>
+      </ol>
+
+      <h2 class="steps-title">Update, Compose, uninstall</h2>
+      <div class="post-source">
+        <p><strong>Manual update</strong> (keep the same volume name):</p>
+        <pre><code>docker rm -f open-webui
+docker pull ghcr.io/open-webui/open-webui:main
+docker run -d -p 3000:8080 \
+  --add-host=host.docker.internal:host-gateway \
+  -e WEBUI_SECRET_KEY="your-secret-key" \
+  -v open-webui:/app/backend/data \
+  --name open-webui --restart always \
+  ghcr.io/open-webui/open-webui:main</code></pre>
+        <p><strong>docker-compose.yml</strong>:</p>
+        <pre><code>services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "3000:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      WEBUI_SECRET_KEY: your-secret-key
+    volumes:
+      - open-webui:/app/backend/data
+    restart: always
+volumes:
+  open-webui:</code></pre>
+        <pre><code>docker compose up -d</code></pre>
+        <p><strong>Remove</strong> (last command deletes all chats):</p>
+        <pre><code>docker rm -f open-webui
+docker rmi ghcr.io/open-webui/open-webui:main
+docker volume rm open-webui</code></pre>
+      </div>
+
+      <div class="topic-source">
+        <h3>Project</h3>
+        <p><strong>Repo:</strong> <a href="https://github.com/open-webui/open-webui" target="_blank" rel="noopener">github.com/open-webui/open-webui</a></p>
+        <p><strong>Docs:</strong> <a href="https://docs.openwebui.com/getting-started/quick-start/" target="_blank" rel="noopener">Quick start</a></p>
+        <p><strong>UI:</strong> <code>http://localhost:3000</code></p>
+        <p><strong>Stars:</strong> 149,388+</p>
+      </div>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 AI Trend Daily. Commands taken from official docs.</p>
+    </div>
+  </footer>
+</body>
+</html>
