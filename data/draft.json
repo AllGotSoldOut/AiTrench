@@ -1,0 +1,98 @@
+{
+  "date": "2026-08-24",
+  "slug": "2026-08-24-ai-engineering-from-scratch",
+  "topic": {
+    "name": "rohitg00/ai-engineering-from-scratch",
+    "source": "github_trending",
+    "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+    "stars": 48383,
+    "description": "Learn it. Build it. Ship it for others.",
+    "language": "Python",
+    "topics": [
+      "agents",
+      "ai",
+      "ai-agents",
+      "ai-engineering",
+      "computer-vision",
+      "course",
+      "deep-learning",
+      "from-scratch",
+      "generative-ai",
+      "llm",
+      "machine-learning",
+      "mcp",
+      "nlp",
+      "python",
+      "reinforcement-learning",
+      "rust",
+      "swarm-intelligence",
+      "transformers",
+      "tutorial",
+      "typescript"
+    ],
+    "homepage": "https://aiengineeringfromscratch.com",
+    "pushed_at": "2026-08-23",
+    "created_at": "2026-03-18",
+    "default_branch": "main"
+  },
+  "mode": "docs",
+  "readme_excerpt": "<p align=\"center\">\n  <img src=\"assets/banner.svg\" alt=\"AI Engineering from Scratch \u2014 reference manual banner\" width=\"100%\">\n</p>\n\n<p align=\"center\">\n  <b>Read in your language:</b>\n  <a href=\"i18n/es/README.md\">Espa\u00f1ol</a> \u00b7\n  <a href=\"i18n/fr/README.md\">Fran\u00e7ais</a> \u00b7\n  <a href=\"i18n/pt/README.md\">Portugu\u00eas</a> \u00b7\n  <a href=\"i18n/de/README.md\">Deutsch</a> \u00b7\n  <a href=\"i18n/it/README.md\">Italiano</a> \u00b7\n  <a href=\"i18n/zh/README.md\">\u7b80\u4f53\u4e2d\u6587</a> \u00b7\n  <a href=\"i18n/ja/README.md\">\u65e5\u672c\u8a9e</a> \u00b7\n  <a href=\"i18n/ko/README.md\">\ud55c\uad6d\uc5b4</a> \u00b7\n  <a href=\"i18n/hi/README.md\">\u0939\u093f\u0928\u094d\u0926\u0940</a> \u00b7\n  <a href=\"i18n/ar/README.md\">\u0627\u0644\u0639\u0631\u0628\u064a\u0629</a> \u00b7\n  <a href=\"i18n/ru/README.md\">\u0420\u0443\u0441\u0441\u043a\u0438\u0439</a> \u00b7\n  <a href=\"i18n/tr/README.md\">T\u00fcrk\u00e7e</a>\n  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href=\"docs/i18n.md\">docs/i18n.md</a>.</sub>\n</p>\n\n<p align=\"center\">\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5\" alt=\"MIT License\"></a>\n  <a href=\"ROADMAP.md\"><img src=\"https://img.shields.io/badge/lessons-511-3553ff?style=flat-square&labelColor=fafaf5\" alt=\"511 lessons\"></a>\n  <a href=\"#contents\"><img src=\"https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5\" alt=\"20 phases\"></a>\n  <a href=\"https://github.com/rohitg00/ai-engineering-from-scratch/stargazers\"><img src=\"https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff\" alt=\"GitHub stars\"></a>\n  <a href=\"https://aiengineeringfromscratch.com\"><img src=\"https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5\" alt=\"Website\"></a>\n</p>\n\n## From the creator of [Agent Memory - #1 Persistent memory \u2b50](https://github.com/rohitg00/agentmemory) <a href=\"https://github.com/rohitg00/agentmemory/stargazers\"><img src=\"https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff\" alt=\"GitHub stars\"></a> which naturally works with any agents or chat assistants.\n\n```text\n\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\u2591\u2591\u2591\u2592\u2592\u2592\n```\n\n> **84% of students already use AI tools. Only 18% feel prepared to use them\n> professionally.** This curriculum closes that gap.\n>\n> 511 lessons. 20 phases. ~329 hours. Python, TypeScript, Rust, Julia. Every lesson ships\n> a reusable artifact: a prompt, a skill, an agent, an MCP server. Free, open source, MIT.\n>\n> You don't just learn AI. You build it. End-to-end. By hand.\n\n<!-- STATS:START (generated from site/stats.json by build.js \u2014 do not edit by hand) -->\n<p align=\"center\"><sub><b>150,639</b> readers &nbsp;\u00b7&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;\u00b7&nbsp; as of 2026-06-07</sub></p>\n<!-- STATS:END -->\n\n## Start here: choose what you want to build\n\nYou do not need to scan 511 lessons before beginning. Pick one goal. Each link\nopens the same curriculum on GitHub or the website, and both versions use the\nsame lesson code.\n\n| Your goal | Learn on GitHub | Learn on the website |\n|---|---|---|\n| I am new and want the complete foundation | [Phase 0: Setup and Tooling](phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson.html?path=phases/00-setup-and-tooling/01-dev-environment) |\n| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson.html?path=phases/01-math-foundations/01-linear-algebra-intuition) |\n| I want to build production LLM applications | [Phase 11: LLM Engineering](phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson.html?path=phases/11-llm-engineering/01-prompt-engineering) |\n| I want to build agents | [Phase 14: Agent Engineering](phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson.html?path=phases/14-agent-engineering/01-the-agent-loop) |\n| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |\n| I want to write and ship Agent Skills | [Focused Agent Skills route](phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |\n| I want to prepare for a Claude certification | [Certification onboarding](certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |\n\nNot sure where you fit? Use the [`start-learning` placement tutor](skills/start-learning/SKILL.md)\nor the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).\n\n### Use every lesson the same way\n\n1. **Read** `docs/en.md` and explain the core idea in your own words.\n2. **Type and build** the important code instead of treating the code block as decoration.\n3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.\n4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.\n5. **Continue** only when you can explain the output and make one small change without guessing.\n\nCommands in lesson pages are paths from the repository root unless the lesson\nexplicitly says to change directories. If a lesson offers several languages,\nrun the implementation for the language you are learning.\n\n### Clone it and produce your first evidence\n\n```bash\ngit clone https://github.com/rohitg00/ai-engineering-from-scratch.git\ncd ai-enginee",
+  "readme_images": [
+    "https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/badge/lessons-511-3553ff?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff",
+    "https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff"
+  ],
+  "screenshots": [
+    "https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/badge/lessons-511-3553ff?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff",
+    "https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5",
+    "https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff"
+  ],
+  "intel": {
+    "latest_release": {
+      "tag": "v2026.08",
+      "date": "2026-08-10",
+      "notes": "The August edition. Three big surfaces landed: a certification prep program, the course in five languages, and a rebuilt way to navigate all 503 lessons.\n\n## Certification prep, free and build-first\n\nA new [certifications section](https://aiengineeringfromscratch.com/certifications.html) turns public exam blueprints into study paths you build through, not read through. The first program covers all four Claude credentials from the July 2026 exam guides (Associate, Developer, Architect Foundations, Architect Professional): 33 in-depth lessons, runnable labs, diagnostics, capstones, and 295 original assessment questions.\n\nIt is AI-native: Claude Code, Codex, Cursor, or any SKILL.md agent can teach a route, run the labs, quiz you, and resume your progress.\n\n```text\nnpx skills add rohitg00/ai-e"
+    },
+    "recent_commits": [
+      {
+        "message": "chore(site): rebuild data.js",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "feat(site): improve motion, responsive UX, and agent readiness (#426)",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "chore(site): rebuild data.js",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Merge pull request #423 from rohitg00/feat/course-site-learning-dx",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "fix(course): keep one canonical MCP route",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "Merge remote-tracking branch 'origin/main' into HEAD",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "docs: remove unavailable star history embed",
+        "date": "2026-08-23"
+      },
+      {
+        "message": "chore(site): rebuild data.js",
+        "date": "2026-08-23"
+      }
+    ],
+    "hot_issues": []
+  }
+}
